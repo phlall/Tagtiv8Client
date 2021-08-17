@@ -103,6 +103,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
 import NavVari from "../components/NavVari.vue";
@@ -114,16 +115,6 @@ export default {
   },
   data() {
     return {
-      navLinks: [
-        "About",
-        "Research",
-        "Gallery",
-        "Testimonials",
-        "WhatWeOffer",
-        "Shop",
-        "MediaBlogs",
-        "Contact",
-      ],
       email: "",
       password: "",
       showPassword: false,
@@ -149,6 +140,9 @@ export default {
         // }
       },
     };
+  },
+  computed: {
+    ...mapState(["user"]),
   },
   methods: {
     login() {

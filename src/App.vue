@@ -1,21 +1,23 @@
 <template>
-  <div id="nav">
-        <navTop/>
-        <navBar/>
-    <!-- <router-link to="/">Home</router-link> |
+  <div>
+    <div id="nav">
+      <navTop />
+      <!-- <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> -->
+    </div>
+     <NotificationContainer/>
+    <router-view />
   </div>
-  <router-view />
 </template>
 <script>
 import navTop from "./components/NavTop.vue";
-import navBar from "./components/NavBar.vue";
+import NotificationContainer from "./components/NotificationContainer.vue";
+// import navBar from "./components/NavBar.vue";
 
 export default {
   components: {
-   navBar,
-   navTop
-  }
-}
+    navTop,
+    NotificationContainer,
+  },
+};
 </script>
-
