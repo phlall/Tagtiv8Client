@@ -21,8 +21,8 @@ export const mutations = {
     state.user = "";
     // location.reload();
   },
-  SET_PLAN(state, plan) {
-    state.plan.name = plan.planName;
+  SET_PLAN(state, subject) {
+    state.plan.subject = subject;
   },
   SET_AGERANGE(state, ageRange) {
     state.plan.ageRange = ageRange.ageRange;
@@ -60,6 +60,28 @@ export const actions = {
       return data;
     });
   },
+  getResources({ state, dispatch }) {
+    if (state.plan.ageRange != null && state.plan.subject != null) {
+      return ApiService.getResources(state.plan.ageRange, state.plan.subject.id)
+        .then((response) => {
+          return response.data;
+        })
+        .catch((error) => {
+          const notification = {
+            type: "error",
+            message: `resources not found ${error.message}`,
+          };
+          dispatch("notification/add", notification, { root: true });
+          return error;
+        });
+    } else {
+      const notification = {
+        type: "error",
+        message: "state.plan not defined",
+      };
+      dispatch("notification/add", notification, { root: true });
+    }
+  },
   setPassword({ commit, dispatch }, credentials) {
     return ApiService.setPassword(credentials).then(() => {
       commit("LOGOUT");
@@ -70,12 +92,27 @@ export const actions = {
       dispatch("notification/add", notification, { root: true });
     });
   },
-  setPlan({ commit }, plan) {
-    commit("SET_PLAN", plan);
+  setPlan({ commit }, subject) {
+    commit("SET_PLAN", subject);
   },
   setAgeRange({ commit }, ageRange) {
     commit("SET_AGERANGE", ageRange);
   },
+  getSubjects({ dispatch }) {
+    return ApiService.getSubjects()
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        const notification = {
+          type: "error",
+          message: `Username or Password not found ${error.message}`,
+        };
+        dispatch("notification/add", notification, { root: true });
+        return error;
+      });
+  },
+
   login({ commit, dispatch }, credentials) {
     return ApiService.login(credentials)
       .then((response) => {

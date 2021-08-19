@@ -18,6 +18,9 @@ module.exports = {
         bgblue: {
           DEFAULT: "#E3EDF8",
         },
+        gridrowblue: {
+          DEFAULT: "#98D9F0",
+        },
       },
     },
   },

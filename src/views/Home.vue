@@ -12,13 +12,13 @@
           </h2>
         </div>
         <div
-          v-for="(plan, index) in plans"
+          v-for="(subject, index) in subjects"
           :key="index"
-          @click="setPlan(plan.name)"
+          @click="setPlan(subject)"
           class="cursor-pointer relative"
         >
           <inline-svg
-            :src="require(`@/assets/images/${plan.image}.svg`)"
+            :src="require(`@/assets/images/${subject.image}.svg`)"
           ></inline-svg>
           <div
             class="
@@ -35,7 +35,7 @@
               delay: 0,
             }"
           >
-            {{ plan.name }}
+            {{ subject.name }}
           </div>
           <!-- <h2
             class="
@@ -67,7 +67,8 @@
 import NavVari from "../components/NavVari.vue";
 import InlineSvg from "vue-inline-svg";
 import VueResizeText from "vue3-resize-text";
-
+//import { apiClient } from "@/services/apiService";
+//import store from "@/store";
 export default {
   directives: {
     ResizeText: VueResizeText.ResizeText,
@@ -75,28 +76,43 @@ export default {
   data() {
     return {
       navLinks: ["Plans", "MainSite", "Account"],
-      plans: [
-        { name: "English", image: "blue-ribbon" },
-        { name: "Physical Challenges", image: "orange-ribbon" },
-        { name: "Tree Tag Orienteering", image: "green-ribbon" },
-        { name: "Maths", image: "red-ribbon" },
-        { name: "Thinking Challenges", image: "lightgreen-ribbon" },
-        { name: "Miscellaneous Magic Moves", image: "black-ribbon" },
-        { name: "Foundation Subjects", image: "royalblue-ribbon" },
-        { name: "Blended Challenges", image: "pink-ribbon" },
-        { name: "Create Your Own Games", image: "purple-ribbon" },
-      ],
+      subjects: [],
+      // plans: [
+      //   { name: "English", image: "blue-ribbon" },
+      //   { name: "Physical Challenges", image: "orange-ribbon" },
+      //   { name: "Tree Tag Orienteering", image: "green-ribbon" },
+      //   { name: "Maths", image: "red-ribbon" },
+      //   { name: "Thinking Challenges", image: "lightgreen-ribbon" },
+      //   { name: "Miscellaneous Magic Moves", image: "black-ribbon" },
+      //   { name: "Foundation Subjects", image: "royalblue-ribbon" },
+      //   { name: "Blended Challenges", image: "pink-ribbon" },
+      //   { name: "Create Your Own Games", image: "purple-ribbon" },
+      // ],
     };
   },
+  created() {
+    this.getSubjects();
+  },
   methods: {
-    setPlan(planName) {
-      this.$store.dispatch("user/setPlan", { planName }).then((error) => {
-        if (!error) {
-          this.$router.push({ name: "AgeRange" });
-        } else {
-          this.$router.push({ name: "Login" });
-        }
+    getSubjects() {
+      this.$store.dispatch("user/getSubjects").then((subjects) => {
+        this.subjects = subjects;
+        // if (response.data != null) {
+        // } else {
+        //   this.$router.push({ name: "Login" });
+        // }
       });
+    },
+    setPlan(subject) {
+      this.$store
+        .dispatch("user/setPlan", { name: subject.name, id: subject.id })
+        .then((error) => {
+          if (!error) {
+            this.$router.push({ name: "AgeRange" });
+          } else {
+            this.$router.push({ name: "Login" });
+          }
+        });
     },
   },
   name: "Home",

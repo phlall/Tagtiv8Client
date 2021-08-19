@@ -57,7 +57,7 @@ export default {
     setAgeGroup(ageRange) {
       this.$store.dispatch("user/setAgeRange", { ageRange }).then((error) => {
         if (!error) {
-          this.$router.push({ name: "Resources" });
+          this.$router.push({ name: "AgeRange" });
         } else {
           this.$router.push({ name: "Login" });
         }

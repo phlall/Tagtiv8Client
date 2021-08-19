@@ -42,4 +42,19 @@ export default {
     }
     return null;
   },
+  getSubjects() {
+    // alert(store.getters.userToken.token);
+    if (this.setAuthHeader()) {
+      return apiClient.get("Subject");
+    }
+    return null;
+  },
+  getResources(agerange, subjectid) {
+    if (this.setAuthHeader()) {
+      return apiClient.get(
+        `Resource/GetContentBySubject/${agerange}/${subjectid}`
+      );
+    }
+    return null;
+  },
 };
