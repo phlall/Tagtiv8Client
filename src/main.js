@@ -14,6 +14,12 @@ import {
   faEnvelope,
   faBars,
   faTimes,
+  faStar,
+  faSort,
+  faSortUp,
+  faSortDown,
+  faCaretUp,
+  faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
 import App from "./App.vue";
 import router from "./router";
@@ -30,7 +36,13 @@ library.add(
   faFacebookSquare,
   faLinkedin,
   faPinterestSquare,
-  faVimeo
+  faVimeo,
+  faStar,
+  faSort,
+  faSortUp,
+  faSortDown,
+  faCaretUp,
+  faCaretDown
 );
 
 const requireComponent = require.context(
