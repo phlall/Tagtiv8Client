@@ -21,13 +21,18 @@
       <div class="flex-grow text-right">
         <BaseButton
           type="button"
-          :disabled="false"
+          :disabled="!resource.resourceContent.length"
           class="py-1 px-2 mr-2"
-          @click="toggle"
+          @click="toggle()"
         >
           <span class="text-3xl">
             <font-awesome-icon
               :icon="['fas', open ? 'caret-up' : 'caret-down']"
+              :class="
+                resource.resourceContent.length
+                  ? 'text-gray-600'
+                  : 'text-gray-400'
+              "
           /></span>
         </BaseButton>
       </div>
@@ -63,9 +68,16 @@
         </div>
         <div class="flex-grow flex justify-end">
           <div class="mr-2">
-            <BaseButton type="button" :disabled="false" class="py-1 px-2">
+            <BaseButton
+              type="button"
+              :disabled="false"
+              class="py-1 px-2"
+              @click="setFavorite(item)"
+            >
               <span class="ml-4">
-                <font-awesome-icon :icon="['fas', 'star']"
+                <font-awesome-icon
+                  :icon="['fas', 'star']"
+                  :class="item.isFavorite ? 'text-red-600' : 'text-gray-200'"
               /></span>
             </BaseButton>
           </div>
@@ -83,7 +95,6 @@
               type="submit"
               :disabled="false"
               class="text-white py-1 px-2 w-full bg-buttonblue font-bold mr-2"
-              something="else"
             >
               Work Sheet
             </BaseButton>
@@ -110,6 +121,21 @@ export default {
   methods: {
     toggle() {
       this.open = !this.open;
+    },
+    setFavorite(item) {
+      // const itemId = item.id;
+      item.isFavorite = !item.isFavorite;
+      if (item.isFavorite) {
+        // item.isFavorite = false;
+        // this.$store.dispatch("user/deleteFavorite", { itemId }).then(() => {
+        //   item.isFavorite = false;
+        // });
+      } else {
+        //item.isFavorite = true;
+        // this.$store.dispatch("user/setFavorite", { itemId }).then(() => {
+        //   item.isFavorite = true;
+        // });
+      }
     },
   },
 };
