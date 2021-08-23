@@ -10,7 +10,7 @@ const apiClient = axios.create({
     "Content-Type": "application/json",
     "Referrer-Policy": "origin",
   },
-  timeout: 15000,
+  timeout: 25000,
 });
 
 export default {
@@ -54,6 +54,20 @@ export default {
       return apiClient.get(
         `Resource/GetContentBySubject/${agerange}/${subjectid}`
       );
+    }
+    return null;
+  },
+  deleteFavorite(userId, resourceContentId) {
+    if (this.setAuthHeader()) {
+      return apiClient.delete(
+        `Favorites/DeleteByUserContent/${userId}/${resourceContentId}`
+      );
+    }
+    return null;
+  },
+  addFavorite(credentials) {
+    if (this.setAuthHeader()) {
+      return apiClient.post("Favorites/PostFavorite", credentials);
     }
     return null;
   },

@@ -7,15 +7,35 @@
       </div>
       <div class="grid grid-cols-2 lg:grid-cols-3 w-9/12 mt-12 gap-6 m-auto">
         <div class="col-span-2 lg:col-span-3 h-20">
-          <h2 class="font-bold text-blue-600 text-center text-5xl w-full">
+          <h2
+            class="font-bold text-blue-600 text-center text-5xl w-full h-screen"
+          >
             Introduction to Tagtiv8
           </h2>
         </div>
+        <template v-if="!loaded">
+          <div v-for="i in 3" :key="i">
+            <ContentLoader
+              viewBox="0 0 250 110"
+              :speed="2"
+              primaryColor="#b2e0fe"
+              secondaryColor="#ecebeb"
+            >
+              <rect x="48" y="8" rx="3" ry="3" width="88" height="6" />
+              <rect x="48" y="26" rx="3" ry="3" width="52" height="6" />
+              <rect x="0" y="56" rx="3" ry="3" width="410" height="6" />
+              <rect x="0" y="72" rx="3" ry="3" width="380" height="6" />
+              <rect x="0" y="88" rx="3" ry="3" width="178" height="6" />
+              <circle cx="20" cy="20" r="20" />
+            </ContentLoader>
+          </div>
+        </template>
         <div
           v-for="(subject, index) in subjects"
           :key="index"
           @click="setPlan(subject)"
           class="cursor-pointer relative"
+          v-else
         >
           <inline-svg
             :src="require(`@/assets/images/${subject.image}.svg`)"
@@ -37,27 +57,7 @@
           >
             {{ subject.name }}
           </div>
-          <!-- <h2
-            class="
-              absolute
-              top-1/3
-              w-full
-              h-12
-              text-center text-white
-              pt-2
-              text-lg
-              xl:text-2xl
-              2xl:text-3xl
-              font-bold
-            "
-          >
-            {{ plan.name }}
-          </h2> -->
         </div>
-        <!-- <BaseSvgIcon name="blue-ribbon"/> -->
-        <!-- <div  v-for="(plan, index) in plans" :key="index" @click="setPlan(plan.name)">
-      <BaseSvgIcon :name="plan.name"/>
-      </div> -->
       </div>
     </div>
   </div>
@@ -67,8 +67,7 @@
 import NavVari from "../components/NavVari.vue";
 import InlineSvg from "vue-inline-svg";
 import VueResizeText from "vue3-resize-text";
-//import { apiClient } from "@/services/apiService";
-//import store from "@/store";
+import { ContentLoader } from "vue-content-loader";
 export default {
   directives: {
     ResizeText: VueResizeText.ResizeText,
@@ -77,17 +76,7 @@ export default {
     return {
       navLinks: ["Plans", "MainSite", "Account"],
       subjects: [],
-      // plans: [
-      //   { name: "English", image: "blue-ribbon" },
-      //   { name: "Physical Challenges", image: "orange-ribbon" },
-      //   { name: "Tree Tag Orienteering", image: "green-ribbon" },
-      //   { name: "Maths", image: "red-ribbon" },
-      //   { name: "Thinking Challenges", image: "lightgreen-ribbon" },
-      //   { name: "Miscellaneous Magic Moves", image: "black-ribbon" },
-      //   { name: "Foundation Subjects", image: "royalblue-ribbon" },
-      //   { name: "Blended Challenges", image: "pink-ribbon" },
-      //   { name: "Create Your Own Games", image: "purple-ribbon" },
-      // ],
+      loaded: false,
     };
   },
   created() {
@@ -97,10 +86,7 @@ export default {
     getSubjects() {
       this.$store.dispatch("user/getSubjects").then((subjects) => {
         this.subjects = subjects;
-        // if (response.data != null) {
-        // } else {
-        //   this.$router.push({ name: "Login" });
-        // }
+        this.loaded = true;
       });
     },
     setPlan(subject) {
@@ -119,6 +105,7 @@ export default {
   components: {
     NavVari,
     InlineSvg,
+    ContentLoader,
   },
 };
 </script>

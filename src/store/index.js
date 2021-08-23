@@ -15,5 +15,6 @@ export default createStore({
       return !!state.user.user;
     },
     userToken: (state) => state.user.user,
+    plan: (state) => state.user.plan,
   },
 });

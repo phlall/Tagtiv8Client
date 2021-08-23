@@ -21,6 +21,12 @@ module.exports = {
         gridrowblue: {
           DEFAULT: "#98D9F0",
         },
+        gridrowbluedark: {
+          DEFAULT: "#44b9e4",
+        },
+        gridrowbluehover: {
+          DEFAULT: "#72b0da",
+        },
       },
     },
   },

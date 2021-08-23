@@ -1,19 +1,19 @@
 <template>
-  <div>
-    <div class="flex w-full">
+  <div v-if="!loaded" class="h-32">
+    <ContentLoader
+      viewBox="0 0 250 110"
+      :speed="2"
+      primaryColor="#b2e0fe"
+      secondaryColor="#ecebeb"
+    >
+      <rect x="0" y="4" rx="3" ry="3" height="6" class="w-11/12" />
+      <rect x="0" y="16" rx="3" ry="3" class="w-7/12" height="6" />
+    </ContentLoader>
+  </div>
+  <div class="bg-gridrowblue" v-else>
+    <div class="flex w-full" :class="handleToggle()" @click="toggle()">
       <div class="flex-shrink">
-        <h2
-          class="
-            w-full
-            h-10
-            pl-4
-            text-gray-600
-            pt-2
-            text-lg
-            xl:text-lg
-            2xl:text-lg
-          "
-        >
+        <h2 class="w-full h-10 pl-4 pt-2 text-lg xl:text-lg 2xl:text-lg">
           {{ resource.name }}
         </h2>
       </div>
@@ -23,7 +23,6 @@
           type="button"
           :disabled="!resource.resourceContent.length"
           class="py-1 px-2 mr-2"
-          @click="toggle()"
         >
           <span class="text-3xl">
             <font-awesome-icon
@@ -106,10 +105,15 @@
 </template>
 
 <script>
+import { ContentLoader } from "vue-content-loader";
 export default {
   props: {
     resource: {
       type: Object,
+      required: true,
+    },
+    loaded: {
+      type: Boolean,
       required: true,
     },
   },
@@ -118,23 +122,43 @@ export default {
       open: false,
     };
   },
+  components: {
+    ContentLoader,
+  },
   methods: {
+    handleToggle() {
+      let strClass = "";
+      if (this.resource.resourceContent.length && !this.open) {
+        strClass += "cursor-pointer hover:bg-gridrowbluehover text-gray-600";
+      }
+      if (this.resource.resourceContent.length && this.open) {
+        strClass += "cursor-pointer bg-gridrowbluedark text-white";
+      }
+      return strClass;
+    },
+
     toggle() {
       this.open = !this.open;
     },
     setFavorite(item) {
-      // const itemId = item.id;
+      const itemId = item.id;
+      const fav = item.isFavorite;
       item.isFavorite = !item.isFavorite;
-      if (item.isFavorite) {
+      if (fav) {
         // item.isFavorite = false;
-        // this.$store.dispatch("user/deleteFavorite", { itemId }).then(() => {
-        //   item.isFavorite = false;
-        // });
+        this.$store
+          .dispatch("user/deleteFavorite", { itemId })
+          .then(() => {})
+          .catch(() => {
+            item.isFavorite = !item.isFavorite;
+          });
       } else {
-        //item.isFavorite = true;
-        // this.$store.dispatch("user/setFavorite", { itemId }).then(() => {
-        //   item.isFavorite = true;
-        // });
+        this.$store
+          .dispatch("user/addFavorite", { itemId })
+          .then(() => {})
+          .catch(() => {
+            item.isFavorite = !item.isFavorite;
+          });
       }
     },
   },

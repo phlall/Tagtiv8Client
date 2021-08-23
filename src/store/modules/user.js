@@ -19,7 +19,7 @@ export const mutations = {
     // state.user = null;
     localStorage.removeItem("user");
     state.user = "";
-    // location.reload();
+    state.plan = {};
   },
   SET_PLAN(state, subject) {
     state.plan.subject = subject;
@@ -77,10 +77,11 @@ export const actions = {
     } else {
       const notification = {
         type: "error",
-        message: "state.plan not defined",
+        message: "Please reset yor plan",
       };
       dispatch("notification/add", notification, { root: true });
     }
+    return null;
   },
   setPassword({ commit, dispatch }, credentials) {
     return ApiService.setPassword(credentials).then(() => {
@@ -112,7 +113,31 @@ export const actions = {
         return error;
       });
   },
-
+  deleteFavorite({ state, dispatch }, obj) {
+    return ApiService.deleteFavorite(state.user.id, obj.itemId).catch(
+      (error) => {
+        const notification = {
+          type: "error",
+          message: `Error deleting favorite - ${error.message}`,
+        };
+        dispatch("notification/add", notification, { root: true });
+        return error;
+      }
+    );
+  },
+  addFavorite({ state, dispatch }, obj) {
+    return ApiService.addFavorite({
+      userId: state.user.id,
+      resourceContentId: obj.itemId,
+    }).catch((error) => {
+      const notification = {
+        type: "error",
+        message: `Error adding favorite - ${error.message}`,
+      };
+      dispatch("notification/add", notification, { root: true });
+      return error;
+    });
+  },
   login({ commit, dispatch }, credentials) {
     return ApiService.login(credentials)
       .then((response) => {

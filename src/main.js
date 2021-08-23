@@ -51,6 +51,7 @@ const requireComponent = require.context(
   /Base[A-Z]\w+\.(vue|js)$/
 );
 const app = createApp(App);
+
 requireComponent.keys().forEach((fileName) => {
   const componentConfig = requireComponent(fileName);
 

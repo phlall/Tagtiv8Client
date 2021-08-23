@@ -32,10 +32,21 @@
             :class="'bg-buttonblue'"
             :disabled="false"
             class="text-white h-8 bg-indigo-400 px-3 py-1 mr-6 ml-2 font-bold"
-            something="else"
             @click="$router.push('Login')"
+            v-if="!loggedIn"
           >
             LOG IN
+          </BaseButton>
+          <BaseButton
+            type="submit"
+            :class="'bg-buttonblue'"
+            :disabled="false"
+            class="text-white h-8 bg-indigo-400 px-3 py-1 mr-6 ml-2 font-bold"
+            something="else"
+            @click="logout"
+            v-else
+          >
+            LOG OUT
           </BaseButton>
         </div>
       </div>
@@ -95,6 +106,7 @@
 
 <script>
 import { useWindowSize } from "vue-window-size";
+import { authComputed } from "../store/helpers.js";
 const { width } = useWindowSize();
 export default {
   props: {
@@ -122,6 +134,9 @@ export default {
       windowWidth: width,
     };
   },
+  computed: {
+    ...authComputed,
+  },
   mounted() {
     window.addEventListener("resize", this.handleResize);
   },
@@ -129,6 +144,10 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    logout() {
+      this.$store.dispatch("user/logout");
+      this.$router.push("Login");
+    },
     toggle() {
       this.open = !this.open;
     },

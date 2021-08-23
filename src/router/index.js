@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "@/store";
+import _ from "lodash";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
@@ -12,6 +14,7 @@ import Shop from "../views/Shop.vue";
 import Account from "../views/Account.vue";
 import AgeRange from "../views/AgeRange.vue";
 import Resources from "../views/Resources.vue";
+
 const routes = [
   {
     path: "/login",
@@ -27,6 +30,7 @@ const routes = [
     component: Home,
     meta: {
       title: "Home",
+      requiresAuth: true,
     },
   },
   {
@@ -51,6 +55,7 @@ const routes = [
     component: Home,
     meta: {
       title: "Plans",
+      requiresAuth: true,
     },
   },
   {
@@ -124,14 +129,27 @@ const routes = [
     path: "/agerange",
     name: "AgeRange",
     component: AgeRange,
+    beforeEnter: () => {
+      const plan = store.getters.plan;
+      if (!_.has(plan, "subject")) {
+        router.push("Home");
+      }
+    },
     meta: {
       title: "Age Range",
+      requiresAuth: true,
     },
   },
   {
     path: "/resources",
     name: "Resources",
     component: Resources,
+    beforeEnter: () => {
+      const plan = store.getters.plan;
+      if (!_.has(plan, "ageRange") || !_.has(plan, "subject")) {
+        router.push("Home");
+      }
+    },
     meta: {
       title: "Resources",
     },
@@ -143,4 +161,12 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  const loggedIn = localStorage.getItem("user");
+
+  if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn) {
+    next("/");
+  }
+  next();
+});
 export default router;
