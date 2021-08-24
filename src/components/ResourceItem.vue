@@ -81,13 +81,14 @@
             </BaseButton>
           </div>
           <div class="mr-2">
-            <BaseButton
+            <button
               type="button"
               :disabled="false"
               class="text-white py-1 px-2 w-full bg-buttonblue font-bold"
+              @click="setResourceContent(item)"
             >
               Lesson Plan
-            </BaseButton>
+            </button>
           </div>
           <div class="mr-1">
             <BaseButton
@@ -126,6 +127,15 @@ export default {
     ContentLoader,
   },
   methods: {
+    setResourceContent(resourceItem) {
+      let resourceObj = {
+        id: this.resource.id,
+        ageGroups: this.resource.ageGroups,
+        name: this.resource.name,
+        resourceContent: resourceItem,
+      };
+      this.$emit("setContent", resourceObj);
+    },
     handleToggle() {
       let strClass = "";
       if (this.resource.resourceContent.length && !this.open) {

@@ -2,7 +2,7 @@
   <div id="nav">
     <navTop />
   </div>
-  <router-view />
+  <router-view class="font-roboto" />
   <NotificationContainer />
 </template>
 <script>
@@ -26,6 +26,11 @@ export default {
         return Promise.reject(error);
       }
     );
+    const planString = localStorage.getItem("plan");
+    if (planString) {
+      const plan = JSON.parse(planString);
+      this.$store.commit("user/SET_PLAN", plan);
+    }
   },
   components: {
     navTop,

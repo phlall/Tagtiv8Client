@@ -1,21 +1,6 @@
 <template>
   <div>
     <NavVari :NavLinks="navLinks" />
-    <!-- <div class="m-auto w-6/12 mt-12" v-if="loading">
-      <ContentLoader
-        viewBox="0 0 250 110"
-        :speed="2"
-        primaryColor="#b2e0fe"
-        secondaryColor="#ecebeb"
-      >
-        <rect x="48" y="8" rx="3" ry="3" width="88" height="6" />
-        <rect x="48" y="26" rx="3" ry="3" width="52" height="6" />
-        <rect x="0" y="56" rx="3" ry="3" width="410" height="6" />
-        <rect x="0" y="72" rx="3" ry="3" width="380" height="6" />
-        <rect x="0" y="88" rx="3" ry="3" width="178" height="6" />
-        <circle cx="20" cy="20" r="20" />
-      </ContentLoader>
-    </div> -->
     <div class="home bg-bgblue h-screen font-roboto border">
       <div class="bg-headerblue py-8 pl-6">
         <span class="text-white"><h2>Planning Home</h2></span>
@@ -56,7 +41,11 @@
           :key="resource.id"
           class="col-span-2"
         >
-          <ResourceItem :resource="resource" loaded="loaded" />
+          <ResourceItem
+            :resource="resource"
+            loaded="loaded"
+            @setContent="setResourceContent($event)"
+          />
         </div>
       </div>
     </div>
@@ -80,6 +69,17 @@ export default {
     this.getResources();
   },
   methods: {
+    setResourceContent(resourceObj) {
+      //alert(JSON.stringify(resourceItem));
+      this.$store
+        .dispatch("user/setResourceContent", { resourceObj })
+        .then(() => {
+          this.$router.push("lessonplan");
+        })
+        .catch(() => {
+          //this.$router.push("Home");
+        });
+    },
     getSort() {
       this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc";
     },

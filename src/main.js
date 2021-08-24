@@ -20,6 +20,7 @@ import {
   faSortDown,
   faCaretUp,
   faCaretDown,
+  faFileAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import App from "./App.vue";
 import router from "./router";
@@ -42,7 +43,8 @@ library.add(
   faSortUp,
   faSortDown,
   faCaretUp,
-  faCaretDown
+  faCaretDown,
+  faFileAlt
 );
 
 const requireComponent = require.context(

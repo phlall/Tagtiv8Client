@@ -16,5 +16,6 @@ export default createStore({
     },
     userToken: (state) => state.user.user,
     plan: (state) => state.user.plan,
+    resource: (state) => state.user.plan.resource,
   },
 });
