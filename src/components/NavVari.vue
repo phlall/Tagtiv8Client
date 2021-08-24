@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative bg-white">
     <div
       class="
         border-b border-gray-700

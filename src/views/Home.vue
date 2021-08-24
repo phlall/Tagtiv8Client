@@ -5,10 +5,29 @@
       <div class="bg-headerblue py-8 pl-6">
         <span class="text-white"><h2>Planning Home</h2></span>
       </div>
-      <div class="grid grid-cols-2 lg:grid-cols-3 w-9/12 mt-12 gap-6 m-auto">
-        <div class="col-span-2 lg:col-span-3 h-20">
+      <div
+        class="
+          grid grid-cols-1
+          md:grid-cols-2
+          lg:grid-cols-3 lg:max-w-screen-lg
+          md:max-w-3xl
+          sm:max-w-md
+          max-w-xl
+          mt-12
+          gap-6
+          m-auto
+        "
+      >
+        <div class="md:col-span-2 lg:col-span-3 h-20">
           <h2
-            class="font-bold text-blue-600 text-center text-5xl w-full h-screen"
+            class="
+              font-bold
+              text-blue-600 text-center
+              md:text-5xl
+              text-4xl
+              w-full
+              h-screen
+            "
           >
             Introduction to Tagtiv8
           </h2>
@@ -34,7 +53,7 @@
           v-for="(subject, index) in subjects"
           :key="index"
           @click="setPlan(subject)"
-          class="cursor-pointer relative"
+          class="cursor-pointer relative mx-32 sm:mx-12 md:mx-8 lg:mx-2"
           v-else
         >
           <inline-svg
