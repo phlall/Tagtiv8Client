@@ -12,8 +12,10 @@ import axios from "axios";
 
 export default {
   created() {
+    // localStorage.clear();
     const userString = localStorage.getItem("user");
     if (userString) {
+      // alert(JSON.stringify(userString));
       const userData = JSON.parse(userString);
       this.$store.commit("user/SET_USER_DATA", userData);
     }
@@ -28,6 +30,7 @@ export default {
     );
     const planString = localStorage.getItem("plan");
     if (planString) {
+      // alert(JSON.stringify(planString));
       const plan = JSON.parse(planString);
       this.$store.commit("user/SET_PLAN", plan);
     }
