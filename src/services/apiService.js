@@ -12,7 +12,7 @@ const apiClient = axios.create({
   },
   timeout: 25000,
 });
-
+const clientUrl = "http://localhost:8080/pdf/";
 export default {
   // Menus
   setAuthHeader() {
@@ -42,8 +42,9 @@ export default {
     }
     return null;
   },
-  getFile(url) {
-    return apiClient.get(url, { responseType: "blob" });
+  getFile(file) {
+    const fullUrl = new URL(clientUrl + file);
+    return apiClient.get(fullUrl, { responseType: "blob" });
   },
   getSubjects() {
     // alert(store.getters.userToken.token);
