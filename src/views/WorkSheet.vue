@@ -188,22 +188,21 @@ export default {
   },
   methods: {
     onClick() {
-      const url = new URL(
-        "http://localhost:8080/pdf/" + this.resource.resourceContent.workSheet
-      );
-      this.$store.dispatch("user/getFile", url).then((response) => {
-        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        var fileLink = document.createElement("a");
+      this.$store
+        .dispatch("user/getFile", this.resource.resourceContent.workSheet)
+        .then((response) => {
+          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+          var fileLink = document.createElement("a");
 
-        fileLink.href = fileURL;
-        fileLink.setAttribute(
-          "download",
-          this.resource.resourceContent.workSheet
-        );
-        document.body.appendChild(fileLink);
+          fileLink.href = fileURL;
+          fileLink.setAttribute(
+            "download",
+            this.resource.resourceContent.workSheet
+          );
+          document.body.appendChild(fileLink);
 
-        fileLink.click();
-      });
+          fileLink.click();
+        });
     },
     downloadItem() {
       this.$store
