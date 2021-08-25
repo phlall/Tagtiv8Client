@@ -1,38 +1,41 @@
 <template>
   <div>
     <div><NavVari /></div>
-    <div class="grid grid-cols-2 w-9/12 mt-12 m-auto bg-gray-300">
-      <div class="pl-1">
-        <h3 class="font-bold text-gray-600 text-left pt-2">
-          {{ resource.name }} {{ resource.resourceContent.name }} Lesson Plan
-        </h3>
-      </div>
-      <div class="flex justify-end pt-2 pr-1">
-        <div class="mr-3 text-sm">Add to Favorites:</div>
-        <div>
-          <BaseButton
-            type="button"
-            :disabled="false"
-            class=""
-            @click="setFavorite(item)"
-            :class="
-              resource.resourceContent.isFavorite
-                ? 'text-red-600'
-                : 'text-gray-200'
-            "
-          >
-            <span class=""> <font-awesome-icon :icon="['fas', 'star']" /></span>
-          </BaseButton>
+    <div class="w-full m-auto text-center flex justify-center">
+      <div class="grid grid-cols-2 mt-12 max-w-screen-lg">
+        <div class="pl-1">
+          <h3 class="text-left pt-2 text-smlg">
+            {{ resource.name }} {{ resource.resourceContent.name }} Lesson Plan
+          </h3>
         </div>
-        <div class="ml-4 text-sm">View Work Sheet</div>
-        <div>
-          <BaseButton
-            type="button"
-            :disabled="false"
-            v-if="!loggedIn"
-            @click="setFavorite(item)"
-          >
-            <span class="ml-4">
+        <div class="flex justify-end pt-2 text-xslg">
+          <div class="mr-3">Add to Favorites:</div>
+          <div>
+            <BaseButton
+              type="button"
+              :disabled="false"
+              class=""
+              @click="setFavorite(item)"
+              :class="
+                resource.resourceContent.isFavorite
+                  ? 'text-red-600'
+                  : 'text-gray-200'
+              "
+            >
+              <span class="">
+                <font-awesome-icon :icon="['fas', 'star']"
+              /></span>
+            </BaseButton>
+          </div>
+          <div class="ml-4">View Work Sheet</div>
+          <div>
+            <BaseButton
+              type="button"
+              :disabled="false"
+              v-if="!loggedIn"
+              @click="setFavorite(item)"
+            >
+              <!-- <span class="ml-4">
               <font-awesome-icon
                 :icon="['far', 'faFileAlt']"
                 :class="
@@ -40,10 +43,86 @@
                     ? 'text-red-600'
                     : 'text-gray-200'
                 "
-            /></span>
-          </BaseButton>
+            /></span> -->
+            </BaseButton>
+          </div>
+        </div>
+        <div class="col-span-2 bg-gray-100 mt-4">
+          <div
+            id="pdfvuer"
+            class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll"
+          >
+            <!-- <div
+              id="buttons"
+              class="
+                ui
+                grey
+                three
+                item
+                inverted
+                bottom
+                fixed
+                menu
+                transition
+                hidden
+              "
+            >
+              <a class="item" @click="page > 1 ? page-- : 1">
+                <i class="left chevron icon"></i>
+                Back
+              </a>
+              <a class="ui active item">
+                {{ page }} / {{ numPages ? numPages : "∞" }}
+              </a>
+              <a class="item" @click="page < numPages ? page++ : 1">
+                Forward
+                <i class="right chevron icon"></i>
+              </a>
+            </div> -->
+            <!-- <div
+              id="buttons"
+              class="
+                ui
+                grey
+                three
+                item
+                inverted
+                bottom
+                fixed
+                menu
+                transition
+                hidden
+              "
+            >
+              <a class="item" @click="scale -= scale > 0.2 ? 0.1 : 0">
+                <i class="left chevron icon" />
+                Zoom -
+              </a>
+              <a class="ui active item"> {{ formattedZoom }} % </a>
+              <a class="item" @click="scale += scale < 2 ? 0.1 : 0">
+                Zoom +
+                <i class="right chevron icon" />
+              </a>
+            </div> -->
+            <pdf
+              :src="pdfdata"
+              v-for="i in numPages"
+              :key="i"
+              :id="i"
+              :page="i"
+              v-model:scale="scale"
+              style="width: 100%; margin: 20px auto"
+              :annotation="true"
+              :resize="true"
+              @link-clicked="handle_pdf_link"
+            >
+              <template v-slot:loading> loading content here... </template>
+            </pdf>
+          </div>
         </div>
       </div>
+
+      <!-- <pdf src="./assets/pdf/introducing-sustain.pdf"></pdf> -->
     </div>
   </div>
 </template>
@@ -51,16 +130,102 @@
 <script>
 import NavVari from "@/components/NavVari.vue";
 import { mapGetters } from "vuex";
+//import pdf from "vue3-pdf";
+import pdfvuer from "pdfvuer";
 //import _ from "lodash";
 export default {
   props: ["contentId"],
   components: {
     NavVari,
+    pdf: pdfvuer,
   },
-  created() {
-    //this.getContent();
+  data() {
+    return {
+      page: 1,
+      numPages: 0,
+      pdfdata: undefined,
+      errors: [],
+      scale: "page-width",
+    };
+  },
+  computed: {
+    ...mapGetters(["resource"]),
+    formattedZoom() {
+      return Number.parseInt(this.scale * 100);
+    },
+  },
+  mounted() {
+    this.getPdf();
+  },
+  watch: {
+    show: function (s) {
+      if (s) {
+        this.getPdf();
+      }
+    },
+    page: function (p) {
+      if (
+        window.pageYOffset <= this.findPos(document.getElementById(p)) ||
+        (document.getElementById(p + 1) &&
+          window.pageYOffset >= this.findPos(document.getElementById(p + 1)))
+      ) {
+        // window.scrollTo(0,this.findPos(document.getElementById(p)));
+        document.getElementById(p).scrollIntoView();
+      }
+    },
   },
   methods: {
+    handle_pdf_link: function (params) {
+      // Scroll to the appropriate place on our page - the Y component of
+      // params.destArray * (div height / ???), from the bottom of the page div
+      var page = document.getElementById(String(params.pageNumber));
+      page.scrollIntoView();
+    },
+    getPdf() {
+      var self = this;
+      self.pdfdata = pdfvuer.createLoadingTask(
+        "/pdf/" + this.resource.resourceContent.lessonPlan
+      );
+      self.pdfdata.then((pdf) => {
+        self.numPages = pdf.numPages;
+        window.onscroll = function () {
+          changePage();
+          //stickyNav();
+        };
+
+        // Get the offset position of the navbar
+        //var sticky = $("#buttons")[0].offsetTop;
+
+        // Add the sticky class to the self.$refs.nav when you reach its scroll position. Remove "sticky" when you leave the scroll position
+        // function stickyNav() {
+        //   if (window.pageYOffset >= sticky) {
+        //     $("#buttons")[0].classList.remove("hidden");
+        //   } else {
+        //     $("#buttons")[0].classList.add("hidden");
+        //   }
+        // }
+
+        function changePage() {
+          var i = 1,
+            count = Number(pdf.numPages);
+          do {
+            if (
+              window.pageYOffset >= self.findPos(document.getElementById(i)) &&
+              window.pageYOffset <= self.findPos(document.getElementById(i + 1))
+            ) {
+              self.page = i;
+            }
+            i++;
+          } while (i < count);
+          if (window.pageYOffset >= self.findPos(document.getElementById(i))) {
+            self.page = i;
+          }
+        }
+      });
+    },
+    findPos(obj) {
+      return obj.offsetTop;
+    },
     setFavorite() {
       let rs = this.resource.resourceContent;
       const rsId = rs.id;
@@ -82,9 +247,6 @@ export default {
           });
       }
     },
-  },
-  computed: {
-    ...mapGetters(["resource"]),
   },
 };
 </script>

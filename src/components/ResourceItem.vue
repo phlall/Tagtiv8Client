@@ -85,7 +85,7 @@
               type="button"
               :disabled="false"
               class="text-white py-1 px-2 w-full bg-buttonblue font-bold"
-              @click="setResourceContent(item)"
+              @click="setResourceContent(item, 'lessonPlan')"
             >
               Lesson Plan
             </button>
@@ -95,6 +95,7 @@
               type="submit"
               :disabled="false"
               class="text-white py-1 px-2 w-full bg-buttonblue font-bold mr-2"
+              @click="setResourceContent(item, 'workSheet')"
             >
               Work Sheet
             </BaseButton>
@@ -127,14 +128,14 @@ export default {
     ContentLoader,
   },
   methods: {
-    setResourceContent(resourceItem) {
+    setResourceContent(resourceItem, type) {
       let resourceObj = {
         id: this.resource.id,
         ageGroups: this.resource.ageGroups,
         name: this.resource.name,
         resourceContent: resourceItem,
       };
-      this.$emit("setContent", resourceObj);
+      this.$emit("setContent", { resourceObj, resourceType: type });
     },
     handleToggle() {
       let strClass = "";

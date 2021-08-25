@@ -42,6 +42,9 @@ export default {
     }
     return null;
   },
+  getFile(url) {
+    return apiClient.get(url, { responseType: "blob" });
+  },
   getSubjects() {
     // alert(store.getters.userToken.token);
     if (this.setAuthHeader()) {

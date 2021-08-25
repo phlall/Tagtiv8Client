@@ -57,6 +57,7 @@ import NavVari from "../components/NavVari.vue";
 import ResourceItem from "../components/ResourceItem.vue";
 import _ from "lodash";
 export default {
+  name: "Lesson Plan",
   data() {
     return {
       navLinks: ["Resources", "MainSite", "Account"],
@@ -69,12 +70,17 @@ export default {
     this.getResources();
   },
   methods: {
-    setResourceContent(resourceObj) {
-      //alert(JSON.stringify(resourceItem));
+    setResourceContent({ resourceObj, resourceType }) {
+      //let res = resourceObj;
+      alert(JSON.stringify(resourceObj));
       this.$store
         .dispatch("user/setResourceContent", { resourceObj })
         .then(() => {
-          this.$router.push("lessonplan");
+          if (resourceType === "lessonPlan") {
+            this.$router.push("lessonplan");
+          } else {
+            this.$router.push("worksheet");
+          }
         })
         .catch(() => {
           //this.$router.push("Home");
@@ -116,7 +122,6 @@ export default {
         });
     },
   },
-  name: "Home",
   components: {
     NavVari,
     ResourceItem,

@@ -20,8 +20,10 @@ import {
   faSortDown,
   faCaretUp,
   faCaretDown,
-  faFileAlt,
+  faFileDownload,
+  faFile,
 } from "@fortawesome/free-solid-svg-icons";
+import { faFilePdf, faFileAlt } from "@fortawesome/free-regular-svg-icons";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -44,6 +46,9 @@ library.add(
   faSortDown,
   faCaretUp,
   faCaretDown,
+  faFileDownload,
+  faFile,
+  faFilePdf,
   faFileAlt
 );
 
