@@ -142,7 +142,7 @@ import NavVari from "@/components/NavVari.vue";
 import { mapGetters } from "vuex";
 //import pdf from "vue3-pdf";
 import pdfvuer from "pdfvuer";
-//import axios from "axios";
+import ApiService from "@/services/apiService.js";
 //import _ from "lodash";
 export default {
   name: "Work Sheet",
@@ -188,9 +188,8 @@ export default {
   },
   methods: {
     onClick() {
-      this.$store
-        .dispatch("user/getFile", this.resource.resourceContent.workSheet)
-        .then((response) => {
+      ApiService.getFile(this.resource.resourceContent.workSheet).then(
+        (response) => {
           var fileURL = window.URL.createObjectURL(new Blob([response.data]));
           var fileLink = document.createElement("a");
 
@@ -202,7 +201,8 @@ export default {
           document.body.appendChild(fileLink);
 
           fileLink.click();
-        });
+        }
+      );
     },
     downloadItem() {
       this.$store

@@ -110,12 +110,6 @@ export const actions = {
       dispatch("notification/add", notification, { root: true });
     });
   },
-  getFile(commit, file) {
-    // alert(JSON.stringify(url));
-    return ApiService.getFile(file).then((response) => {
-      return response;
-    });
-  },
   setPlan({ commit }, subject) {
     commit("SET_SUBJECT", subject);
   },

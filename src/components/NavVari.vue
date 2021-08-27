@@ -1,106 +1,91 @@
 <template>
-  <div class="relative bg-white">
-    <div
-      class="
-        border-b border-gray-700
-        flex
-        items-center
-        justify-between
-        text-center
-        w-full
-      "
-    >
-      <div class="flex lg:justify-end lg:w-4/12 ml-4 lg:ml-0 lg:pr-4">
-        <img
-          src="@/assets/images/logomain.png"
-          class="object-none object-center"
-        />
-      </div>
-      <div class="flex-grow flex justify-end">
-        <div class="hidden lg:block font-bold">
-          <router-link
-            class="p-2"
-            v-for="(link, index) in NavLinks"
-            :key="index"
-            :to="link"
-            >{{ getTitle(link) }}</router-link
-          >
+  <div>
+    <BaseLayout outerClass="bg-white text-gray-700 border-b border-gray-700">
+      <div class="flex flex-wrap">
+        <div>
+          <img src="@/assets/images/tagtiv8logo.png" class="w-32 p-0" />
         </div>
-        <div class="">
-          <BaseButton
-            type="submit"
-            :class="'bg-buttonblue'"
-            :disabled="false"
-            class="text-white h-8 bg-indigo-400 px-3 py-1 mr-6 ml-2 font-bold"
-            @click="$router.push('Login')"
-            v-if="!loggedIn"
-          >
-            LOG IN
-          </BaseButton>
-          <BaseButton
-            type="submit"
-            :class="'bg-buttonblue'"
-            :disabled="false"
-            class="text-white h-8 bg-indigo-400 px-3 py-1 mr-6 ml-2 font-bold"
-            something="else"
-            @click="logout"
-            v-else
-          >
-            LOG OUT
-          </BaseButton>
+        <div class="flex-grow pt-8">
+          <div class="hidden lg:block font-bold text-right text-nav">
+            <router-link
+              class="px-2"
+              v-for="(link, index) in NavLinks"
+              :key="index"
+              :to="link"
+              >{{ getTitle(link) }}</router-link
+            >
+
+            <BaseButton
+              type="submit"
+              :class="'bg-buttonblue'"
+              :disabled="false"
+              class="text-white h-8 bg-indigo-400 py-1 px-3 ml-2 font-bold"
+              @click="$router.push('Login')"
+              v-if="!loggedIn"
+            >
+              LOG IN
+            </BaseButton>
+            <BaseButton
+              type="submit"
+              :class="'bg-buttonblue'"
+              :disabled="false"
+              class="text-white h-8 bg-indigo-400 px-3 py-1 ml-2 font-bold"
+              something="else"
+              @click="logout"
+              v-else
+            >
+              LOG OUT
+            </BaseButton>
+          </div>
+          <div class="block lg:hidden font-bold text-right text-smlg">
+            <button
+              @click="toggle"
+              class="
+                px-3
+                py-2
+                border
+                rounded
+                text-teal-lighter
+                border-teal-light
+                hover:text-gray-800 hover:border-gray-700
+              "
+            >
+              <font-awesome-icon :icon="['fas', 'bars']" v-if="!open" />
+              <font-awesome-icon :icon="['fas', 'times']" v-else />
+            </button>
+          </div>
         </div>
       </div>
-      <div class="block lg:hidden mr-4">
-        <button
-          @click="toggle"
-          class="
-            flex
-            items-center
-            px-3
-            py-2
-            border
-            rounded
-            text-teal-lighter
-            border-teal-light
-            hover:text-gray-800 hover:border-gray-700
-          "
-        >
-          <font-awesome-icon :icon="['fas', 'bars']" v-if="!open" />
-          <font-awesome-icon :icon="['fas', 'times']" v-else />
-          <!-- <svg class="fill-current h-3 w-3"
-        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg> -->
-        </button>
+      <div
+        :class="open ? 'block' : 'invisible'"
+        class="
+          w-full
+          items-center
+          w-auto
+          bg-gray-300
+          lg:hidden
+          z-50
+          absolute
+          top-50
+          left-0
+          opacity-95
+          border-b border-gray-400
+        "
+      >
+        <div class="text-sm py-4">
+          <ul>
+            <li
+              class="py-1 ml-6 font-bold"
+              v-for="(link, index) in NavLinks"
+              :key="index"
+            >
+              <router-link :to="link">{{ getTitle(link) }}</router-link>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div
-      :class="open ? 'block' : 'invisible'"
-      class="
-        w-full
-        items-center
-        w-auto
-        bg-gray-300
-        lg:hidden
-        z-50
-        absolute
-        top-50
-        left-0
-        opacity-95
-        border-b border-gray-400
-      "
-    >
-      <div class="text-sm py-4">
-        <ul>
-          <li
-            class="py-1 ml-6 font-bold"
-            v-for="(link, index) in NavLinks"
-            :key="index"
-          >
-            <router-link :to="link">{{ getTitle(link) }}</router-link>
-          </li>
-        </ul>
-      </div>
-    </div>
+      <div class="text-right justify-end"></div>
+    </BaseLayout>
   </div>
 </template>
 
