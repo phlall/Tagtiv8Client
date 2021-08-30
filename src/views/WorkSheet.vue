@@ -62,58 +62,6 @@
             id="pdfvuer"
             class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll"
           >
-            <!-- <div
-              id="buttons"
-              class="
-                ui
-                grey
-                three
-                item
-                inverted
-                bottom
-                fixed
-                menu
-                transition
-                hidden
-              "
-            >
-              <a class="item" @click="page > 1 ? page-- : 1">
-                <i class="left chevron icon"></i>
-                Back
-              </a>
-              <a class="ui active item">
-                {{ page }} / {{ numPages ? numPages : "∞" }}
-              </a>
-              <a class="item" @click="page < numPages ? page++ : 1">
-                Forward
-                <i class="right chevron icon"></i>
-              </a>
-            </div> -->
-            <!-- <div
-              id="buttons"
-              class="
-                ui
-                grey
-                three
-                item
-                inverted
-                bottom
-                fixed
-                menu
-                transition
-                hidden
-              "
-            >
-              <a class="item" @click="scale -= scale > 0.2 ? 0.1 : 0">
-                <i class="left chevron icon" />
-                Zoom -
-              </a>
-              <a class="ui active item"> {{ formattedZoom }} % </a>
-              <a class="item" @click="scale += scale < 2 ? 0.1 : 0">
-                Zoom +
-                <i class="right chevron icon" />
-              </a>
-            </div> -->
             <pdf
               :src="pdfdata"
               v-for="i in numPages"
@@ -131,8 +79,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <pdf src="./assets/pdf/introducing-sustain.pdf"></pdf> -->
     </div>
   </div>
 </template>
@@ -211,7 +157,6 @@ export default {
           "http://localhost:8080/pdf/" + this.resource.resourceContent.workSheet
         )
         .then((response) => {
-          alert(response.data);
           const blob = new Blob([response.data], { type: "application/pdf" });
           const link = document.createElement("a");
           link.href = URL.createObjectURL(blob);

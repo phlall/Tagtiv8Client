@@ -117,7 +117,6 @@ export const actions = {
     commit("SET_AGERANGE", ageRange);
   },
   setResourceContent({ commit }, content) {
-    //alert(JSON.stringify(content));
     if (_.has(content, "resourceObj")) {
       commit("SET_RESOURCE_CONTENT", content.resourceObj);
     }

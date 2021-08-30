@@ -1,54 +1,58 @@
 <template>
   <div>
     <NavVari :NavLinks="navLinks" />
-    <div class="home bg-bgblue h-screen font-roboto border">
+    <BaseLayout outerClass="bg-headerblue text-gray-700">
       <div class="bg-headerblue py-8 pl-6">
         <span class="text-white"><h2>Planning Home</h2></span>
       </div>
-      <div class="grid grid-cols-2 w-6/12 mt-12 gap-2 m-auto">
-        <div class="pl-1">
-          <h3 class="font-bold text-gray-600 text-left pt-2 text-lg">
-            Maths Resources
-          </h3>
-        </div>
-        <div class="flex justify-end pt-2 pr-1">
-          <div class="mr-3">Sort:</div>
-          <div>
-            <BaseButton
-              type="button"
-              :disabled="false"
-              @click="sortAz()"
-              v-if="!loggedIn"
-            >
-              A-Z
-            </BaseButton>
+    </BaseLayout>
+    <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">
+      <div class="bg-bgblue h-screen font-roboto border">
+        <div class="grid grid-cols-2 mt-12 gap-2 m-auto">
+          <div class="pl-1">
+            <h3 class="font-bold text-gray-600 text-left pt-2 text-lg">
+              Maths Resources
+            </h3>
           </div>
-          <div class="mx-2">|</div>
-          <div>
-            <BaseButton
-              type="button"
-              :disabled="false"
-              @click="sortFavorites()"
-              v-if="!loggedIn"
-            >
-              Favorites
-            </BaseButton>
+          <div class="flex justify-end pt-2 pr-1">
+            <div class="mr-3">Sort:</div>
+            <div>
+              <BaseButton
+                type="button"
+                :disabled="false"
+                @click="sortAz()"
+                v-if="!loggedIn"
+              >
+                A-Z
+              </BaseButton>
+            </div>
+            <div class="mx-2">|</div>
+            <div>
+              <BaseButton
+                type="button"
+                :disabled="false"
+                @click="sortFavorites()"
+                v-if="!loggedIn"
+              >
+                Favorites
+              </BaseButton>
+            </div>
           </div>
-        </div>
 
-        <div
-          v-for="resource in resourceData"
-          :key="resource.id"
-          class="col-span-2"
-        >
-          <ResourceItem
-            :resource="resource"
-            loaded="loaded"
-            @setContent="setResourceContent($event)"
-          />
+          <div
+            v-for="resource in resourceData"
+            :key="resource.id"
+            class="col-span-2"
+          >
+            <ResourceItem
+              :resource="resource"
+              loaded="loaded"
+              @setContent="setResourceContent($event)"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </BaseLayout>
   </div>
 </template>
 

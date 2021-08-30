@@ -2,8 +2,8 @@
   <div>
     <BaseLayout outerClass="bg-white text-gray-700 border-b border-gray-700">
       <div class="flex flex-wrap">
-        <div>
-          <img src="@/assets/images/tagtiv8logo.png" class="w-32 p-0" />
+        <div class="pt-4 pb-1">
+          <img src="@/assets/images/logo.png" />
         </div>
         <div class="flex-grow pt-8">
           <div class="hidden lg:block font-bold text-right text-nav">
@@ -14,7 +14,6 @@
               :to="link"
               >{{ getTitle(link) }}</router-link
             >
-
             <BaseButton
               type="submit"
               :class="'bg-buttonblue'"
@@ -88,7 +87,6 @@
     </BaseLayout>
   </div>
 </template>
-
 <script>
 import { useWindowSize } from "vue-window-size";
 import { authComputed } from "../store/helpers.js";

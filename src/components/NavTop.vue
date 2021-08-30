@@ -1,9 +1,6 @@
 <template>
   <div>
     <BaseLayout outerClass="bg-gray-700 text-white py-2">
-      <!-- <div class="border border-pink-600 w-full">
-            fsdfsfjhkhkhkhk hdghdhdhdghdhgdgh
-          </div> -->
       <div class="flex flex-nowrap w-full">
         <div class="text-left">
           <span class="pr-1"

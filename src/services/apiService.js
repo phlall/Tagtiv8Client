@@ -47,7 +47,6 @@ export default {
     return apiClient.get(fullUrl, { responseType: "blob" });
   },
   getSubjects() {
-    // alert(store.getters.userToken.token);
     if (this.setAuthHeader()) {
       return apiClient.get("Subject");
     }

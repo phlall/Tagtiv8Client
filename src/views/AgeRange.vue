@@ -1,15 +1,37 @@
 <template>
   <div>
     <NavVari :NavLinks="navLinks" />
-    <div class="home bg-bgblue h-screen font-roboto border">
+    <BaseLayout outerClass="bg-headerblue text-gray-700">
       <div class="bg-headerblue py-8 pl-6">
         <span class="text-white"><h2>Planning Home</h2></span>
       </div>
-      <div class="flex justify-center">
-        <div class="grid grid-cols-2 mt-12 gap-6 m-auto">
-          <div class="col-span-2 h-20">
-            <h2 class="font-bold text-blue-600 text-center text-5xl w-full">
-              Select Age Range
+    </BaseLayout>
+    <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">
+      <div class="h-screen">
+        <div
+          class="
+            grid grid-cols-1
+            md:grid-cols-2 md:max-w-screen-md md:max-w-3xl
+            sm:max-w-md
+            max-w-md
+            pt-12
+            gap-6
+            mx-12
+            sm:m-auto
+          "
+        >
+          <div class="md:col-span-2 lg:col-span-2 h-20">
+            <h2
+              class="
+                font-bold
+                text-blue-600 text-center
+                md:text-4xl
+                text-3xl
+                w-full
+                h-screen
+              "
+            >
+              Select age range
             </h2>
           </div>
           <div
@@ -40,7 +62,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </BaseLayout>
   </div>
 </template>
 
