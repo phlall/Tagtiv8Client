@@ -89,7 +89,7 @@
                 </div>
               </div>
               <div class="flex px-8 mt-6">
-                <div class="w-full mr-2">
+                <!-- <div class="w-full mr-2">
                   <BaseButton
                     type="submit"
                     :disabled="false"
@@ -97,12 +97,12 @@
                   >
                     REGISTER
                   </BaseButton>
-                </div>
-                <div class="w-full ml-2">
+                </div> -->
+                <div>
                   <BaseButton
                     type="submit"
                     :disabled="false"
-                    class="text-white h-12 w-full bg-buttonblue font-bold"
+                    class="text-white h-12 bg-buttonblue font-bold px-8"
                   >
                     LOG IN
                   </BaseButton>

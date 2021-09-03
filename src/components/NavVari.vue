@@ -19,9 +19,8 @@
             <BaseButton
               type="submit"
               :class="'bg-buttonblue'"
-              :disabled="false"
               class="text-white h-8 bg-indigo-400 py-1 px-3 ml-2 font-bold"
-              @click="$router.push('/admin/register')"
+              @click="goRegister()"
               v-if="loggedIn && checkUser() && showAdmin()"
             >
               REGISTER
@@ -145,6 +144,9 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    goRegister() {
+      this.$router.push("Register");
+    },
     checkUser() {
       return _.has(this.userToken, "isAdmin");
     },

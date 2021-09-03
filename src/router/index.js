@@ -16,7 +16,7 @@ import AgeRange from "../views/AgeRange.vue";
 import Resources from "../views/Resources.vue";
 import LessonPlan from "../views/LessonPlan.vue";
 import WorkSheet from "../views/WorkSheet.vue";
-import Register from "../views/Admin/Register.vue";
+import Register from "../views/Register.vue";
 const routes = [
   {
     path: "/login",
@@ -190,16 +190,10 @@ const routes = [
     },
   },
   {
-    path: "/admin/register",
+    path: "/register",
     name: "Register",
     component: Register,
     props: true,
-    beforeEnter: () => {
-      const rc = store.getters.resource;
-      if (_.isEmpty(rc)) {
-        router.push("Home");
-      }
-    },
     meta: {
       title: "Register",
       requiresAuth: true,
