@@ -20,6 +20,7 @@ import {
   faSortDown,
   faCaretUp,
   faCaretDown,
+  faCaretLeft,
   faFileDownload,
   faFile,
 } from "@fortawesome/free-solid-svg-icons";
@@ -46,6 +47,7 @@ library.add(
   faSortDown,
   faCaretUp,
   faCaretDown,
+  faCaretLeft,
   faFileDownload,
   faFile,
   faFilePdf,

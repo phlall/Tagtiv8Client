@@ -2,8 +2,8 @@
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700">
-      <div class="bg-headerblue py-8 pl-6">
-        <span class="text-white"><h2>Planning Home</h2></span>
+      <div class="bg-headerblue py-4 pl-6">
+        <span class="text-white text-nav"><h2>Planning Home</h2></span>
       </div>
     </BaseLayout>
     <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">

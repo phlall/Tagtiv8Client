@@ -1,11 +1,35 @@
 <template>
   <div>
     <div><NavVari /></div>
+    <BaseLayout outerClass="bg-headerblue text-gray-700">
+      <div class="bg-headerblue py-4 flex">
+        <div>
+          <span class="text-white leading-2"
+            ><BaseButton
+              type="submit"
+              :disabled="false"
+              class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
+              @click="$router.push('resources')"
+            >
+              <font-awesome-icon
+                :icon="['fas', 'caret-left']"
+                class="text-xl"
+              />
+              <span class="inline-block align-top ml-2"> Back </span>
+            </BaseButton></span
+          >
+        </div>
+        <div class="pt-2 text-nav text-white ml-4">
+          Planning Home / {{ plan.subject.name }} / {{ plan.resource.name }}
+        </div>
+      </div>
+    </BaseLayout>
     <div class="w-full m-auto text-center flex justify-center">
       <div class="grid grid-cols-2 mt-12 max-w-screen-lg">
         <div class="pl-1">
           <h3 class="text-left pt-2 text-smlg">
-            {{ resource.name }} - {{ resource.resourceContent.name }} Work Sheet
+            {{ plan.resource.name }} -
+            {{ plan.resource.resourceContent.name }} Work Sheet
           </h3>
         </div>
         <div class="flex justify-end pt-2">
@@ -17,7 +41,7 @@
               class="text-md"
               @click="setFavorite(item)"
               :class="
-                resource.resourceContent.isFavorite
+                plan.resource.resourceContent.isFavorite
                   ? 'text-red-600'
                   : 'text-gray-200'
               "
@@ -25,13 +49,14 @@
               <span> <font-awesome-icon :icon="['fas', 'star']" /></span>
             </BaseButton>
           </div>
-          <div class="ml-4 text-xslg">View Work Sheet</div>
+          <div class="ml-4 text-xslg">View Lesson Plan</div>
           <div>
             <BaseButton
               type="button"
               :disabled="false"
               v-if="!loggedIn"
               class="text-lg"
+              @click="$router.push('lesson-plan')"
             >
               <span class="ml-4">
                 <font-awesome-icon :icon="['far', 'file-alt']"
@@ -107,7 +132,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["resource"]),
+    ...mapGetters(["plan"]),
     formattedZoom() {
       return Number.parseInt(this.scale * 100);
     },
@@ -134,7 +159,7 @@ export default {
   },
   methods: {
     onClick() {
-      ApiService.getFile(this.resource.resourceContent.workSheet).then(
+      ApiService.getFile(this.plan.resource.resourceContent.workSheet).then(
         (response) => {
           var fileURL = window.URL.createObjectURL(new Blob([response.data]));
           var fileLink = document.createElement("a");
@@ -142,7 +167,7 @@ export default {
           fileLink.href = fileURL;
           fileLink.setAttribute(
             "download",
-            this.resource.resourceContent.workSheet
+            this.plan.resource.resourceContent.workSheet
           );
           document.body.appendChild(fileLink);
 
@@ -154,13 +179,14 @@ export default {
       this.$store
         .dispatch(
           "user/getFile",
-          "http://localhost:8080/pdf/" + this.resource.resourceContent.workSheet
+          "http://localhost:8080/pdf/" +
+            this.plan.resource.resourceContent.workSheet
         )
         .then((response) => {
           const blob = new Blob([response.data], { type: "application/pdf" });
           const link = document.createElement("a");
           link.href = URL.createObjectURL(blob);
-          link.download = this.resource.resourceContent.name;
+          link.download = this.plan.resource.resourceContent.name;
           link.click();
           URL.revokeObjectURL(link.href);
         })
@@ -178,7 +204,7 @@ export default {
     getPdf() {
       var self = this;
       self.pdfdata = pdfvuer.createLoadingTask(
-        "/pdf/" + this.resource.resourceContent.workSheet
+        "/pdf/" + this.plan.resource.resourceContent.workSheet
       );
       self.pdfdata.then((pdf) => {
         self.numPages = pdf.numPages;
@@ -221,7 +247,7 @@ export default {
       return obj.offsetTop;
     },
     setFavorite() {
-      let rs = this.resource.resourceContent;
+      let rs = this.plan.resource.resourceContent;
       const rsId = rs.id;
       if (rs.isFavorite) {
         rs.isFavorite = false;

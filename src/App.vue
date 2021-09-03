@@ -15,7 +15,6 @@ export default {
     // localStorage.clear();
     const userString = localStorage.getItem("user");
     if (userString) {
-      // alert(JSON.stringify(userString));
       const userData = JSON.parse(userString);
       this.$store.commit("user/SET_USER_DATA", userData);
     }

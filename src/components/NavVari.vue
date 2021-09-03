@@ -5,8 +5,8 @@
         <div class="pt-4 pb-1">
           <img src="@/assets/images/logo.png" />
         </div>
-        <div class="flex-grow pt-8">
-          <div class="hidden lg:block font-bold text-right text-nav">
+        <div class="flex-grow pt-8 flex justify-end">
+          <div v-if="loggedIn" class="pt-1 hidden lg:block">
             <router-link
               class="px-2"
               v-for="(link, index) in NavLinks"
@@ -14,6 +14,20 @@
               :to="link"
               >{{ getTitle(link) }}</router-link
             >
+          </div>
+          <div>
+            <BaseButton
+              type="submit"
+              :class="'bg-buttonblue'"
+              :disabled="false"
+              class="text-white h-8 bg-indigo-400 py-1 px-3 ml-2 font-bold"
+              @click="$router.push('/admin/register')"
+              v-if="loggedIn && checkUser() && showAdmin()"
+            >
+              REGISTER
+            </BaseButton>
+            <!-- </div>
+          <div class=""> -->
             <BaseButton
               type="submit"
               :class="'bg-buttonblue'"
@@ -36,7 +50,8 @@
               LOG OUT
             </BaseButton>
           </div>
-          <div class="block lg:hidden font-bold text-right text-smlg">
+          <!-- <div class="hidden lg:block font-bold"></div> -->
+          <div class="block lg:hidden font-bold text-right text-smlg ml-2">
             <button
               @click="toggle"
               class="
@@ -90,6 +105,8 @@
 <script>
 import { useWindowSize } from "vue-window-size";
 import { authComputed } from "../store/helpers.js";
+import { mapGetters } from "vuex";
+import _ from "lodash";
 const { width } = useWindowSize();
 export default {
   props: {
@@ -119,6 +136,7 @@ export default {
   },
   computed: {
     ...authComputed,
+    ...mapGetters(["userToken"]),
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
@@ -127,6 +145,9 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    checkUser() {
+      return _.has(this.userToken, "isAdmin");
+    },
     logout() {
       this.$store.dispatch("user/logout");
       this.$router.push("Login");
@@ -138,6 +159,14 @@ export default {
       if (this.windowWidth > 1024) {
         this.open = false;
       }
+    },
+    showAdmin() {
+      const isAdminMeta = this.$route.meta;
+      return isAdminMeta.showAdmin;
+      // if (isAdminMeta.showAdmin) {
+      //   return true;
+      // }
+      // return false;
     },
     getTitle(routeName) {
       const route = this.$router.resolve({

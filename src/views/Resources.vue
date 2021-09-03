@@ -2,8 +2,26 @@
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700">
-      <div class="bg-headerblue py-8 pl-6">
-        <span class="text-white"><h2>Planning Home</h2></span>
+      <div class="bg-headerblue py-4 flex">
+        <div>
+          <span class="text-white leading-2"
+            ><BaseButton
+              type="submit"
+              :disabled="false"
+              class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
+              @click="$router.push('ageRange')"
+            >
+              <font-awesome-icon
+                :icon="['fas', 'caret-left']"
+                class="text-xl"
+              />
+              <span class="inline-block align-top ml-2"> Back </span>
+            </BaseButton></span
+          >
+        </div>
+        <div class="pt-2 text-nav text-white ml-4">
+          Planning Home / {{ plan.subject.name }} / {{ plan.ageRange }}
+        </div>
       </div>
     </BaseLayout>
     <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">
@@ -60,6 +78,7 @@
 import NavVari from "../components/NavVari.vue";
 import ResourceItem from "../components/ResourceItem.vue";
 import _ from "lodash";
+import { mapGetters } from "vuex";
 export default {
   name: "Lesson Plan",
   data() {
@@ -75,13 +94,11 @@ export default {
   },
   methods: {
     setResourceContent({ resourceObj, resourceType }) {
-      //let res = resourceObj;
-      alert(JSON.stringify(resourceObj));
       this.$store
         .dispatch("user/setResourceContent", { resourceObj })
         .then(() => {
           if (resourceType === "lessonPlan") {
-            this.$router.push("lessonplan");
+            this.$router.push("lesson-plan");
           } else {
             this.$router.push("worksheet");
           }
@@ -125,6 +142,9 @@ export default {
           this.$router.push("Home");
         });
     },
+  },
+  computed: {
+    ...mapGetters(["plan"]),
   },
   components: {
     NavVari,

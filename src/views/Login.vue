@@ -94,7 +94,6 @@
                     type="submit"
                     :disabled="false"
                     class="text-white h-12 w-full bg-buttonblue font-bold"
-                    something="else"
                   >
                     REGISTER
                   </BaseButton>
@@ -104,7 +103,6 @@
                     type="submit"
                     :disabled="false"
                     class="text-white h-12 w-full bg-buttonblue font-bold"
-                    something="else"
                   >
                     LOG IN
                   </BaseButton>

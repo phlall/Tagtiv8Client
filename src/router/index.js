@@ -16,6 +16,7 @@ import AgeRange from "../views/AgeRange.vue";
 import Resources from "../views/Resources.vue";
 import LessonPlan from "../views/LessonPlan.vue";
 import WorkSheet from "../views/WorkSheet.vue";
+import Register from "../views/Admin/Register.vue";
 const routes = [
   {
     path: "/login",
@@ -32,6 +33,7 @@ const routes = [
     meta: {
       title: "Home",
       requiresAuth: true,
+      showAdmin: true,
     },
   },
   {
@@ -156,7 +158,7 @@ const routes = [
     },
   },
   {
-    path: "/Lessonplan",
+    path: "/lesson-plan",
     name: "LessonPlan",
     component: LessonPlan,
     props: true,
@@ -167,7 +169,7 @@ const routes = [
       }
     },
     meta: {
-      title: "Age Range",
+      title: "Lesson Plan",
       // requiresAuth: true,
     },
   },
@@ -183,8 +185,24 @@ const routes = [
       }
     },
     meta: {
-      title: "Age Range",
-      // requiresAuth: true,
+      title: "Worksheet",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/admin/register",
+    name: "Register",
+    component: Register,
+    props: true,
+    beforeEnter: () => {
+      const rc = store.getters.resource;
+      if (_.isEmpty(rc)) {
+        router.push("Home");
+      }
+    },
+    meta: {
+      title: "Register",
+      requiresAuth: true,
     },
   },
 ];

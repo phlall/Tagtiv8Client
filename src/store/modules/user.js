@@ -47,15 +47,55 @@ export const mutations = {
 };
 
 export const actions = {
-  register({ commit, dispatch }, credentials) {
-    return ApiService.register(credentials).then(({ response }) => {
-      commit("SET_USER_DATA", response.data);
-      const notification = {
-        type: "success",
-        message: "YRegistration successful",
-      };
-      dispatch("notification/add", notification, { root: true });
-    });
+  login({ commit, dispatch }, credentials) {
+    return ApiService.login(credentials)
+      .then((response) => {
+        commit("SET_USER_DATA", response.data);
+        const notification = {
+          type: "success",
+          message: "login successful",
+        };
+        dispatch("notification/add", notification, { root: true });
+      })
+      .catch((error) => {
+        const notification = {
+          type: "error",
+          message: `Username or Password not found ${error.message}`,
+        };
+        dispatch("notification/add", notification, { root: true });
+        return error;
+      });
+  },
+  logout({ commit }) {
+    commit("LOGOUT");
+  },
+  register({ dispatch }, credentials) {
+    return ApiService.register(credentials)
+      .then((response) => {
+        let notification = "";
+        // commit("SET_USER_DATA", response.data);
+        if (_.has(response.data, "message")) {
+          notification = {
+            type: "error",
+            message: response.data.message,
+          };
+        } else {
+          notification = {
+            type: "success",
+            message: "Registration successful",
+          };
+          dispatch("notification/add", notification, { root: true });
+        }
+      })
+      .catch((error) => {
+        // alert(JSON.stringify(response));
+        const notification = {
+          type: "error",
+          message: `Registration failed  -  ${error.message} - check duplicate user`,
+        };
+        dispatch("notification/add", notification, { root: true });
+        return error;
+      });
   },
   resetPassword({ dispatch }, credentials) {
     return ApiService.resetPassword(credentials).then(({ data }) => {
@@ -79,7 +119,11 @@ export const actions = {
   },
   getResources({ state, dispatch }) {
     if (state.plan.ageRange != null && state.plan.subject != null) {
-      return ApiService.getResources(state.plan.ageRange, state.plan.subject.id)
+      return ApiService.getResources(
+        state.plan.ageRange,
+        state.plan.subject.id,
+        state.user.id
+      )
         .then((response) => {
           return response.data;
         })
@@ -166,28 +210,6 @@ export const actions = {
         dispatch("notification/add", notification, { root: true });
         return error;
       });
-  },
-  login({ commit, dispatch }, credentials) {
-    return ApiService.login(credentials)
-      .then((response) => {
-        commit("SET_USER_DATA", response.data);
-        const notification = {
-          type: "success",
-          message: "login successful",
-        };
-        dispatch("notification/add", notification, { root: true });
-      })
-      .catch((error) => {
-        const notification = {
-          type: "error",
-          message: `Username or Password not found ${error.message}`,
-        };
-        dispatch("notification/add", notification, { root: true });
-        return error;
-      });
-  },
-  logout({ commit }) {
-    commit("LOGOUT");
   },
 
   setPlanObj() {
