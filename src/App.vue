@@ -2,7 +2,7 @@
   <div id="nav">
     <navTop />
   </div>
-  <router-view class="font-roboto text-gray-600" />
+  <router-view class="text-gray-600" />
   <NotificationContainer />
 </template>
 <script>

@@ -3,6 +3,11 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    // fontFamily: {
+    //   sans: ["FragileBombers"],
+    //   serif: ["FragileBombers"],
+    //   mono: ["FragileBombers"],
+    // },
     extend: {
       height: () => ({
         "screen/1": "75vh",
@@ -12,8 +17,8 @@ module.exports = {
         "screen/5": "calc(100vh / 5)",
       }),
       fontFamily: {
+        sans: ["FragileBombers", "Roboto", "Helvetica", "Arial", "sans-serif"],
         roboto: ["Roboto"],
-        fragilebombers: ["bombers"],
       },
       fontSize: {
         xslg: "0.82rem",

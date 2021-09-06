@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavVari :NavLinks="navLinks" />
-    <BaseLayout outerClass="bg-headerblue text-gray-700">
+    <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 flex">
         <div>
           <span class="text-white leading-2"
@@ -43,10 +43,9 @@
               class="
                 font-bold
                 text-blue-600 text-center
-                md:text-4xl
-                text-3xl
                 w-full
                 h-screen
+                text-5xl
               "
             >
               Select age range
@@ -69,9 +68,7 @@
                 h-12
                 text-center text-white
                 pt-2
-                text-lg
-                xl:text-2xl
-                2xl:text-3xl
+                text-3xl
                 font-bold
               "
             >

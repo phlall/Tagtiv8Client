@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="">
     <NavVari :NavLinks="navLinks" />
-    <BaseLayout outerClass="bg-headerblue text-gray-700">
+    <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 pl-6">
         <span class="text-white text-nav"><h2>Planning Home</h2></span>
       </div>
@@ -33,11 +33,11 @@
                 px-4
                 text-center text-headerblue
                 font-bold
-                text-2xl
                 pt-1
                 w-full
                 px-6
                 sm:pt-2
+                text-4xl
               "
             >
               Introduction to Tagtiv8
@@ -93,11 +93,9 @@
                 text-center text-white
                 pt-2
                 font-bold
+                text-3xl
+                md:text-2xl
               "
-              v-resize-text="{
-                ratio: 1.5,
-                delay: 0,
-              }"
             >
               {{ subject.name }}
             </div>

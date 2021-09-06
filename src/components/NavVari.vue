@@ -1,6 +1,8 @@
 <template>
   <div>
-    <BaseLayout outerClass="bg-white text-gray-700 border-b border-gray-700">
+    <BaseLayout
+      outerClass="bg-white text-gray-700 border-b border-gray-700 font-roboto"
+    >
       <div class="flex flex-wrap">
         <div class="pt-4 pb-1">
           <img src="@/assets/images/logo.png" />

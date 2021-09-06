@@ -1,12 +1,30 @@
 <template>
   <div>
     <NavVari />
-    <BaseLayout outerClass="bg-headerblue text-gray-700">
-      <div class="bg-headerblue py-4 pl-6">
-        <span class="text-white text-nav"><h2>Planning Home</h2></span>
+    <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
+      <div class="bg-headerblue py-4 flex">
+        <div>
+          <span class="text-white leading-2"
+            ><BaseButton
+              type="submit"
+              :disabled="false"
+              class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
+              @click="$router.push('ageRange')"
+            >
+              <font-awesome-icon
+                :icon="['fas', 'caret-left']"
+                class="text-xl"
+              />
+              <span class="inline-block align-top ml-2"> Back </span>
+            </BaseButton></span
+          >
+        </div>
+        <div class="pt-2 text-nav text-white ml-4">Register new user</div>
       </div>
     </BaseLayout>
-    <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">
+    <BaseLayout
+      outerClass="bg-bgblue text-gray-700 border-b border-gray-700 font-roboto"
+    >
       <div class="w-full sm:3/4 lg:w-1/2 m-auto mt-6">
         <form class="form" v-on:submit.prevent="login">
           <div class="px-8 text-red-500">
@@ -85,10 +103,11 @@
                 focus:ring-2
                 focus:ring-purple-400
                 focus:border-transparent
+                bg-white
               "
               placeholder="Enter your password"
             />
-            <div class="pt-1 h-8 text-red-500">
+            <div class="pt-1 h-8 text-red-500 outline-0">
               <p v-if="v$.password.$invalid">Please enter a valid password.</p>
               <p v-if="v$.password.required.$invalid">Email is required.</p>
             </div>

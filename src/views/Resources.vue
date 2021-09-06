@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavVari :NavLinks="navLinks" />
-    <BaseLayout outerClass="bg-headerblue text-gray-700">
+    <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 flex">
         <div>
           <span class="text-white leading-2"

@@ -6,12 +6,18 @@
 @tailwind base;
 @tailwind components;
 
+
 @tailwind utilities;
 
+
+
 @layer base {
-    @font-face {
-      font-family: "fragilebombers";
-      font-weight: 400;
-      src: url(fonts/FRAGILEB.TTF) format("ttf");
-    }
+  @font-face {
+    font-family: "FragileBombers";
+    src: url(../fonts/FRAGILEB.TTF);
   }
+
+  }
+  /* html {
+    font-size: 1.4rem
+  } */

@@ -25,6 +25,7 @@
             max-w-screen-sm
             md:max-w-screen-lg
             m-auto
+            font-roboto
           "
         >
           <div
