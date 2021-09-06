@@ -8,6 +8,42 @@
     </BaseLayout>
     <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">
       <div class="h-screen">
+        <div class="mb-16 md:mb-8 mt-6 flex justify-center h-32">
+          <div
+            class="
+              cursor-pointer
+              relative
+              sm:mx-8
+              md:mx-6
+              lg:mx-1
+              md:w-96
+              sm:w-10/12
+              lg:w-96
+              w-11/12
+              m-auto
+            "
+          >
+            <inline-svg :src="require(`@/assets/images/white-ribbon.svg`)" />
+            <div
+              class="
+                absolute
+                top-1/3
+                h-16
+                mt-0
+                px-4
+                text-center text-headerblue
+                font-bold
+                text-2xl
+                pt-1
+                w-full
+                px-6
+                sm:pt-2
+              "
+            >
+              Introduction to Tagtiv8
+            </div>
+          </div>
+        </div>
         <div
           class="
             grid grid-cols-1
@@ -16,25 +52,11 @@
             md:max-w-3xl
             sm:max-w-md
             max-w-xl
-            mt-12
+            mt-6
             gap-6
             m-auto
           "
         >
-          <div class="md:col-span-2 lg:col-span-3 h-20">
-            <h2
-              class="
-                font-bold
-                text-blue-600 text-center
-                md:text-4xl
-                text-3xl
-                w-full
-                h-screen
-              "
-            >
-              Introduction to Tagtiv8
-            </h2>
-          </div>
           <template v-if="!loaded">
             <div v-for="i in 3" :key="i">
               <ContentLoader
@@ -92,6 +114,7 @@ import InlineSvg from "vue-inline-svg";
 import VueResizeText from "vue3-resize-text";
 import { ContentLoader } from "vue-content-loader";
 export default {
+  name: "Home",
   directives: {
     ResizeText: VueResizeText.ResizeText,
   },
@@ -124,7 +147,6 @@ export default {
         });
     },
   },
-  name: "Home",
   components: {
     NavVari,
     InlineSvg,
