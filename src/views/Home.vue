@@ -94,7 +94,7 @@
                 pt-2
                 font-bold
                 text-3xl
-                md:text-2xl
+                md:text-xl2sm
               "
             >
               {{ subject.name }}

@@ -25,6 +25,7 @@ module.exports = {
         nav: "0.92rem",
         smlg: "1.0rem",
         xlsm: "1.175rem",
+        xl2sm: "1.7rem",
         // xslg: {"font-size: 0.81rem", "line-height: 1.05rem"],
         // smlg: ["font-size: 1.0rem", "line-height: 1.25rem"],
         // xlsm: ["font-size: 1.175rem", "line-height: 1.25rem"],
