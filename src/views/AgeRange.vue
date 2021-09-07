@@ -90,7 +90,7 @@ export default {
   name: "AgeRange",
   data() {
     return {
-      navLinks: ["Resources", "MainSite", "Account"],
+      navLinks: ["MainSite"],
       ageGroups: AgeGroups(),
     };
   },

@@ -83,7 +83,7 @@ export default {
   name: "Lesson Plan",
   data() {
     return {
-      navLinks: ["Resources", "MainSite", "Account"],
+      navLinks: ["MainSite"],
       resourceData: [],
       sortOrder: "asc",
       loaded: false,

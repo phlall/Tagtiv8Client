@@ -44,14 +44,14 @@ const routes = [
       title: "About",
     },
   },
-  {
-    path: "/",
-    name: "MainSite",
-    component: Login,
-    meta: {
-      title: "BACK TO MAIN SITE",
-    },
-  },
+  // {
+  //   path: "/",
+  //   name: "MainSite",
+  //   component: Login,
+  //   meta: {
+  //     title: "BACK TO MAIN SITE",
+  //   },
+  // },
   {
     path: "/home",
     name: "Plans",
@@ -199,6 +199,17 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/mainsite",
+    name: "MainSite",
+    meta: {
+      title: "Return to Tagtiv8.com",
+      linkType: "button",
+    },
+    beforeEnter() {
+      window.location.href = "https://tagtiv8.com";
+    },
+  },
 ];
 
 const router = createRouter({
@@ -210,7 +221,7 @@ router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem("user");
 
   if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn) {
-    next("/");
+    next("/Login");
   }
   next();
 });

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div><NavVari /></div>
-    <BaseLayout outerClass="bg-headerblue text-gray-700">
+    <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 flex">
         <div>
           <span class="text-white leading-2"
@@ -24,7 +24,7 @@
         </div>
       </div>
     </BaseLayout>
-    <div class="w-full m-auto text-center flex justify-center">
+    <div class="w-full m-auto text-center flex justify-center font-roboto">
       <div class="grid grid-cols-2 mt-12 max-w-screen-lg">
         <div class="pl-1">
           <h3 class="text-left pt-2 text-smlg">

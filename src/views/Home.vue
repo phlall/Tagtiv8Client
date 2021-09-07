@@ -109,16 +109,12 @@
 <script>
 import NavVari from "../components/NavVari.vue";
 import InlineSvg from "vue-inline-svg";
-import VueResizeText from "vue3-resize-text";
 import { ContentLoader } from "vue-content-loader";
 export default {
   name: "Home",
-  directives: {
-    ResizeText: VueResizeText.ResizeText,
-  },
   data() {
     return {
-      navLinks: ["Plans", "MainSite", "Account"],
+      navLinks: ["MainSite"],
       subjects: [],
       loaded: false,
     };

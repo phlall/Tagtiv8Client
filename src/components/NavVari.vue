@@ -8,14 +8,37 @@
           <img src="@/assets/images/logo.png" />
         </div>
         <div class="flex-grow pt-8 flex justify-end">
-          <div v-if="loggedIn" class="pt-1 hidden lg:block">
-            <router-link
-              class="px-2"
-              v-for="(link, index) in NavLinks"
-              :key="index"
-              :to="link"
-              >{{ getTitle(link) }}</router-link
-            >
+          <div v-for="(link, index) in NavLinks" :key="index">
+            <div v-if="getLinkType(link)">
+              <BaseButton
+                type="submit"
+                :class="'bg-buttonblue'"
+                :disabled="false"
+                class="
+                  text-white
+                  h-8
+                  bg-indigo-400
+                  px-3
+                  ml-2
+                  align-middle
+                  font-bold
+                  inline-flex
+                  items-center
+                "
+                @click="$router.push('MainSite')"
+              >
+                <font-awesome-icon
+                  :icon="['fas', 'caret-left']"
+                  class="text-xl inline-block mr-3"
+                />
+                {{ getTitle(link) }}
+              </BaseButton>
+            </div>
+            <div v-if="!getLinkType(link) && loggedIn" class="pt-1">
+              <router-link class="px-2" :to="link">{{
+                getTitle(link)
+              }}</router-link>
+            </div>
           </div>
           <div>
             <BaseButton
@@ -117,16 +140,7 @@ export default {
     },
     NavLinks: {
       type: Array,
-      default: () => [
-        "About",
-        "Research",
-        "Gallery",
-        "Testimonials",
-        "WhatWeOffer",
-        "Shop",
-        "MediaBlogs",
-        "Contact",
-      ],
+      default: () => ["MainSite"],
     },
   },
   data() {
@@ -171,6 +185,16 @@ export default {
       //   return true;
       // }
       // return false;
+    },
+    getLinkType(routeName) {
+      //alert(routeName);
+      const route = this.$router.resolve({
+        name: routeName,
+      });
+      if (route && route.meta.linkType) {
+        return route.meta.linkType == "button";
+      }
+      return false;
     },
     getTitle(routeName) {
       const route = this.$router.resolve({
