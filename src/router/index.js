@@ -44,14 +44,14 @@ const routes = [
       title: "About",
     },
   },
-  // {
-  //   path: "/",
-  //   name: "MainSite",
-  //   component: Login,
-  //   meta: {
-  //     title: "BACK TO MAIN SITE",
-  //   },
-  // },
+  {
+    path: "/",
+    name: "Root",
+    component: Login,
+    meta: {
+      title: "Login",
+    },
+  },
   {
     path: "/home",
     name: "Plans",
