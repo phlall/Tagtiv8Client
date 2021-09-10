@@ -1,16 +1,5 @@
 <template>
-  <div v-if="!loaded" class="h-32">
-    <ContentLoader
-      viewBox="0 0 250 110"
-      :speed="2"
-      primaryColor="#b2e0fe"
-      secondaryColor="#ecebeb"
-    >
-      <rect x="0" y="4" rx="3" ry="3" height="6" class="w-11/12" />
-      <rect x="0" y="16" rx="3" ry="3" class="w-7/12" height="6" />
-    </ContentLoader>
-  </div>
-  <div class="bg-gridrowblue" v-else>
+  <div class="bg-gridrowblue">
     <div class="flex w-full" :class="handleToggle()" @click="toggle()">
       <div class="flex-shrink">
         <h2 class="w-full h-10 pl-4 pt-2 text-lg xl:text-lg 2xl:text-lg">
@@ -107,7 +96,6 @@
 </template>
 
 <script>
-import { ContentLoader } from "vue-content-loader";
 export default {
   props: {
     resource: {
@@ -123,9 +111,6 @@ export default {
     return {
       open: false,
     };
-  },
-  components: {
-    ContentLoader,
   },
   methods: {
     setResourceContent(resourceItem, type) {
