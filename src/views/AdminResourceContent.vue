@@ -3,43 +3,46 @@
     <NavVari />
     <BaseLayout outerClass="text-gray-700 font-roboto">
       <form class="form" v-on:submit.prevent="submit">
-        <div class="px-8 my-12 text-gray-500 text-xlg">
-          <h2 class="text-lg">SUBJECT</h2>
-          <div class="mb-8 border border-gray-300 w-80">
-            <select v-model="subjectId" class="py-2 w-full h-12">
-              <option disabled value="">Please select one</option>
-              <option
-                v-for="subject in subjects"
-                :key="subject.id"
-                v-bind:value="subject.id"
-                class="my-1 ml-2"
-              >
-                {{ subject.name }}
-              </option>
-            </select>
+        <div class="px-8 mt-12 text-gray-500 text-xlg">
+          <div class="border-b border-gray-400">
+            <h2 class="text-lg">SUBJECT</h2>
+            <div class="mb-4 border border-gray-300 w-80">
+              <select v-model="subjectId" class="py-2 w-full h-12">
+                <option disabled value="">Please select one</option>
+                <option
+                  v-for="subject in subjects"
+                  :key="subject.id"
+                  v-bind:value="subject.id"
+                  class="my-1 ml-2"
+                >
+                  {{ subject.name }}
+                </option>
+              </select>
+            </div>
           </div>
-          <BaseInput
-            v-model="name"
-            type="text"
-            placeholder="Activity"
-            class="
-              w-80
-              border
-              pl-2
-              border-gray-500
-              focus:outline-none focus:ring-2
-              h-12
-              focus:ring-purple-400 focus:border-transparent
-            "
-          />
-          <div class="pt-1 h-8 text-red-500">
-            <p v-if="v$.name.required.$invalid">Activity is required.</p>
+          <div class="border-b border-gray-400 mt-6">
+            <BaseInput
+              v-model="name"
+              type="text"
+              placeholder="Activity"
+              class="
+                w-80
+                border
+                pl-2
+                border-gray-500
+                focus:outline-none focus:ring-2
+                h-12
+                focus:ring-purple-400 focus:border-transparent
+              "
+            />
+            <div class="pt-1 h-8 text-red-500">
+              <p v-if="v$.name.required.$invalid">Activity is required.</p>
+            </div>
           </div>
-
-          <div class="pl-2 w-6/12 mt-6">
+          <div class="pl-2 w-6/12 my-6 text-gray-500 border-b border-gray-400">
             <h2 class="text-lg">AGEGROUPS</h2>
             <div class="flex mt-2">
-              <div class="flex-grow h-16">
+              <div class="flex-grow h-12">
                 <input
                   type="checkbox"
                   value="EYFS"
@@ -48,7 +51,7 @@
                 />
                 <label>EYFS</label>
               </div>
-              <div class="flex-grow h-16">
+              <div class="flex-grow h-12">
                 <input
                   type="checkbox"
                   value="KS1"
@@ -57,7 +60,7 @@
                 />
                 <label>KS1</label>
               </div>
-              <div class="flex-grow h-16">
+              <div class="flex-grow h-12">
                 <input
                   type="checkbox"
                   value="LKS2"
@@ -66,7 +69,7 @@
                 />
                 <label>LKS2</label>
               </div>
-              <div class="flex-grow h-16">
+              <div class="flex-grow h-12">
                 <input
                   type="checkbox"
                   value="UKS2"
@@ -97,7 +100,7 @@
               </p>
             </div>
           </div>
-          <div class="text-gray-500">
+          <div class="text-gray-500 border-b border-gray-400">
             <BaseInput
               v-model="worksheet"
               type="text"
@@ -118,10 +121,10 @@
               </p>
             </div>
           </div>
-          <div>
+          <div class="border-b border-gray-400">
             <h2 class="text-lg mt-2">BLENDED SUBJECTS</h2>
             <div class="flex w-5/12 mt-2">
-              <div class="flex-grow h-16">
+              <div class="flex-grow h-12">
                 <input
                   type="checkbox"
                   value="blended"
@@ -130,7 +133,7 @@
                 />
                 <label>Blended</label>
               </div>
-              <div class="flex-grow h-16">
+              <div class="flex-grow h-12">
                 <input
                   type="checkbox"
                   value="KS1"
@@ -139,7 +142,7 @@
                 />
                 <label>Physical</label>
               </div>
-              <div class="flex-grow h-16">
+              <div class="flex-grow h-12">
                 <input
                   type="checkbox"
                   value="LKS2"
@@ -150,7 +153,7 @@
               </div>
             </div>
           </div>
-          <div>
+          <div class="border-b border-gray-400">
             <h2 class="text-lg my-2">RESOURCES</h2>
             <div v-for="item in resourceData" :key="item.id">
               <input
@@ -224,21 +227,24 @@ export default {
         //this.legit = true;
         this.$store
           .dispatch("admin/addResource", {
-            name: this.name,
+            name: _.trim(this.name),
             ageGroups: this.ageGroups.join(),
-            worksheet: this.worksheet,
-            lessonPlan: this.lessonPlan,
+            worksheet: _.trim(this.worksheet),
+            lessonPlan: _.trim(this.lessonPlan),
             blended: this.blended,
             thinking: this.thinking,
             physical: this.physical,
-            resourceData: this.resourceData,
+            resourceIds: this.resourceIds,
           })
-          .then((error) => {
-            if (!error) {
-              //  this.$router.push({ name: "Home" });
-            } else {
-              // this.$router.push({ name: "Login" });
-            }
+          .then(() => {
+            (this.name = ""),
+              (this.ageGroups = []),
+              (this.worksheet = ""),
+              (this.lessonPlan = ""),
+              (this.blended = false),
+              (this.thinking = false),
+              (this.physical = false),
+              (this.resourceIds = []);
           });
       }
     },

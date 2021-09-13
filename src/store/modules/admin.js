@@ -25,7 +25,11 @@ export const actions = {
   addResource({ dispatch }, content) {
     return ApiService.addResource(content)
       .then((response) => {
-        // commit("CLEAR_RESOURCE");
+        const notification = {
+          type: "success",
+          message: "Resource Content added",
+        };
+        dispatch("notification/add", notification, { root: true });
         return response.data;
       })
       .catch((error) => {

@@ -62,7 +62,7 @@ export default {
   },
   addResource(content) {
     if (this.setAuthHeader()) {
-      return apiClient.post("Resource/resource/AddContentMultiple", content);
+      return apiClient.post("Resource/AddContentMultiple", content);
     }
     return null;
   },
