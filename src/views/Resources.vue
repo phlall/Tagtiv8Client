@@ -25,11 +25,11 @@
       </div>
     </BaseLayout>
     <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">
-      <div class="bg-bgblue h-screen font-roboto border">
+      <div class="bg-bgblue mb-64 font-roboto border">
         <div class="grid grid-cols-2 mt-12 gap-2 m-auto">
           <div class="pl-1">
             <h3 class="font-bold text-gray-600 text-left pt-2 text-lg">
-              Maths Resources
+              {{ plan.subject.name }} Resources
             </h3>
           </div>
           <div class="flex justify-end pt-2 pr-1">
@@ -56,15 +56,30 @@
               </BaseButton>
             </div>
           </div>
-
+          <div v-if="!loaded" class="col-span-2">
+            <ContentLoader
+              viewBox="0 0 250 110"
+              :speed="1.2"
+              primaryColor="#c2e0fe"
+              secondaryColor="#eeeeed"
+            >
+              <rect x="0" y="4" rx="3" ry="3" height="4" class="w-full" />
+              <rect x="0" y="12" rx="3" ry="3" height="4" class="w-9/12" />
+              <rect x="0" y="22" rx="3" ry="3" height="4" class="w-full" />
+              <rect x="0" y="30" rx="3" ry="3" height="4" class="w-9/12" />
+              <rect x="0" y="40" rx="3" ry="3" class="w-full" height="4" />
+              <rect x="0" y="48" rx="3" ry="3" height="4" class="w-9/12" />
+            </ContentLoader>
+          </div>
           <div
+            v-else
             v-for="resource in resourceData"
             :key="resource.id"
             class="col-span-2"
           >
             <ResourceItem
               :resource="resource"
-              loaded="loaded"
+              :loaded="loaded"
               @setContent="setResourceContent($event)"
             />
           </div>
@@ -79,8 +94,9 @@ import NavVari from "../components/NavVari.vue";
 import ResourceItem from "../components/ResourceItem.vue";
 import _ from "lodash";
 import { mapGetters } from "vuex";
+import { ContentLoader } from "vue-content-loader";
 export default {
-  name: "Lesson Plan",
+  name: "Resources",
   data() {
     return {
       navLinks: ["MainSite"],
@@ -90,6 +106,7 @@ export default {
     };
   },
   created() {
+    this.loaded = false;
     this.getResources();
   },
   methods: {
@@ -135,8 +152,10 @@ export default {
       this.$store
         .dispatch("user/getResources")
         .then((resources) => {
-          this.resourceData = _.orderBy(resources, ["name"], ["asc"]);
-          this.loaded = true;
+          if (resources) {
+            this.loaded = true;
+            this.resourceData = _.orderBy(resources, ["name"], ["asc"]);
+          }
         })
         .catch(() => {
           this.$router.push("Home");
@@ -149,6 +168,7 @@ export default {
   components: {
     NavVari,
     ResourceItem,
+    ContentLoader,
   },
 };
 </script>

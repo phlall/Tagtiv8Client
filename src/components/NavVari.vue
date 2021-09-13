@@ -45,10 +45,19 @@
               type="submit"
               :class="'bg-buttonblue'"
               class="text-white h-8 bg-indigo-400 py-1 px-3 ml-2 font-bold"
-              @click="goRegister()"
+              @click="goPath('Register')"
               v-if="loggedIn && checkUser() && showAdmin()"
             >
               REGISTER
+            </BaseButton>
+            <BaseButton
+              type="submit"
+              :class="'bg-buttonblue'"
+              class="text-white h-8 bg-indigo-400 py-1 px-3 ml-2 font-bold"
+              @click="goPath('resource-content')"
+              v-if="loggedIn && checkUser() && showAdmin()"
+            >
+              Add Resource Content
             </BaseButton>
             <!-- </div>
           <div class=""> -->
@@ -160,8 +169,8 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
-    goRegister() {
-      this.$router.push("Register");
+    goPath(path) {
+      this.$router.push(path);
     },
     checkUser() {
       return _.has(this.userToken, "isAdmin");

@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import * as user from "@/store/modules/user.js";
 import * as notification from "@/store/modules/notification.js";
+import * as admin from "@/store/modules/admin.js";
 
 export default createStore({
   state: {},
@@ -9,6 +10,7 @@ export default createStore({
   modules: {
     user,
     notification,
+    admin,
   },
   getters: {
     loggedIn(state) {

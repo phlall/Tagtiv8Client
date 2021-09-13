@@ -131,7 +131,11 @@ export default {
     },
     setPlan(subject) {
       this.$store
-        .dispatch("user/setPlan", { name: subject.name, id: subject.id })
+        .dispatch("user/setPlan", {
+          name: subject.name,
+          id: subject.id,
+          blended: subject.blended,
+        })
         .then((error) => {
           if (!error) {
             this.$router.push({ name: "AgeRange" });

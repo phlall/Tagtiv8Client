@@ -17,6 +17,8 @@ import Resources from "../views/Resources.vue";
 import LessonPlan from "../views/LessonPlan.vue";
 import WorkSheet from "../views/WorkSheet.vue";
 import Register from "../views/Register.vue";
+import AdminResourceContent from "../views/AdminResourceContent.vue";
+
 const routes = [
   {
     path: "/login",
@@ -197,6 +199,17 @@ const routes = [
     meta: {
       title: "Register",
       requiresAuth: true,
+    },
+  },
+  {
+    path: "/resource-content",
+    name: "AdminResourceContent",
+    component: AdminResourceContent,
+    props: true,
+    meta: {
+      title: "Resource Content",
+      requiresAuth: true,
+      showAdmin: true,
     },
   },
   {

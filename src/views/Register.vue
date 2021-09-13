@@ -9,7 +9,7 @@
               type="submit"
               :disabled="false"
               class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
-              @click="$router.push('ageRange')"
+              @click="$router.push('home')"
             >
               <font-awesome-icon
                 :icon="['fas', 'caret-left']"
@@ -134,7 +134,6 @@
                   v$.$invalid ? 'opacity-50 cursor-default' : 'cursor-pointer'
                 "
                 class="text-white h-12 w-full bg-buttonblue font-bold"
-                something="else"
               >
                 REGISTER
               </BaseButton>

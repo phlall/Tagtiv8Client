@@ -195,7 +195,7 @@ export default {
       let rs = this.plan.resource.resourceContent;
       const rsId = rs.id;
       if (rs.isFavorite) {
-        rs.isFavorite = false;
+        rs.isFavorite = !rs.isFavorite;
         this.$store
           .dispatch("user/deleteFavorite", { itemId: rsId })
           .then(() => {})
@@ -203,12 +203,12 @@ export default {
             rs.isFavorite = true;
           });
       } else {
-        rs.isFavorite = true;
+        rs.isFavorite = !rs.isFavorite;
         this.$store
           .dispatch("user/addFavorite", { itemId: rsId })
           .then(() => {})
           .catch(() => {
-            rs.isFavorite = false;
+            rs.isFavorite = !rs.isFavorite;
           });
       }
     },

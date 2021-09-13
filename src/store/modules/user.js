@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
 import ApiService from "@/services/apiService.js";
-//import { lastIndexOf } from "core-js/core/array";
-// import axios from "axios";
 import _ from "lodash";
 export const namespaced = true;
 
@@ -18,20 +16,21 @@ export const mutations = {
     // axios.defaults.headers.common["Authorization"] = "Bearer ${userData.token}";
   },
   LOGOUT() {
-    // state.user = null;
     localStorage.removeItem("user");
+    localStorage.removeItem("plan");
     state.user = "";
     state.plan = {};
   },
   SET_FAVORITE(state, blnFavorite) {
-    state.plan.resource.resourceContent.isFavorite = blnFavorite;
+    if (!_.isEmpty(state.plan.resource)) {
+      state.plan.resource.resourceContent.isFavorite = blnFavorite;
+    }
   },
   SET_PLAN(state, plan) {
     state.plan = plan;
     localStorage.setItem("plan", JSON.stringify(plan));
   },
   SET_SUBJECT(state, subject) {
-    //this.setPlanObj();
     state.plan.subject = subject;
     localStorage.setItem("plan", JSON.stringify(state.plan));
   },
@@ -43,6 +42,9 @@ export const mutations = {
   SET_RESOURCE_CONTENT(state, resourceItem) {
     state.plan.resource = resourceItem;
     localStorage.setItem("plan", JSON.stringify(state.plan));
+  },
+  CLEAR_RESOURCE(state) {
+    state.plan.resource = {};
   },
 };
 
@@ -88,7 +90,6 @@ export const actions = {
         }
       })
       .catch((error) => {
-        // alert(JSON.stringify(response));
         const notification = {
           type: "error",
           message: `Registration failed  -  ${error.message} - check duplicate user`,
@@ -117,7 +118,7 @@ export const actions = {
       return data;
     });
   },
-  getResources({ state, dispatch }) {
+  getResources({ state, commit, dispatch }) {
     if (state.plan.ageRange != null && state.plan.subject != null) {
       return ApiService.getResources(
         state.plan.ageRange,
@@ -125,6 +126,7 @@ export const actions = {
         state.user.id
       )
         .then((response) => {
+          commit("CLEAR_RESOURCE");
           return response.data;
         })
         .catch((error) => {
@@ -133,7 +135,7 @@ export const actions = {
             message: `resources not found ${error.message}`,
           };
           dispatch("notification/add", notification, { root: true });
-          return error;
+          // return error;
         });
     } else {
       const notification = {
@@ -180,10 +182,10 @@ export const actions = {
         return error;
       });
   },
-  deleteFavorite({ state, commit, dispatch }, obj) {
+  deleteFavorite({ state, dispatch }, obj) {
     return ApiService.deleteFavorite(state.user.id, obj.itemId)
       .then(() => {
-        commit("SET_FAVORITE", false);
+        //commit("SET_FAVORITE", false);
       })
       .catch((error) => {
         const notification = {
@@ -194,13 +196,13 @@ export const actions = {
         return error;
       });
   },
-  addFavorite({ state, commit, dispatch }, obj) {
+  addFavorite({ state, dispatch }, obj) {
     return ApiService.addFavorite({
       userId: state.user.id,
       resourceContentId: obj.itemId,
     })
       .then(() => {
-        commit("SET_FAVORITE", true);
+        //commit("SET_FAVORITE", true);
       })
       .catch((error) => {
         const notification = {
