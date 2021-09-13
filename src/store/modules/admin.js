@@ -37,5 +37,4 @@ export const actions = {
         // return error;
       });
   },
-  
 };
