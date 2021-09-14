@@ -158,18 +158,6 @@ export default {
           //stickyNav();
         };
 
-        // Get the offset position of the navbar
-        //var sticky = $("#buttons")[0].offsetTop;
-
-        // Add the sticky class to the self.$refs.nav when you reach its scroll position. Remove "sticky" when you leave the scroll position
-        // function stickyNav() {
-        //   if (window.pageYOffset >= sticky) {
-        //     $("#buttons")[0].classList.remove("hidden");
-        //   } else {
-        //     $("#buttons")[0].classList.add("hidden");
-        //   }
-        // }
-
         function changePage() {
           var i = 1,
             count = Number(pdf.numPages);

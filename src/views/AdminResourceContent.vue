@@ -1,6 +1,27 @@
 <template>
   <div>
     <NavVari />
+    <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
+      <div class="bg-headerblue py-4 flex">
+        <div>
+          <span class="text-white leading-2"
+            ><BaseButton
+              type="submit"
+              :disabled="false"
+              class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
+              @click="$router.push('home')"
+            >
+              <font-awesome-icon
+                :icon="['fas', 'caret-left']"
+                class="text-xl"
+              />
+              <span class="inline-block align-top ml-2"> Back </span>
+            </BaseButton></span
+          >
+        </div>
+        <div class="pt-2 text-nav text-white ml-4">Add Content Item</div>
+      </div>
+    </BaseLayout>
     <BaseLayout outerClass="text-gray-700 font-roboto">
       <form class="form" v-on:submit.prevent="submit">
         <div class="px-8 mt-12 text-gray-500 text-xlg">
@@ -255,17 +276,22 @@ export default {
       });
     },
     getResources() {
-      this.$store
-        .dispatch("admin/getResources", this.subjectId)
-        .then((subject) => {
-          if (subject) {
-            this.loaded = true;
-            this.resourceData = _.orderBy(subject.resources, ["name"], ["asc"]);
-          }
-        })
-        .catch(() => {
-          this.$router.push("Home");
-        });
+      (this.resourceData = []),
+        this.$store
+          .dispatch("admin/getResources", this.subjectId)
+          .then((subject) => {
+            if (subject) {
+              this.loaded = true;
+              this.resourceData = _.orderBy(
+                subject.resources,
+                ["name"],
+                ["asc"]
+              );
+            }
+          })
+          .catch(() => {
+            this.$router.push("Home");
+          });
     },
   },
   watch: {
