@@ -78,7 +78,7 @@
             v-for="(subject, index) in subjects"
             :key="index"
             @click="setPlan(subject)"
-            class="cursor-pointer relative mx-12 sm:mx-8 md:mx-6 lg:mx-2"
+            class="cursor-pointer relative mx-4 sm:mx-0 md:mx-2 lg:mx-2"
             v-else
           >
             <inline-svg
