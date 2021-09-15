@@ -1,5 +1,0 @@
-<template>
-  <div>
-    <h1>Research</h1>
-  </div>
-</template>

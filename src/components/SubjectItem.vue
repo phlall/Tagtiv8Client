@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { ContentLoader } from "vue-content-loader";
+//import { ContentLoader } from "vue-content-loader";
 export default {
   props: {
     subject: {
@@ -44,7 +44,7 @@ export default {
     };
   },
   components: {
-    ContentLoader,
+    // ContentLoader,
   },
   methods: {
     handleToggle() {

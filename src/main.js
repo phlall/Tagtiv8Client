@@ -30,6 +30,7 @@ import router from "./router";
 import store from "./store";
 import camelCase from "lodash/camelCase";
 import upperFirst from "lodash/upperFirst";
+import "./registerServiceWorker";
 
 library.add(
   faPhone,
