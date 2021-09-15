@@ -12,7 +12,6 @@
             <div v-if="getLinkType(link)">
               <BaseButton
                 type="submit"
-                :class="'bg-buttonblue'"
                 :disabled="false"
                 class="
                   text-white
@@ -24,6 +23,9 @@
                   font-bold
                   inline-flex
                   items-center
+                  bg-buttonblue
+                  lg:inline-block
+                  hidden
                 "
                 @click="$router.push('MainSite')"
               >
@@ -35,16 +37,26 @@
               </BaseButton>
             </div>
             <div v-if="!getLinkType(link) && loggedIn" class="pt-1">
-              <router-link class="px-2" :to="link">{{
-                getTitle(link)
-              }}</router-link>
+              <router-link class="px-2" :to="link"
+                >{{ getTitle(link) }}
+              </router-link>
             </div>
           </div>
           <div>
             <BaseButton
               type="submit"
               :class="'bg-buttonblue'"
-              class="text-white h-8 bg-indigo-400 py-1 px-3 ml-2 font-bold"
+              class="
+                text-white
+                h-8
+                bg-indigo-400
+                py-1
+                px-3
+                ml-2
+                font-bold
+                lg:inline-block
+                hidden
+              "
               @click="goPath('Register')"
               v-if="loggedIn && checkUser() && showAdmin()"
             >
@@ -53,11 +65,21 @@
             <BaseButton
               type="submit"
               :class="'bg-buttonblue'"
-              class="text-white h-8 bg-indigo-400 py-1 px-3 ml-2 font-bold"
+              class="
+                text-white
+                h-8
+                bg-indigo-400
+                py-1
+                px-3
+                ml-2
+                font-bold
+                lg:inline-block
+                hidden
+              "
               @click="goPath('resource-content')"
               v-if="loggedIn && checkUser() && showAdmin()"
             >
-              Add Resource Content
+              ADD CONTENT
             </BaseButton>
             <!-- </div>
           <div class=""> -->
@@ -94,7 +116,9 @@
                 rounded
                 text-teal-lighter
                 border-teal-light
-                hover:text-gray-800 hover:border-gray-700
+                hover:text-gray-800 hover:border-gray-400
+                h-10
+                shadow
               "
             >
               <font-awesome-icon :icon="['fas', 'bars']" v-if="!open" />
@@ -104,29 +128,116 @@
         </div>
       </div>
       <div
-        :class="open ? 'block' : 'invisible'"
+        :class="open ? 'block' : 'hidden'"
         class="
           w-full
-          items-center
-          w-auto
-          bg-gray-300
+          bg-gray-200
           lg:hidden
           z-50
           absolute
           top-50
           left-0
-          opacity-95
           border-b border-gray-400
         "
       >
-        <div class="text-sm py-4">
+        <div class="text-sm py-4 bg-gridrowbluehover">
           <ul>
             <li
-              class="py-1 ml-6 font-bold"
+              class="
+                my-1
+                py-1
+                font-bold
+                border-t border-blue-300
+                bg-gridrowbluehover
+              "
               v-for="(link, index) in NavLinks"
               :key="index"
             >
-              <router-link :to="link">{{ getTitle(link) }}</router-link>
+              <div class="flex">
+                <div class="flex-grow">
+                  <BaseButton
+                    type="button"
+                    class="
+                      font-bold
+                      pl-6
+                      w-full
+                      text-left text-blue-100
+                      hover:text-white
+                      text-left
+                    "
+                    @click="goPath('resource-content')"
+                    v-if="loggedIn && checkUser() && showAdmin()"
+                  >
+                    <router-link :to="link">{{ getTitle(link) }}</router-link>
+                  </BaseButton>
+                </div>
+                <div>
+                  <font-awesome-icon
+                    :icon="['fas', 'caret-right']"
+                    class="text-xl inline-block mr-3"
+                  />
+                </div>
+              </div>
+            </li>
+            <li class="my-1 py-1 font-bold border-b border-t border-blue-300">
+              <div class="flex">
+                <div class="flex-grow">
+                  <BaseButton
+                    type="button"
+                    class="
+                      font-bold
+                      pl-6
+                      w-full
+                      text-left text-left text-blue-100
+                      hover:text-white
+                    "
+                    @click="goPath('resource-content')"
+                    v-if="loggedIn && checkUser() && showAdmin()"
+                  >
+                    ADD CONTENT
+                  </BaseButton>
+                </div>
+                <div>
+                  <font-awesome-icon
+                    :icon="['fas', 'caret-right']"
+                    class="text-xl inline-block mr-3"
+                  />
+                </div>
+              </div>
+            </li>
+            <li
+              class="
+                my-1
+                py-1
+                font-bold
+                border-b border-blue-300
+                bg-gridrowbluehover
+              "
+            >
+              <div class="flex">
+                <div class="flex-grow">
+                  <BaseButton
+                    type="button"
+                    class="
+                      font-bold
+                      pl-6
+                      w-full
+                      text-left text-blue-100
+                      hover:text-white
+                    "
+                    @click="goPath('Register')"
+                    v-if="loggedIn && checkUser() && showAdmin()"
+                  >
+                    REGISTER
+                  </BaseButton>
+                </div>
+                <div>
+                  <font-awesome-icon
+                    :icon="['fas', 'caret-right']"
+                    class="text-xl inline-block mr-3"
+                  />
+                </div>
+              </div>
             </li>
           </ul>
         </div>

@@ -1,8 +1,8 @@
 <template>
   <div>
     <BaseLayout outerClass="bg-gray-700 text-white py-2">
-      <div class="flex flex-nowrap w-full font-roboto">
-        <div class="text-left">
+      <div class="grid md:grid-cols-2 w-full font-roboto">
+        <div class="md:text-left text-center">
           <span class="pr-1"
             ><font-awesome-icon
               :icon="['fas', 'phone']"
@@ -14,7 +14,7 @@
           /></span>
           <span class="px-2 text-xslg font-bold">hello@tagtiv8.com</span>
         </div>
-        <div class="flex-auto text-right text-2xl">
+        <div class="md:text-right text-center text-2xl">
           <div>
             <span class="px-1"
               ><font-awesome-icon :icon="['fab', 'facebook-square']"
