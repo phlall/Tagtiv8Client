@@ -80,17 +80,23 @@
               <rect x="0" y="48" rx="3" ry="3" height="4" class="w-9/12" />
             </ContentLoader>
           </div>
-          <div
-            v-else
-            v-for="resource in resourceData"
-            :key="resource.id"
-            class="col-span-2"
-          >
+          <div v-else class="col-span-2">
             <ResourceItem
-              :resource="resource"
-              :loaded="loaded"
+              v-if="intro != null"
+              :resource="intro"
+              :intro="true"
               @setContent="setResourceContent($event)"
             />
+            <div
+              v-for="resource in resourceData"
+              :key="resource.id"
+              class="my-1"
+            >
+              <ResourceItem
+                :resource="resource"
+                @setContent="setResourceContent($event)"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -112,6 +118,7 @@ export default {
       resourceData: [],
       sortOrder: "asc",
       loaded: false,
+      intro: {},
     };
   },
   created() {
@@ -163,7 +170,16 @@ export default {
         .then((resources) => {
           if (resources) {
             this.loaded = true;
-            this.resourceData = _.orderBy(resources, ["name"], ["asc"]);
+            let intr = _.remove(resources, function (n) {
+              return n.name.includes("Introduction");
+            });
+            this.intro = intr[0];
+            // this.resourceData.unshift(info[0]);
+
+            const match = _.filter(resources, (car) => {
+              return car.resourceContent.length;
+            });
+            this.resourceData = _.orderBy(match, ["name"], ["asc"]);
           }
         })
         .catch(() => {

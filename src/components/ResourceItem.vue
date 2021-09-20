@@ -6,7 +6,6 @@
           {{ resource.name }}
         </h2>
       </div>
-
       <div class="flex-grow text-right">
         <BaseButton
           type="button"
@@ -55,60 +54,84 @@
           </h2>
         </div>
         <div class="flex justify-end">
-          <div class="mr-2">
-            <BaseButton
-              type="button"
-              :disabled="false"
-              class="py-1 px-2"
-              @click="setFavorite(item)"
-            >
-              <span class="ml-4">
-                <font-awesome-icon
-                  :icon="['fas', 'star']"
-                  :class="item.isFavorite ? 'text-red-600' : 'text-gray-200'"
-              /></span>
-            </BaseButton>
+          <div v-if="intro">
+            <div class="mr-2">
+              <button
+                type="button"
+                :disabled="false"
+                class="
+                  text-white
+                  py-1
+                  px-2
+                  w-24
+                  sm:w-28
+                  bg-buttonblue
+                  font-bold
+                  text-xs
+                  sm:text-base
+                "
+                @click="setResourceContent(item, 'lessonPlan')"
+              >
+                Introduction
+              </button>
+            </div>
           </div>
-          <div class="mr-2">
-            <button
-              type="button"
-              :disabled="false"
-              class="
-                text-white
-                py-1
-                px-2
-                w-24
-                sm:w-28
-                bg-buttonblue
-                font-bold
-                text-xs
-                sm:text-base
-              "
-              @click="setResourceContent(item, 'lessonPlan')"
-            >
-              Lesson Plan
-            </button>
-          </div>
-          <div class="mr-1">
-            <BaseButton
-              type="submit"
-              :disabled="false"
-              class="
-                text-white
-                py-1
-                px-2
-                bg-buttonblue
-                font-bold
-                mr-2
-                w-24
-                sm:w-28
-                text-xs
-                sm:text-base
-              "
-              @click="setResourceContent(item, 'workSheet')"
-            >
-              Work Sheet
-            </BaseButton>
+          <div v-else class="flex">
+            <div class="mr-2">
+              <BaseButton
+                type="button"
+                :disabled="false"
+                class="py-1 px-2"
+                @click="setFavorite(item)"
+              >
+                <span class="ml-4">
+                  <font-awesome-icon
+                    :icon="['fas', 'star']"
+                    :class="item.isFavorite ? 'text-red-600' : 'text-gray-200'"
+                /></span>
+              </BaseButton>
+            </div>
+            <div class="mr-2">
+              <button
+                type="button"
+                :disabled="false"
+                class="
+                  text-white
+                  py-1
+                  px-2
+                  w-24
+                  sm:w-28
+                  bg-buttonblue
+                  font-bold
+                  text-xs
+                  sm:text-base
+                "
+                @click="setResourceContent(item, 'lessonPlan')"
+              >
+                Lesson Plan
+              </button>
+            </div>
+            <div class="mr-1">
+              <BaseButton
+                type="submit"
+                :disabled="false"
+                class="
+                  text-white
+                  py-1
+                  px-2
+                  bg-buttonblue
+                  font-bold
+                  mr-2
+                  w-24
+                  sm:w-28
+                  text-xs
+                  sm:text-base
+                "
+                @click="setResourceContent(item, 'workSheet')"
+              >
+                Work Sheet
+              </BaseButton>
+            </div>
           </div>
         </div>
       </div>
@@ -123,9 +146,12 @@ export default {
       type: Object,
       required: true,
     },
-    loaded: {
+    // loaded: {
+    //   type: Boolean,
+    // },
+    intro: {
       type: Boolean,
-      required: true,
+      default: false,
     },
   },
   data() {
