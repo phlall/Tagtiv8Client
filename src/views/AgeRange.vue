@@ -3,12 +3,12 @@
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 flex ml-2 sm:ml-0">
-        <div class="w-20">
+        <div class="flex-none">
           <span class="text-white leading-2"
             ><BaseButton
               type="submit"
               :disabled="false"
-              class="text-white text-nav w-full bg-red-500 font-bold pt-2 pb-1"
+              class="text-white text-nav w-20 bg-red-500 font-bold pt-2 pb-1"
               @click="$router.push('home')"
             >
               <font-awesome-icon
