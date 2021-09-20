@@ -3,7 +3,7 @@
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout>
-      <div class="w-full m-auto text-center flex justify-center">
+      <div class="w-full m-auto text-center flex justify-center bg-white">
         <div class="grid grid-cols-12 md:mt-16 max-w-screen-lg">
           <div
             class="
