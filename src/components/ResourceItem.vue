@@ -73,7 +73,17 @@
             <button
               type="button"
               :disabled="false"
-              class="text-white py-1 px-2 w-full bg-buttonblue font-bold"
+              class="
+                text-white
+                py-1
+                px-2
+                w-24
+                sm:w-28
+                bg-buttonblue
+                font-bold
+                text-xs
+                sm:text-base
+              "
               @click="setResourceContent(item, 'lessonPlan')"
             >
               Lesson Plan
@@ -83,7 +93,18 @@
             <BaseButton
               type="submit"
               :disabled="false"
-              class="text-white py-1 px-2 w-full bg-buttonblue font-bold mr-2"
+              class="
+                text-white
+                py-1
+                px-2
+                bg-buttonblue
+                font-bold
+                mr-2
+                w-24
+                sm:w-28
+                text-xs
+                sm:text-base
+              "
               @click="setResourceContent(item, 'workSheet')"
             >
               Work Sheet

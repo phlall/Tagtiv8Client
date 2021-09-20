@@ -2,7 +2,7 @@
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="bg-headerblue py-4 flex">
+      <div class="bg-headerblue py-4 flex ml-2 sm:ml-0">
         <div>
           <span class="text-white leading-2"
             ><BaseButton
@@ -15,7 +15,7 @@
                 :icon="['fas', 'caret-left']"
                 class="text-xl"
               />
-              <span class="inline-block align-top ml-2"> Back </span>
+              <span class="inline-block align-top w-20"> Back </span>
             </BaseButton></span
           >
         </div>
