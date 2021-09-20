@@ -1,12 +1,14 @@
 <template>
-  <div class="">
+  <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="bg-headerblue py-4 pl-6">
+      <div class="py-4 pl-6">
         <span class="text-white text-nav"><h2>Planning Home</h2></span>
       </div>
     </BaseLayout>
-    <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">
+    <BaseLayout
+      outerClass="bg-bgblue text-gray-700 border-b border-gray-700 h-screen"
+    >
       <div class="h-screen">
         <div class="mb-16 md:mb-8 mt-6 flex justify-center h-32">
           <div

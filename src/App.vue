@@ -2,7 +2,7 @@
   <div id="nav">
     <navTop />
   </div>
-  <router-view class="text-gray-600" />
+  <router-view class="text-gray-600 bg-bgblue" />
   <NotificationContainer />
 </template>
 <script>

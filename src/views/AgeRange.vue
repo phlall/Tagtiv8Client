@@ -2,7 +2,7 @@
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="bg-headerblue py-4 flex ml-2 sm:ml-0">
+      <div class="py-4 flex ml-2 sm:ml-0">
         <div class="flex-none">
           <span class="text-white leading-2"
             ><BaseButton
