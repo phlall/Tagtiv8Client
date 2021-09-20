@@ -8,7 +8,16 @@
             ><BaseButton
               type="submit"
               :disabled="false"
-              class="text-white text-nav w-20 bg-red-500 font-bold pt-2 pb-1"
+              class="
+                text-white text-nav
+                w-20
+                h-10
+                bg-red-500
+                font-bold
+                pt-1
+                m-auto
+                sm:ml-0
+              "
               @click="$router.push('home')"
             >
               <font-awesome-icon
@@ -20,7 +29,7 @@
           >
         </div>
         <div class="pt-2 text-nav text-white ml-4 flex-grow">
-          Planning Home / {{ plan.subject.name }} / Select Age Range
+          Planning Home / {{ plan.subject.name }} / Age Range
         </div>
       </div>
     </BaseLayout>
