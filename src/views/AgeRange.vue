@@ -15,7 +15,6 @@
                 bg-red-500
                 font-bold
                 pt-1
-                m-auto
                 sm:ml-0
               "
               @click="$router.push('home')"
