@@ -106,7 +106,10 @@
             </BaseButton>
           </div>
           <!-- <div class="hidden lg:block font-bold"></div> -->
-          <div class="block lg:hidden font-bold text-right text-smlg ml-2">
+          <div
+            class="block lg:hidden font-bold text-right text-smlg ml-2"
+            v-if="loggedIn"
+          >
             <button
               @click="toggle"
               class="
@@ -222,7 +225,7 @@
                       font-bold
                       pl-6
                       w-full
-                      text-left text-blue-100
+                      text-left text-white
                       hover:text-white
                     "
                     @click="goPath('Register')"
