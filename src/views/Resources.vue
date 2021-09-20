@@ -3,23 +3,32 @@
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 flex ml-2 sm:ml-0">
-        <div>
+        <div class="flex-none">
           <span class="text-white leading-2"
             ><BaseButton
               type="submit"
               :disabled="false"
-              class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
-              @click="$router.push('ageRange')"
+              class="
+                text-white text-nav
+                w-20
+                h-10
+                bg-red-500
+                font-bold
+                pt-1
+                m-auto
+                sm:ml-0
+              "
+              @click="$router.push('agerange')"
             >
               <font-awesome-icon
                 :icon="['fas', 'caret-left']"
                 class="text-xl"
               />
-              <span class="inline-block align-top w-20"> Back </span>
+              <span class="inline-block align-top ml-2"> Back </span>
             </BaseButton></span
           >
         </div>
-        <div class="pt-2 text-nav text-white ml-4">
+        <div class="pt-2 text-nav text-white ml-4 flex-grow">
           Planning Home / {{ plan.subject.name }} / {{ plan.ageRange }}
         </div>
       </div>
