@@ -31,7 +31,7 @@
       class="cursor-pointer bg-white px-4"
     >
       <div
-        class="flex w-full pt-2"
+        class="grid grid-cols-1 sm:grid-cols-2 w-full pt-2"
         :class="
           index != resource.resourceContent.length - 1
             ? 'border-b border-gray-300'
@@ -39,7 +39,7 @@
         "
         v-show="open"
       >
-        <div class="flex-shrink">
+        <div>
           <h2
             class="
               w-full
@@ -54,7 +54,7 @@
             {{ item.name }}
           </h2>
         </div>
-        <div class="flex-grow flex justify-end">
+        <div class="flex justify-end">
           <div class="mr-2">
             <BaseButton
               type="button"
