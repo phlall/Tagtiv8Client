@@ -150,7 +150,7 @@
                 my-1
                 py-1
                 font-bold
-                border-t border-blue-300
+                border-t border-b border-blue-300
                 bg-gridrowbluehover
               "
               v-for="(link, index) in NavLinks"
@@ -169,7 +169,7 @@
                       text-left
                     "
                     @click="goPath('resource-content')"
-                    v-if="loggedIn && checkUser() && showAdmin()"
+                    v-if="loggedIn && checkUser()"
                   >
                     <router-link :to="link">{{ getTitle(link) }}</router-link>
                   </BaseButton>
@@ -182,7 +182,10 @@
                 </div>
               </div>
             </li>
-            <li class="my-1 py-1 font-bold border-b border-t border-blue-300">
+            <li
+              class="my-1 py-1 font-bold border-b border-blue-300"
+              v-if="loggedIn && checkUser() && showAdmin()"
+            >
               <div class="flex">
                 <div class="flex-grow">
                   <BaseButton
@@ -195,7 +198,6 @@
                       hover:text-white
                     "
                     @click="goPath('resource-content')"
-                    v-if="loggedIn && checkUser() && showAdmin()"
                   >
                     ADD CONTENT
                   </BaseButton>
@@ -216,6 +218,7 @@
                 border-b border-blue-300
                 bg-gridrowbluehover
               "
+              v-if="loggedIn && checkUser() && showAdmin()"
             >
               <div class="flex">
                 <div class="flex-grow">
