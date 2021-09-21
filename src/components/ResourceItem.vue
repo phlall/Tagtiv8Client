@@ -70,7 +70,7 @@
                   text-xs
                   sm:text-base
                 "
-                @click="setResourceContent(item, 'lessonPlan')"
+                @click="setResourceContent(item, 'Introduction')"
               >
                 Introduction
               </button>
@@ -106,7 +106,7 @@
                   text-xs
                   sm:text-base
                 "
-                @click="setResourceContent(item, 'lessonPlan')"
+                @click="setResourceContent(item, 'LessonPlan')"
               >
                 Lesson Plan
               </button>
@@ -127,7 +127,7 @@
                   text-xs
                   sm:text-base
                 "
-                @click="setResourceContent(item, 'workSheet')"
+                @click="setResourceContent(item, 'WorkSheet')"
               >
                 Work Sheet
               </BaseButton>

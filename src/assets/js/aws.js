@@ -37,8 +37,8 @@ const GetFile = {
   from(remoteName) {
     var s3 = config();
 
-    //const filePath = "cognito/" + remoteName.trim();
-    const filePath = remoteName.trim();
+    const filePath = "cognito/" + remoteName.trim();
+    //const filePath = remoteName.trim();
     //const filePath = remoteName;
     var headParams = {
       Bucket: rscBucketName,

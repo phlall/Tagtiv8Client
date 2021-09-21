@@ -130,11 +130,7 @@ export default {
       this.$store
         .dispatch("user/setResourceContent", { resourceObj })
         .then(() => {
-          if (resourceType === "lessonPlan") {
-            this.$router.push("lesson-plan");
-          } else {
-            this.$router.push("worksheet");
-          }
+          this.$router.push({ name: resourceType });
         })
         .catch(() => {
           //this.$router.push("Home");

@@ -8,6 +8,7 @@ import AgeRange from "../views/AgeRange.vue";
 import Resources from "../views/Resources.vue";
 import LessonPlan from "../views/LessonPlan.vue";
 import WorkSheet from "../views/WorkSheet.vue";
+import Introduction from "../views/Introduction.vue";
 import Register from "../views/Register.vue";
 import AdminResourceContent from "../views/AdminResourceContent.vue";
 
@@ -113,6 +114,22 @@ const routes = [
     },
     meta: {
       title: "Worksheet",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/introduction",
+    name: "Introduction",
+    component: Introduction,
+    props: true,
+    beforeEnter: () => {
+      const rc = store.getters.resource;
+      if (_.isEmpty(rc)) {
+        router.push("Home");
+      }
+    },
+    meta: {
+      title: "Introduction",
       requiresAuth: true,
     },
   },
