@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import { GetFile } from "@/assets/js/aws.js"; // image service
 import NavVari from "@/components/NavVari.vue";
 import { mapGetters } from "vuex";
 //import pdf from "vue3-pdf";
@@ -120,7 +121,8 @@ export default {
     },
   },
   mounted() {
-    this.getPdf();
+    //this.getPdf();
+    this.load();
   },
   watch: {
     show: function (s) {
@@ -140,6 +142,17 @@ export default {
     },
   },
   methods: {
+    load() {
+      setTimeout(() => {
+        GetFile.from("Tag+Orienteering+Maths.pdf")
+          .then((f) => {
+            this.pdfdata = f;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, 1000);
+    },
     handle_pdf_link: function (params) {
       // Scroll to the appropriate place on our page - the Y component of
       // params.destArray * (div height / ???), from the bottom of the page div
