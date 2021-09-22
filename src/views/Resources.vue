@@ -169,9 +169,9 @@ export default {
             let intr = _.remove(resources, function (n) {
               return n.name.includes("Introduction");
             });
-            this.intro = intr[0];
-            // this.resourceData.unshift(info[0]);
-
+            if (intr.length) {
+              this.intro = intr[0];
+            }
             const match = _.filter(resources, (car) => {
               return car.resourceContent.length;
             });

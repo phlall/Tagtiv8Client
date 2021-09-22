@@ -307,13 +307,8 @@ export default {
     showAdmin() {
       const isAdminMeta = this.$route.meta;
       return isAdminMeta.showAdmin;
-      // if (isAdminMeta.showAdmin) {
-      //   return true;
-      // }
-      // return false;
     },
     getLinkType(routeName) {
-      //alert(routeName);
       const route = this.$router.resolve({
         name: routeName,
       });

@@ -188,7 +188,6 @@ export default {
       const fav = item.isFavorite;
       item.isFavorite = !item.isFavorite;
       if (fav) {
-        // item.isFavorite = false;
         this.$store
           .dispatch("user/deleteFavorite", { itemId })
           .then(() => {})

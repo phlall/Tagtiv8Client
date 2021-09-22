@@ -76,10 +76,6 @@
                 <font-awesome-icon :icon="['fas', 'file-download']"
               /></span>
             </BaseButton>
-            <!-- <a :href="fred" @click.prevent="downloadItem()">
-              <span class="ml-4 text-lg">
-                <font-awesome-icon :icon="['fas', 'file-download']" /></span
-            ></a> -->
           </div>
         </div>
         <div class="col-span-2 bg-gray-100 mt-4">
@@ -191,13 +187,8 @@ export default {
           URL.revokeObjectURL(link.href);
         })
         .catch(console.error);
-      // .catch(() => {
-      //   this.$router.push("Home");
-      // });
     },
     handle_pdf_link: function (params) {
-      // Scroll to the appropriate place on our page - the Y component of
-      // params.destArray * (div height / ???), from the bottom of the page div
       var page = document.getElementById(String(params.pageNumber));
       page.scrollIntoView();
     },
@@ -210,21 +201,7 @@ export default {
         self.numPages = pdf.numPages;
         window.onscroll = function () {
           changePage();
-          //stickyNav();
         };
-
-        // Get the offset position of the navbar
-        //var sticky = $("#buttons")[0].offsetTop;
-
-        // Add the sticky class to the self.$refs.nav when you reach its scroll position. Remove "sticky" when you leave the scroll position
-        // function stickyNav() {
-        //   if (window.pageYOffset >= sticky) {
-        //     $("#buttons")[0].classList.remove("hidden");
-        //   } else {
-        //     $("#buttons")[0].classList.add("hidden");
-        //   }
-        // }
-
         function changePage() {
           var i = 1,
             count = Number(pdf.numPages);

@@ -10,7 +10,6 @@ export const actions = {
   getResources({ dispatch }, subjectId) {
     return ApiService.getResourcesBySubject(subjectId)
       .then((response) => {
-        // commit("CLEAR_RESOURCE");
         return response.data;
       })
       .catch((error) => {

@@ -7,7 +7,6 @@ export const namespaced = true;
 export const state = {
   user: "",
   plan: {},
-  //resourceContent: {},
 };
 export const mutations = {
   SET_USER_DATA(state, data) {
@@ -35,7 +34,6 @@ export const mutations = {
     localStorage.setItem("plan", JSON.stringify(state.plan));
   },
   SET_AGERANGE(state, ageRange) {
-    //this.setPlanObj();
     state.plan.ageRange = ageRange.ageRange;
     localStorage.setItem("plan", JSON.stringify(state.plan));
   },
@@ -75,7 +73,6 @@ export const actions = {
     return ApiService.register(credentials)
       .then((response) => {
         let notification = "";
-        // commit("SET_USER_DATA", response.data);
         if (_.has(response.data, "message")) {
           notification = {
             type: "error",
@@ -100,7 +97,6 @@ export const actions = {
   },
   resetPassword({ dispatch }, credentials) {
     return ApiService.resetPassword(credentials).then(({ data }) => {
-      // commit('SET_RESET_DATA', data)
       const notification = {
         type: "success",
         message: data.message,
@@ -183,35 +179,29 @@ export const actions = {
       });
   },
   deleteFavorite({ state, dispatch }, obj) {
-    return ApiService.deleteFavorite(state.user.id, obj.itemId)
-      .then(() => {
-        //commit("SET_FAVORITE", false);
-      })
-      .catch((error) => {
+    return ApiService.deleteFavorite(state.user.id, obj.itemId).catch(
+      (error) => {
         const notification = {
           type: "error",
           message: `Error deleting favorite - ${error.message}`,
         };
         dispatch("notification/add", notification, { root: true });
         return error;
-      });
+      }
+    );
   },
   addFavorite({ state, dispatch }, obj) {
     return ApiService.addFavorite({
       userId: state.user.id,
       resourceContentId: obj.itemId,
-    })
-      .then(() => {
-        //commit("SET_FAVORITE", true);
-      })
-      .catch((error) => {
-        const notification = {
-          type: "error",
-          message: `Error adding favorite - ${error.message}`,
-        };
-        dispatch("notification/add", notification, { root: true });
-        return error;
-      });
+    }).catch((error) => {
+      const notification = {
+        type: "error",
+        message: `Error adding favorite - ${error.message}`,
+      };
+      dispatch("notification/add", notification, { root: true });
+      return error;
+    });
   },
 
   setPlanObj() {
