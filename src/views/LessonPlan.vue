@@ -143,27 +143,25 @@ export default {
   },
   methods: {
     load() {
-      setTimeout(() => {
-        GetFile.from("Tag+Orienteering+Maths.pdf")
-          .then((f) => {
-            this.pdfdata = f;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }, 1000);
+      // setTimeout(() => {
+      // GetFile.from("Tag+Orienteering+Maths.pdf")
+      GetFile.from(encodeURI(this.plan.resource.resourceContent.lessonPlan))
+        .then((file) => {
+          // this.pdfdata = file;
+          this.getPdf(file);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      //}, 1000);
     },
     handle_pdf_link: function (params) {
-      // Scroll to the appropriate place on our page - the Y component of
-      // params.destArray * (div height / ???), from the bottom of the page div
       var page = document.getElementById(String(params.pageNumber));
       page.scrollIntoView();
     },
-    getPdf() {
+    getPdf(file) {
       var self = this;
-      self.pdfdata = pdfvuer.createLoadingTask(
-        "/pdf/" + this.plan.resource.resourceContent.lessonPlan
-      );
+      self.pdfdata = pdfvuer.createLoadingTask(file);
       self.pdfdata.then((pdf) => {
         self.numPages = pdf.numPages;
         window.onscroll = function () {

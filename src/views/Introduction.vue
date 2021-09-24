@@ -77,7 +77,7 @@
 <script>
 import NavVari from "@/components/NavVari.vue";
 import { mapGetters } from "vuex";
-//import pdf from "vue3-pdf";
+import { GetFile } from "@/assets/js/aws.js";
 import pdfvuer from "pdfvuer";
 import ApiService from "@/services/apiService.js";
 //import _ from "lodash";
@@ -104,7 +104,7 @@ export default {
     },
   },
   mounted() {
-    this.getPdf();
+    this.load();
   },
   watch: {
     show: function (s) {
@@ -124,6 +124,15 @@ export default {
     },
   },
   methods: {
+    load() {
+      GetFile.from(encodeURI(this.plan.resource.resourceContent.workSheet))
+        .then((file) => {
+          this.getPdf(file);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     onClick() {
       ApiService.getFile(this.plan.resource.resourceContent.workSheet).then(
         (response) => {
@@ -141,32 +150,13 @@ export default {
         }
       );
     },
-    downloadItem() {
-      this.$store
-        .dispatch(
-          "user/getFile",
-          "http://localhost:8080/pdf/" +
-            this.plan.resource.resourceContent.workSheet
-        )
-        .then((response) => {
-          const blob = new Blob([response.data], { type: "application/pdf" });
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = this.plan.resource.resourceContent.name;
-          link.click();
-          URL.revokeObjectURL(link.href);
-        })
-        .catch(console.error);
-    },
     handle_pdf_link: function (params) {
       var page = document.getElementById(String(params.pageNumber));
       page.scrollIntoView();
     },
-    getPdf() {
+    getPdf(file) {
       var self = this;
-      self.pdfdata = pdfvuer.createLoadingTask(
-        "/pdf/" + this.plan.resource.resourceContent.workSheet
-      );
+      self.pdfdata = pdfvuer.createLoadingTask(file);
       self.pdfdata.then((pdf) => {
         self.numPages = pdf.numPages;
         window.onscroll = function () {

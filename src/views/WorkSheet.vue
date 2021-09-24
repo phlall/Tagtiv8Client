@@ -106,10 +106,10 @@
 
 <script>
 import NavVari from "@/components/NavVari.vue";
+import { GetFile } from "@/assets/js/aws.js";
 import { mapGetters } from "vuex";
-//import pdf from "vue3-pdf";
 import pdfvuer from "pdfvuer";
-import ApiService from "@/services/apiService.js";
+//import ApiService from "@/services/apiService.js";
 //import _ from "lodash";
 export default {
   name: "Work Sheet",
@@ -134,7 +134,7 @@ export default {
     },
   },
   mounted() {
-    this.getPdf();
+    this.load();
   },
   watch: {
     show: function (s) {
@@ -154,49 +154,39 @@ export default {
     },
   },
   methods: {
-    onClick() {
-      ApiService.getFile(this.plan.resource.resourceContent.workSheet).then(
-        (response) => {
-          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-          var fileLink = document.createElement("a");
-
-          fileLink.href = fileURL;
-          fileLink.setAttribute(
-            "download",
-            this.plan.resource.resourceContent.workSheet
-          );
-          document.body.appendChild(fileLink);
-
-          fileLink.click();
-        }
-      );
-    },
-    downloadItem() {
-      this.$store
-        .dispatch(
-          "user/getFile",
-          "http://localhost:8080/pdf/" +
-            this.plan.resource.resourceContent.workSheet
-        )
-        .then((response) => {
-          const blob = new Blob([response.data], { type: "application/pdf" });
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = this.plan.resource.resourceContent.name;
-          link.click();
-          URL.revokeObjectURL(link.href);
+    load() {
+      GetFile.from(encodeURI(this.plan.resource.resourceContent.workSheet))
+        .then((file) => {
+          this.getPdf(file);
         })
-        .catch(console.error);
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    onClick() {
+      // ApiService.getFile(this.plan.resource.resourceContent.workSheet).then(
+      //   (response) => {
+      var fileURL = window.URL.createObjectURL(this.pdfdata);
+      var fileLink = document.createElement("a");
+
+      fileLink.href = fileURL;
+      fileLink.setAttribute(
+        "download",
+        this.plan.resource.resourceContent.workSheet
+      );
+      document.body.appendChild(fileLink);
+
+      fileLink.click();
+      //   }
+      // );
     },
     handle_pdf_link: function (params) {
       var page = document.getElementById(String(params.pageNumber));
       page.scrollIntoView();
     },
-    getPdf() {
+    getPdf(file) {
       var self = this;
-      self.pdfdata = pdfvuer.createLoadingTask(
-        "/pdf/" + this.plan.resource.resourceContent.workSheet
-      );
+      self.pdfdata = pdfvuer.createLoadingTask(file);
       self.pdfdata.then((pdf) => {
         self.numPages = pdf.numPages;
         window.onscroll = function () {
