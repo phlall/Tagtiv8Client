@@ -3,8 +3,12 @@
     <div v-for="(crumb, ci) in crumbs" :key="ci">
       <BaseButton
         @click="$router.push(crumb.route)"
-        :class="isLast(ci) ? 'cursor-default' : 'hover:text-gridrowbluehover'"
-        :disabled="isLast(ci)"
+        :class="
+          isLast(ci) || !crumb.route.length
+            ? 'cursor-default'
+            : 'hover:text-gridrowbluehover'
+        "
+        :disabled="isLast(ci) || !crumb.route.length"
       >
         {{ crumb.name }}
       </BaseButton>
