@@ -9,7 +9,7 @@
               type="submit"
               :disabled="false"
               class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
-              @click="$router.push('resources')"
+              @click="$router.push('home')"
             >
               <font-awesome-icon
                 :icon="['fas', 'caret-left']"
@@ -86,6 +86,7 @@
             >
               <ResourceItem
                 :resource="resource"
+                :isView="isView"
                 @setContent="setResourceContent($event)"
               />
             </div>
@@ -111,6 +112,7 @@ export default {
       sortOrder: "asc",
       loaded: false,
       intro: null,
+      isView: false,
     };
   },
   created() {
@@ -170,6 +172,9 @@ export default {
             });
             if (intr.length) {
               this.intro = intr[0];
+            }
+            if (this.plan.subject.name == "Sustain") {
+              this.isView = true;
             }
             const match = _.filter(resources, (car) => {
               return car.resourceContent.length;
