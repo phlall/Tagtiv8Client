@@ -19,88 +19,102 @@
             </BaseButton></span
           >
         </div>
-        <div class="pt-2 text-nav text-white ml-4">
-          Planning Home / {{ plan.subject.name }} / {{ plan.resource.name }}
+        <div>
+          <BaseBreadcrumbs class="" :crumbs="crumbs" @selected="selected" />
         </div>
       </div>
     </BaseLayout>
-    <div class="w-full m-auto text-center flex justify-center font-roboto">
-      <div class="grid grid-cols-2 mt-12 max-w-screen-lg">
-        <div class="pl-1">
-          <h3 class="text-left pt-2 text-smlg">
-            {{ plan.resource.name }} -
-            {{ plan.resource.resourceContent.name }} Work Sheet
-          </h3>
-        </div>
-        <div class="flex justify-end pt-2">
-          <div class="mr-3 text-xslg">Add to Favorites:</div>
-          <div>
-            <BaseButton
-              type="button"
-              :disabled="false"
-              class="text-md"
-              @click="setFavorite(item)"
-              :class="
-                plan.resource.resourceContent.isFavorite
-                  ? 'text-red-600'
-                  : 'text-gray-200'
-              "
-            >
-              <span> <font-awesome-icon :icon="['fas', 'star']" /></span>
-            </BaseButton>
-          </div>
-          <div class="ml-4 text-xslg">View Lesson Plan</div>
-          <div>
-            <BaseButton
-              type="button"
-              :disabled="false"
-              v-if="!loggedIn"
-              class="text-lg"
-              @click="$router.push('lesson-plan')"
-            >
-              <span class="ml-4">
-                <font-awesome-icon :icon="['far', 'file-alt']"
-              /></span>
-            </BaseButton>
-          </div>
-          <div class="ml-4 text-xslg">Download</div>
-          <div>
-            <BaseButton
-              type="button"
-              :disabled="false"
-              v-if="!loggedIn"
-              class="text-md"
-              @click.prevent="onClick()"
-            >
-              <span class="ml-4 text-lg">
-                <font-awesome-icon :icon="['fas', 'file-download']"
-              /></span>
-            </BaseButton>
-          </div>
-        </div>
-        <div class="col-span-2 bg-gray-100 mt-4">
-          <div
-            id="pdfvuer"
-            class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll"
+    <BaseLayout>
+      <div class="w-full m-auto text-center flex justify-center font-roboto">
+        <div v-if="!loaded" class="w-full mt-12">
+          <ContentLoader
+            viewBox="0 0 250 110"
+            :speed="1.2"
+            primaryColor="#c2e0fe"
+            secondaryColor="#eeeeed"
           >
-            <pdf
-              :src="pdfdata"
-              v-for="i in numPages"
-              :key="i"
-              :id="i"
-              :page="i"
-              v-model:scale="scale"
-              style="width: 100%; margin: 20px auto"
-              :annotation="true"
-              :resize="true"
-              @link-clicked="handle_pdf_link"
+            <rect x="0" y="4" rx="3" ry="3" height="4" class="w-full" />
+            <rect x="0" y="12" rx="3" ry="3" height="4" class="w-full" />
+            <rect x="0" y="20" rx="3" ry="3" height="4" class="w-9/12" />
+          </ContentLoader>
+        </div>
+        <div class="grid grid-cols-2 mt-12 max-w-screen-lg" v-else>
+          <div class="pl-1">
+            <h3 class="text-left pt-2 text-smlg">
+              {{ plan.resource.name }} -
+              {{ plan.resource.resourceContent.name }} Work Sheet
+            </h3>
+          </div>
+          <div class="flex justify-end pt-2">
+            <div class="mr-3 text-xslg">Add to Favorites:</div>
+            <div>
+              <BaseButton
+                type="button"
+                :disabled="false"
+                class="text-md"
+                @click="setFavorite(item)"
+                :class="
+                  plan.resource.resourceContent.isFavorite
+                    ? 'text-red-600'
+                    : 'text-gray-200'
+                "
+              >
+                <span> <font-awesome-icon :icon="['fas', 'star']" /></span>
+              </BaseButton>
+            </div>
+            <div class="ml-4 text-xslg">View Lesson Plan</div>
+            <div>
+              <BaseButton
+                type="button"
+                :disabled="false"
+                v-if="!loggedIn"
+                class="text-lg"
+                @click="$router.push('lesson-plan')"
+              >
+                <span class="ml-4">
+                  <font-awesome-icon :icon="['far', 'file-alt']"
+                /></span>
+              </BaseButton>
+            </div>
+            <div class="ml-4 text-xslg">Download</div>
+            <div>
+              <BaseButton
+                type="button"
+                :disabled="false"
+                v-if="!loggedIn"
+                class="text-md"
+                @click.prevent="onClick()"
+              >
+                <span class="ml-4 text-lg">
+                  <font-awesome-icon :icon="['fas', 'file-download']"
+                /></span>
+              </BaseButton>
+            </div>
+          </div>
+          <div class="col-span-2 bg-gray-100 mt-4">
+            <div
+              id="pdfvuer"
+              class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll"
             >
-              <template v-slot:loading> loading content here... </template>
-            </pdf>
+              <pdf
+                :src="pdfdata"
+                v-for="i in numPages"
+                :key="i"
+                :id="i"
+                :page="i"
+                v-model:scale="scale"
+                style="width: 100%; margin: 20px auto"
+                :annotation="true"
+                :resize="true"
+                @link-clicked="handle_pdf_link"
+              >
+                <template v-slot:loading> loading content here... </template>
+              </pdf>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </BaseLayout>
   </div>
 </template>
 
@@ -109,14 +123,17 @@ import NavVari from "@/components/NavVari.vue";
 import { GetFile } from "@/assets/js/aws.js";
 import { mapGetters } from "vuex";
 import pdfvuer from "pdfvuer";
-//import ApiService from "@/services/apiService.js";
+import { Favorites } from "@/Mixins/Favorites.js";
+import { ContentLoader } from "vue-content-loader";
 //import _ from "lodash";
 export default {
   name: "Work Sheet",
   props: ["contentId"],
+  mixins: [Favorites],
   components: {
     NavVari,
     pdf: pdfvuer,
+    ContentLoader,
   },
   data() {
     return {
@@ -125,6 +142,8 @@ export default {
       pdfdata: undefined,
       errors: [],
       scale: "page-width",
+      loaded: false,
+      crumbs: [],
     };
   },
   computed: {
@@ -135,6 +154,9 @@ export default {
   },
   mounted() {
     this.load();
+  },
+  created() {
+    this.createCrumbs();
   },
   watch: {
     show: function (s) {
@@ -154,6 +176,13 @@ export default {
     },
   },
   methods: {
+    createCrumbs() {
+      this.crumbs = [
+        { name: "Planning Home", route: "home" },
+        { name: this.plan.subject.name, route: "resources" },
+        { name: this.plan.resource.name, route: "" },
+      ];
+    },
     load() {
       GetFile.from(encodeURI(this.plan.resource.resourceContent.workSheet))
         .then((file) => {
@@ -164,8 +193,6 @@ export default {
         });
     },
     onClick() {
-      // ApiService.getFile(this.plan.resource.resourceContent.workSheet).then(
-      //   (response) => {
       var fileURL = window.URL.createObjectURL(this.pdfdata);
       var fileLink = document.createElement("a");
 
@@ -175,10 +202,7 @@ export default {
         this.plan.resource.resourceContent.workSheet
       );
       document.body.appendChild(fileLink);
-
       fileLink.click();
-      //   }
-      // );
     },
     handle_pdf_link: function (params) {
       var page = document.getElementById(String(params.pageNumber));
@@ -189,6 +213,7 @@ export default {
       self.pdfdata = pdfvuer.createLoadingTask(file);
       self.pdfdata.then((pdf) => {
         self.numPages = pdf.numPages;
+        this.loaded = true;
         window.onscroll = function () {
           changePage();
         };
@@ -213,27 +238,27 @@ export default {
     findPos(obj) {
       return obj.offsetTop;
     },
-    setFavorite() {
-      let rs = this.plan.resource.resourceContent;
-      const rsId = rs.id;
-      if (rs.isFavorite) {
-        rs.isFavorite = false;
-        this.$store
-          .dispatch("user/deleteFavorite", { itemId: rsId })
-          .then(() => {})
-          .catch(() => {
-            rs.isFavorite = true;
-          });
-      } else {
-        rs.isFavorite = true;
-        this.$store
-          .dispatch("user/addFavorite", { itemId: rsId })
-          .then(() => {})
-          .catch(() => {
-            rs.isFavorite = false;
-          });
-      }
-    },
+    // setFavorite() {
+    //   let rs = this.plan.resource.resourceContent;
+    //   const rsId = rs.id;
+    //   if (rs.isFavorite) {
+    //     rs.isFavorite = false;
+    //     this.$store
+    //       .dispatch("user/deleteFavorite", { itemId: rsId })
+    //       .then(() => {})
+    //       .catch(() => {
+    //         rs.isFavorite = true;
+    //       });
+    //   } else {
+    //     rs.isFavorite = true;
+    //     this.$store
+    //       .dispatch("user/addFavorite", { itemId: rsId })
+    //       .then(() => {})
+    //       .catch(() => {
+    //         rs.isFavorite = false;
+    //       });
+    //   }
+    // },
   },
 };
 </script>
