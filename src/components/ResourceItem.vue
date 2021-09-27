@@ -72,7 +72,29 @@
                 "
                 @click="setResourceContent(item, 'Introduction')"
               >
-                Introduction
+                View
+              </button>
+            </div>
+          </div>
+          <div v-else-if="isView">
+            <div class="mr-2">
+              <button
+                type="button"
+                :disabled="false"
+                class="
+                  text-white
+                  py-1
+                  px-2
+                  w-24
+                  sm:w-28
+                  bg-buttonblue
+                  font-bold
+                  text-xs
+                  sm:text-base
+                "
+                @click="setResourceContent(item, 'Introduction')"
+              >
+                View
               </button>
             </div>
           </div>
@@ -150,6 +172,10 @@ export default {
     //   type: Boolean,
     // },
     intro: {
+      type: Boolean,
+      default: false,
+    },
+    isView: {
       type: Boolean,
       default: false,
     },
