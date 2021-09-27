@@ -41,6 +41,7 @@
                 sm:pt-2
                 text-4xl
               "
+              @click="setPlan(intro)"
             >
               Introduction to Tagtiv8
             </div>
@@ -112,6 +113,7 @@
 import NavVari from "../components/NavVari.vue";
 import InlineSvg from "vue-inline-svg";
 import { ContentLoader } from "vue-content-loader";
+import _ from "lodash";
 export default {
   name: "Home",
   data() {
@@ -119,6 +121,7 @@ export default {
       navLinks: ["MainSite"],
       subjects: [],
       loaded: false,
+      intro: null,
     };
   },
   created() {
@@ -127,6 +130,9 @@ export default {
   methods: {
     getSubjects() {
       this.$store.dispatch("user/getSubjects").then((subjects) => {
+        this.intro = _.remove(subjects, function (n) {
+          return n.name.includes("Introduction");
+        })[0];
         this.subjects = subjects;
         this.loaded = true;
       });

@@ -2,22 +2,14 @@
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="py-4 flex ml-2 sm:ml-0">
-        <div class="flex-none">
+      <div class="bg-headerblue py-4 flex">
+        <div>
           <span class="text-white leading-2"
             ><BaseButton
               type="submit"
               :disabled="false"
-              class="
-                text-white text-nav
-                w-20
-                h-10
-                bg-red-500
-                font-bold
-                pt-1
-                sm:ml-0
-              "
-              @click="$router.push('home')"
+              class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
+              @click="$router.push('resources')"
             >
               <font-awesome-icon
                 :icon="['fas', 'caret-left']"
@@ -27,8 +19,8 @@
             </BaseButton></span
           >
         </div>
-        <div class="pt-2 text-nav text-white ml-4 flex-grow">
-          Planning Home / {{ plan.subject.name }} / Age Range
+        <div>
+          <BaseBreadcrumbs class="" :crumbs="crumbs" @selected="selected" />
         </div>
       </div>
     </BaseLayout>
@@ -102,7 +94,17 @@ export default {
       ageGroups: AgeGroups(),
     };
   },
+  created() {
+    this.createCrumbs();
+  },
   methods: {
+    createCrumbs() {
+      this.crumbs = [
+        { name: "Planning Home", route: "home" },
+        { name: this.plan.subject.name, route: "" },
+        { name: "Age Range", route: "" },
+      ];
+    },
     setAgeGroup(ageRange) {
       this.$store.dispatch("user/setAgeRange", { ageRange }).then((error) => {
         if (!error) {

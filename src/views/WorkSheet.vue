@@ -180,6 +180,7 @@ export default {
       this.crumbs = [
         { name: "Planning Home", route: "home" },
         { name: this.plan.subject.name, route: "resources" },
+        { name: this.plan.ageRange, route: "agerange" },
         { name: this.plan.resource.name, route: "" },
       ];
     },

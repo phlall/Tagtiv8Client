@@ -9,7 +9,7 @@
               type="submit"
               :disabled="false"
               class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
-              @click="$router.push('home')"
+              @click="$router.push('agerange')"
             >
               <font-awesome-icon
                 :icon="['fas', 'caret-left']"
@@ -125,6 +125,7 @@ export default {
       this.crumbs = [
         { name: "Planning Home", route: "home" },
         { name: this.plan.subject.name, route: "" },
+        { name: this.plan.ageRange, route: "" },
       ];
     },
     setResourceContent({ resourceObj, resourceType }) {

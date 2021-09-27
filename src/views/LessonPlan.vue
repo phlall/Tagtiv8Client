@@ -21,15 +21,6 @@
         </div>
         <div>
           <BaseBreadcrumbs class="" :crumbs="crumbs" @selected="selected" />
-          <!-- <div class="pt-2 text-nav text-white ml-4">
-          <BaseButton
-            @click="$router.push('home')"
-            class="hover:text-gridrowbluehover"
-          >
-            Planning Home
-          </BaseButton>
-          / {{ plan.subject.name }} /
-          {{ plan.resource.name }}-->
         </div>
       </div>
     </BaseLayout>
@@ -181,6 +172,7 @@ export default {
       this.crumbs = [
         { name: "Planning Home", route: "home" },
         { name: this.plan.subject.name, route: "resources" },
+        { name: this.plan.ageRange, route: "agerange" },
         { name: this.plan.resource.name, route: "" },
       ];
     },

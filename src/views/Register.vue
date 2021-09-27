@@ -69,6 +69,25 @@
           </div>
           <div class="px-8 text-red-500">
             <BaseInput
+              v-model="school"
+              type="text"
+              placeholder="School Name"
+              class="
+                w-full
+                border
+                pl-2
+                border-gray-500
+                focus:outline-none focus:ring-2
+                h-14
+                focus:ring-purple-400 focus:border-transparent
+              "
+            />
+            <div class="pt-1 h-8">
+              <p v-if="v$.school.required.$invalid">School name is required.</p>
+            </div>
+          </div>
+          <div class="px-8 text-red-500">
+            <BaseInput
               v-model="email"
               type="email"
               placeholder="Enter your email"
@@ -164,6 +183,7 @@ export default {
       password: "",
       firstName: "",
       lastName: "",
+      school: "",
       isAdmin: false,
       showPassword: false,
       error: "",
@@ -190,6 +210,7 @@ export default {
       },
       firstName: { required },
       lastName: { required },
+      school: { required },
     };
   },
   computed: {
@@ -206,11 +227,17 @@ export default {
             password: this.password,
             firstName: this.firstName,
             lastName: this.lastName,
+            school: this.school,
             isadmin: this.isAdmin,
           })
           .then((error) => {
             if (!error) {
-              //  this.$router.push({ name: "Home" });
+              (this.email = ""),
+                (this.password = ""),
+                (this.firstName = ""),
+                (this.lastName = ""),
+                (this.school = ""),
+                (this.isAdmin = false);
             } else {
               // this.$router.push({ name: "Login" });
             }

@@ -147,7 +147,7 @@ export default {
     createCrumbs() {
       this.crumbs = [
         { name: "Planning Home", route: "home" },
-        { name: "Introduction", route: "resources" },
+        // { name: "Introduction", route: "resources" },
         { name: this.plan.resource.name, route: "" },
       ];
     },
