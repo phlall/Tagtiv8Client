@@ -45,7 +45,7 @@
               {{ plan.resource.resourceContent.name }}
             </h3>
           </div>
-          <div class="flex justify-end pt-2">
+          <!-- <div class="flex justify-end pt-2">
             <div class="ml-4 text-xslg">Download</div>
             <div>
               <BaseButton
@@ -60,7 +60,7 @@
                 /></span>
               </BaseButton>
             </div>
-          </div>
+          </div> -->
           <div class="col-span-2 bg-gray-100 mt-4">
             <div
               id="pdfvuer"

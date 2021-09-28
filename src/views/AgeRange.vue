@@ -9,7 +9,7 @@
               type="submit"
               :disabled="false"
               class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
-              @click="$router.push('resources')"
+              @click="$router.push('home')"
             >
               <font-awesome-icon
                 :icon="['fas', 'caret-left']"

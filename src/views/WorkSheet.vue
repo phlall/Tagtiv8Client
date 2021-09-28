@@ -83,7 +83,7 @@
                 :disabled="false"
                 v-if="!loggedIn"
                 class="text-md"
-                @click.prevent="onClick()"
+                @click.prevent="savePdf()"
               >
                 <span class="ml-4 text-lg">
                   <font-awesome-icon :icon="['fas', 'file-download']"
@@ -144,6 +144,7 @@ export default {
       scale: "page-width",
       loaded: false,
       crumbs: [],
+      pdfFile: null,
     };
   },
   computed: {
@@ -187,23 +188,19 @@ export default {
     load() {
       GetFile.from(encodeURI(this.plan.resource.resourceContent.workSheet))
         .then((file) => {
+          this.pdfFile = file;
           this.getPdf(file);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    onClick() {
-      var fileURL = window.URL.createObjectURL(this.pdfdata);
-      var fileLink = document.createElement("a");
-
-      fileLink.href = fileURL;
-      fileLink.setAttribute(
-        "download",
+    savePdf() {
+      var FileSaver = require("file-saver");
+      FileSaver.saveAs(
+        this.pdfFile,
         this.plan.resource.resourceContent.workSheet
       );
-      document.body.appendChild(fileLink);
-      fileLink.click();
     },
     handle_pdf_link: function (params) {
       var page = document.getElementById(String(params.pageNumber));
@@ -215,6 +212,7 @@ export default {
       self.pdfdata.then((pdf) => {
         self.numPages = pdf.numPages;
         this.loaded = true;
+
         window.onscroll = function () {
           changePage();
         };

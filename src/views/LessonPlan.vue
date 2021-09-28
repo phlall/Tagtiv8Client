@@ -168,6 +168,13 @@ export default {
     },
   },
   methods: {
+    savePdf() {
+      var FileSaver = require("file-saver");
+      FileSaver.saveAs(
+        this.pdfFile,
+        this.plan.resource.resourceContent.workSheet
+      );
+    },
     createCrumbs() {
       this.crumbs = [
         { name: "Planning Home", route: "home" },
@@ -222,27 +229,6 @@ export default {
     findPos(obj) {
       return obj.offsetTop;
     },
-    // setFavorite() {
-    //   let rs = this.plan.resource.resourceContent;
-    //   const rsId = rs.id;
-    //   if (rs.isFavorite) {
-    //     rs.isFavorite = !rs.isFavorite;
-    //     this.$store
-    //       .dispatch("user/deleteFavorite", { itemId: rsId })
-    //       .then(() => {})
-    //       .catch(() => {
-    //         rs.isFavorite = true;
-    //       });
-    //   } else {
-    //     rs.isFavorite = !rs.isFavorite;
-    //     this.$store
-    //       .dispatch("user/addFavorite", { itemId: rsId })
-    //       .then(() => {})
-    //       .catch(() => {
-    //         rs.isFavorite = !rs.isFavorite;
-    //       });
-    //   }
-    // },
   },
 };
 </script>
