@@ -19,7 +19,7 @@
             </BaseButton></span
           >
         </div>
-        <div>
+        <div class="flex-grow">
           <BaseBreadcrumbs class="" :crumbs="crumbs" @selected="selected" />
         </div>
       </div>

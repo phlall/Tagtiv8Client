@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-2 text-nav text-white ml-4 flex">
+  <div class="pt-2 text-nav text-white mx-4 flex justify-end sm:justify-start">
     <div v-for="(crumb, ci) in crumbs" :key="ci">
       <BaseButton
         @click="$router.push(crumb.route)"

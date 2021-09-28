@@ -2,7 +2,7 @@
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="bg-headerblue py-4 flex">
+      <div class="bg-headerblue flex py-4 ml-2 md:ml-0">
         <div>
           <span class="text-white leading-2"
             ><BaseButton
@@ -19,7 +19,7 @@
             </BaseButton></span
           >
         </div>
-        <div>
+        <div class="flex-grow">
           <BaseBreadcrumbs class="" :crumbs="crumbs" />
         </div>
       </div>
