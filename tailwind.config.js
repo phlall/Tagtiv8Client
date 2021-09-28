@@ -21,11 +21,14 @@ module.exports = {
         roboto: ["Roboto"],
       },
       fontSize: {
+        navxs: "0.70rem",
         xslg: "0.82rem",
         nav: "0.92rem",
         smlg: "1.0rem",
         xlsm: "1.175rem",
         xl2sm: "1.7rem",
+        bombers: "2.4rem",
+        bombersHeading: "2.6rem",
         // xslg: {"font-size: 0.81rem", "line-height: 1.05rem"],
         // smlg: ["font-size: 1.0rem", "line-height: 1.25rem"],
         // xlsm: ["font-size: 1.175rem", "line-height: 1.25rem"],
@@ -33,6 +36,9 @@ module.exports = {
       colors: {
         buttonblue: {
           DEFAULT: "#02A8DA",
+        },
+        buttonblueHover: {
+          DEFAULT: "#1BBDF5",
         },
         headerblue: {
           DEFAULT: "#005FAB",
