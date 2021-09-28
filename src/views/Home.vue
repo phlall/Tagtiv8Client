@@ -6,9 +6,7 @@
         <span class="text-white text-nav"><h2>Planning Home</h2></span>
       </div>
     </BaseLayout>
-    <BaseLayout
-      outerClass="bg-bgblue text-gray-700 border-b border-gray-700 h-screen"
-    >
+    <BaseLayout outerClass="text-gray-700">
       <div class="h-screen">
         <div class="mb-16 md:mb-8 mt-6 flex justify-center h-32">
           <div
@@ -29,17 +27,16 @@
             <div
               class="
                 absolute
-                top-1/3
+                top-12
+                md:top-9
                 h-16
                 mt-0
                 px-4
                 text-center text-headerblue
                 font-bold
-                pt-1
                 w-full
                 px-6
-                sm:pt-2
-                text-4xl
+                text-bombersHeading
               "
               @click="setPlan(intro)"
             >
@@ -97,7 +94,7 @@
                 pt-2
                 font-bold
                 text-3xl
-                md:text-xl2sm
+                md:text-bombers
               "
             >
               {{ subject.name }}

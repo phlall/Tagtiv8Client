@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <BaseLayout
-      outerClass="bg-white text-gray-700 border-b border-gray-700 font-roboto"
-    >
+  <div :class="outerClass">
+    <BaseLayout outerClass="bg-white text-gray-700 font-roboto pb-2">
       <div class="flex flex-wrap">
         <div class="pt-4 pb-1">
           <img src="@/assets/images/logo.png" />
@@ -26,6 +24,7 @@
                   bg-buttonblue
                   lg:inline-block
                   hidden
+                  hover:bg-buttonblueHover
                 "
                 @click="$router.push('MainSite')"
               >
@@ -45,17 +44,17 @@
           <div>
             <BaseButton
               type="submit"
-              :class="'bg-buttonblue'"
               class="
                 text-white
                 h-8
-                bg-indigo-400
                 py-1
                 px-3
                 ml-2
                 font-bold
                 lg:inline-block
                 hidden
+                bg-buttonblue
+                hover:bg-buttonblueHover
               "
               @click="goPath('Register')"
               v-if="loggedIn && checkUser() && showAdmin()"
@@ -68,13 +67,14 @@
               class="
                 text-white
                 h-8
-                bg-indigo-400
+                bg-buttonblue
                 py-1
                 px-3
                 ml-2
                 font-bold
                 lg:inline-block
                 hidden
+                hover:bg-buttonblueHover
               "
               @click="goPath('resource-content')"
               v-if="loggedIn && checkUser() && showAdmin()"
@@ -85,9 +85,17 @@
           <div class=""> -->
             <BaseButton
               type="submit"
-              :class="'bg-buttonblue'"
               :disabled="false"
-              class="text-white h-8 bg-indigo-400 py-1 px-3 ml-2 font-bold"
+              class="
+                text-white
+                h-8
+                bg-buttonblue
+                py-1
+                px-3
+                ml-2
+                font-bold
+                hover:bg-buttonblueHover
+              "
               @click="$router.push('Login')"
               v-if="!loggedIn"
             >
@@ -97,7 +105,16 @@
               type="submit"
               :class="'bg-buttonblue'"
               :disabled="false"
-              class="text-white h-8 bg-indigo-400 px-3 py-1 ml-2 font-bold"
+              class="
+                text-white
+                h-8
+                bg-buttonblue
+                px-3
+                py-1
+                ml-2
+                font-bold
+                hover:bg-buttonblueHover
+              "
               something="else"
               @click="logout"
               v-else
@@ -267,6 +284,10 @@ export default {
     NavLinks: {
       type: Array,
       default: () => ["MainSite"],
+    },
+    outerClass: {
+      type: String,
+      default: "",
     },
   },
   data() {

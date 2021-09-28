@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 <template>
   <div>
-    <NavVari :NavLinks="navLinks" />
+    <NavVari :NavLinks="navLinks" outerClass="border-b border-gray-700" />
     <BaseLayout>
       <div class="w-full m-auto text-center flex justify-center bg-white">
         <div class="grid grid-cols-12 md:mt-16 max-w-screen-lg">
@@ -203,6 +203,14 @@ export default {
         // }
       },
     };
+  },
+  mounted() {
+    document.body.classList.remove("bg-bgblue");
+    document.body.classList.add("bg-white");
+  },
+  unmounted() {
+    document.body.classList.remove("bg-white");
+    document.body.classList.add("bg-bgblue");
   },
   computed: {
     ...mapState(["user"]),

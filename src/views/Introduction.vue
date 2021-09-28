@@ -2,7 +2,7 @@
   <div>
     <div><NavVari /></div>
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="bg-headerblue py-4 flex">
+      <div class="flex flex-wrap bg-headerblue py-4 ml-2 md:ml-0">
         <div>
           <span class="text-white leading-2"
             ><BaseButton
@@ -25,62 +25,46 @@
       </div>
     </BaseLayout>
     <BaseLayout>
-      <div class="w-full m-auto text-center flex justify-center font-roboto">
-        <div v-if="!loaded" class="w-full mt-12">
-          <ContentLoader
-            viewBox="0 0 250 110"
-            :speed="1.2"
-            primaryColor="#c2e0fe"
-            secondaryColor="#eeeeed"
-          >
-            <rect x="0" y="4" rx="3" ry="3" height="4" class="w-full" />
-            <rect x="0" y="12" rx="3" ry="3" height="4" class="w-full" />
-            <rect x="0" y="20" rx="3" ry="3" height="4" class="w-9/12" />
-          </ContentLoader>
-        </div>
-        <div class="grid grid-cols-2 mt-12 max-w-screen-lg" v-else>
+      <div v-if="!loaded" class="w-full mt-12">
+        <ContentLoader
+          viewBox="0 0 250 110"
+          :speed="1.2"
+          primaryColor="#c2e0fe"
+          secondaryColor="#eeeeed"
+        >
+          <rect x="0" y="4" rx="3" ry="3" height="4" class="w-full" />
+          <rect x="0" y="12" rx="3" ry="3" height="4" class="w-full" />
+          <rect x="0" y="20" rx="3" ry="3" height="4" class="w-9/12" />
+        </ContentLoader>
+      </div>
+      <div class="font-roboto" v-else>
+        <div class="flex flex-wrap w-full mt-12">
           <div class="pl-1">
             <h3 class="text-left pt-2 text-smlg">
-              {{ plan.resource.name }} -
+              {{ plan.subject.name }} -
               {{ plan.resource.resourceContent.name }}
             </h3>
           </div>
-          <!-- <div class="flex justify-end pt-2">
-            <div class="ml-4 text-xslg">Download</div>
-            <div>
-              <BaseButton
-                type="button"
-                :disabled="false"
-                v-if="!loggedIn"
-                class="text-md"
-                @click.prevent="onClick()"
-              >
-                <span class="ml-4 text-lg">
-                  <font-awesome-icon :icon="['fas', 'file-download']"
-                /></span>
-              </BaseButton>
-            </div>
-          </div> -->
-          <div class="col-span-2 bg-gray-100 mt-4">
-            <div
-              id="pdfvuer"
-              class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll"
+        </div>
+        <div class="m-auto bg-gray-100 mt-4 px-4">
+          <div
+            id="pdfvuer"
+            class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll m-auto"
+          >
+            <pdf
+              :src="pdfdata"
+              v-for="i in numPages"
+              :key="i"
+              :id="i"
+              :page="i"
+              v-model:scale="scale"
+              style="width: 100%; margin: 20px auto"
+              :annotation="true"
+              :resize="true"
+              @link-clicked="handle_pdf_link"
             >
-              <pdf
-                :src="pdfdata"
-                v-for="i in numPages"
-                :key="i"
-                :id="i"
-                :page="i"
-                v-model:scale="scale"
-                style="width: 100%; margin: 20px auto"
-                :annotation="true"
-                :resize="true"
-                @link-clicked="handle_pdf_link"
-              >
-                <template v-slot:loading> loading content here... </template>
-              </pdf>
-            </div>
+              <template v-slot:loading> loading content here... </template>
+            </pdf>
           </div>
         </div>
       </div>

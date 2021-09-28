@@ -24,7 +24,7 @@
         </div>
       </div>
     </BaseLayout>
-    <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">
+    <BaseLayout outerClass="text-gray-700">
       <div class="h-screen">
         <div
           class="
@@ -68,7 +68,7 @@
                 h-12
                 text-center text-white
                 pt-2
-                text-3xl
+                text-bombers
                 font-bold
               "
             >

@@ -2,7 +2,7 @@
   <div>
     <div><NavVari /></div>
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="bg-headerblue py-4 flex">
+      <div class="flex flex-wrap bg-headerblue py-4 ml-2 md:ml-0">
         <div>
           <span class="text-white leading-2"
             ><BaseButton
@@ -19,7 +19,7 @@
             </BaseButton></span
           >
         </div>
-        <div>
+        <div class="text-left">
           <BaseBreadcrumbs class="" :crumbs="crumbs" @selected="selected" />
         </div>
       </div>
@@ -37,71 +37,94 @@
           <rect x="0" y="20" rx="3" ry="3" height="4" class="w-9/12" />
         </ContentLoader>
       </div>
-      <div
-        class="w-full m-auto text-center flex justify-center font-roboto"
-        v-else
-      >
-        <div class="grid grid-cols-2 mt-12 max-w-screen-lg">
-          <div class="pl-1">
+      <div class="font-roboto" v-else>
+        <div class="flex flex-wrap w-full mt-12">
+          <div class="pl-1 flex-shrink">
             <h3 class="text-left pt-2 text-smlg">
-              {{ plan.resource.name }}
-              {{ plan.resource.resourceContent.name }} Lesson Plan
+              {{ plan.resource.name }} -
+              {{ plan.resource.resourceContent.name }} - Lesson Plan
             </h3>
           </div>
-          <div class="flex justify-end pt-2 text-xslg">
-            <div class="mr-3">Add to Favorites:</div>
+          <div class="flex-grow flex pt-2 mr-2 lg:mr-0 justify-end">
             <div>
               <BaseButton
                 type="button"
                 :disabled="false"
-                class=""
-                @click="setFavorite(item)"
-                :class="
-                  plan.resource.resourceContent.isFavorite
-                    ? 'text-red-600'
-                    : 'text-gray-200'
+                class="
+                  text-white
+                  h-8
+                  bg-indigo-400
+                  px-3
+                  ml-2
+                  align-middle
+                  inline-flex
+                  items-center
+                  bg-buttonblue
+                  hover:bg-buttonblueHover
+                  text-navxs
+                  lg:text-xslg
                 "
+                @click="setFavorite(item)"
               >
-                <span class="">
-                  <font-awesome-icon :icon="['fas', 'star']"
-                /></span>
+                Add to Favorites
+                <font-awesome-icon
+                  :icon="['fas', 'star']"
+                  class="text-lg ml-3 mr-1 hover:text-indigo-200"
+                  :class="
+                    plan.resource.resourceContent.isFavorite
+                      ? 'text-red-600'
+                      : 'text-gray-200'
+                  "
+                />
               </BaseButton>
             </div>
-            <div class="ml-4">View Work Sheet</div>
             <div>
               <BaseButton
-                type="button"
-                :disabled="false"
-                v-if="!loggedIn"
-                class="text-lg"
+                type="submit"
+                class="
+                  text-white
+                  h-8
+                  bg-indigo-400
+                  px-3
+                  ml-2
+                  align-middle
+                  inline-flex
+                  items-center
+                  bg-buttonblue
+                  hover:bg-buttonblueHover
+                  text-navxs
+                  lg:text-xslg
+                "
                 @click="$router.push('worksheet')"
               >
-                <span class="ml-4">
-                  <font-awesome-icon :icon="['far', 'file-alt']"
-                /></span>
+                View Work Sheet
+                <font-awesome-icon
+                  :icon="['far', 'file-alt']"
+                  class="text-xl ml-3 mr-1"
+                />
               </BaseButton>
             </div>
           </div>
-          <div class="col-span-2 bg-gray-100 mt-4">
-            <div
-              id="pdfvuer"
-              class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll"
+        </div>
+        <div class="m-auto bg-gray-100 mt-4 px-4">
+          <div
+            id="pdfvuer"
+            class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll m-auto"
+          >
+            <pdf
+              :src="pdfdata"
+              v-for="i in numPages"
+              :key="i"
+              :id="i"
+              :page="i"
+              v-model:scale="scale"
+              style="width: 100%; margin: 20px auto"
+              :annotation="true"
+              :resize="true"
+              @link-clicked="handle_pdf_link"
             >
-              <pdf
-                :src="pdfdata"
-                v-for="i in numPages"
-                :key="i"
-                :id="i"
-                :page="i"
-                v-model:scale="scale"
-                style="width: 100%; margin: 20px auto"
-                :annotation="true"
-                :resize="true"
-                @link-clicked="handle_pdf_link"
-              >
-                <template v-slot:loading> loading content here... </template>
-              </pdf>
-            </div>
+              <template v-slot:loading> loading content here... </template>
+            </pdf>
           </div>
         </div>
       </div>

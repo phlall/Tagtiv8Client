@@ -24,7 +24,7 @@
         </div>
       </div>
     </BaseLayout>
-    <BaseLayout outerClass="bg-bgblue text-gray-700 border-b border-gray-700">
+    <BaseLayout outerClass="text-gray-700">
       <div class="bg-bgblue mb-64 font-roboto border">
         <div class="grid grid-cols-2 mt-12 gap-2 m-auto">
           <div class="pl-1">
