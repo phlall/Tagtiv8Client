@@ -2,7 +2,7 @@
   <div>
     <div><NavVari /></div>
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="flex flex-wrap bg-headerblue w-full py-4 ml-2 md:ml-0">
+      <div class="flex flex-wrap bg-headerblue py-4 ml-2 md:ml-0">
         <div>
           <span class="text-white leading-2"
             ><BaseButton
@@ -39,17 +39,17 @@
       </div>
       <div class="font-roboto" v-else>
         <div class="flex flex-wrap w-full mt-12">
-          <div class="pl-1">
+          <div class="pl-2 sm:pl-0 flex-shrink mt-0 sm:mt-3">
             <h3 class="text-left pt-2 text-smlg">
               {{ plan.subject.name }} -
               {{ plan.resource.resourceContent.name }}
             </h3>
           </div>
         </div>
-        <div class="m-auto bg-gray-100 mt-4 px-4">
+        <div class="m-auto bg-gray-100 mt-4 md:px-4">
           <div
             id="pdfvuer"
-            class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll m-auto"
+            class="mx-2 overflow-x-hidden overflow-y-scroll m-auto"
           >
             <pdf
               :src="pdfdata"

@@ -31,12 +31,12 @@
                 md:top-9
                 h-16
                 mt-0
-                px-4
                 text-center text-headerblue
                 font-bold
                 w-full
-                px-6
-                text-bombersHeading
+                px-8
+                pt-2
+                text-5xl text-bombersHeading
               "
               @click="setPlan(intro)"
             >
@@ -78,7 +78,7 @@
             v-for="(subject, index) in subjects"
             :key="index"
             @click="setPlan(subject)"
-            class="cursor-pointer relative mx-4 sm:mx-0 md:mx-2 lg:mx-2"
+            class="cursor-pointer relative mx-10 sm:mx-0 md:mx-2 lg:mx-2"
             v-else
           >
             <inline-svg
@@ -93,8 +93,8 @@
                 text-center text-white
                 pt-2
                 font-bold
-                text-3xl
-                md:text-bombers
+                text-4xl
+                sm:text-bombers
               "
             >
               {{ subject.name }}

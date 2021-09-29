@@ -2,7 +2,7 @@
   <div>
     <div><NavVari /></div>
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="flex flex-wrap bg-headerblue py-4 ml-2 md:ml-0">
+      <div class="bg-headerblue py-4 flex flex-wrap ml-2 md:ml-0">
         <div>
           <span class="text-white leading-2"
             ><BaseButton
@@ -39,17 +39,26 @@
       </div>
       <div class="font-roboto" v-else>
         <div class="flex flex-wrap w-full mt-12">
-          <div class="pl-1 flex-shrink">
-            <h3 class="text-left pt-2 text-smlg">
+          <div class="pl-2 sm:pl-0 flex-shrink mt-0 sm:mt-3">
+            <h3 class="text-left text-smlg">
               {{ plan.resource.name }} -
               {{ plan.resource.resourceContent.name }} - Lesson Plan
             </h3>
           </div>
-          <div class="flex-grow flex pt-2 mr-2 lg:mr-0 justify-end">
-            <div>
+          <div
+            class="
+              flex-grow flex flex-wrap
+              pt-2
+              mr-2
+              mt-0
+              lg:mr-0
+              justify-start
+              sm:justify-end
+            "
+          >
+            <div class="pt-1 sm:pt-0">
               <BaseButton
                 type="button"
-                :disabled="false"
                 class="
                   text-white
                   h-8
@@ -69,7 +78,7 @@
                 Add to Favorites
                 <font-awesome-icon
                   :icon="['fas', 'star']"
-                  class="text-lg ml-3 mr-1 hover:text-indigo-200"
+                  class="text-lg ml-3 mr-1"
                   :class="
                     plan.resource.resourceContent.isFavorite
                       ? 'text-red-600'
@@ -78,7 +87,7 @@
                 />
               </BaseButton>
             </div>
-            <div>
+            <div class="pt-1 sm:pt-0">
               <BaseButton
                 type="submit"
                 class="
@@ -109,7 +118,7 @@
         <div class="m-auto bg-gray-100 mt-4 px-4">
           <div
             id="pdfvuer"
-            class="h-screen/1 mx-2 overflow-x-hidden overflow-y-scroll m-auto"
+            class="mx-2 overflow-x-hidden overflow-y-scroll m-auto"
           >
             <pdf
               :src="pdfdata"
@@ -158,6 +167,7 @@ export default {
       scale: "page-width",
       loaded: false,
       crumbs: [],
+      pdfFile: null,
     };
   },
   computed: {
@@ -209,7 +219,7 @@ export default {
     load() {
       GetFile.from(encodeURI(this.plan.resource.resourceContent.lessonPlan))
         .then((file) => {
-          // this.pdfdata = file;
+          this.pdfdata = file;
           this.getPdf(file);
         })
         .catch((err) => {
@@ -228,9 +238,7 @@ export default {
         this.loaded = true;
         window.onscroll = function () {
           changePage();
-          //stickyNav();
         };
-
         function changePage() {
           var i = 1,
             count = Number(pdf.numPages);

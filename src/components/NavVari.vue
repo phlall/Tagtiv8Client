@@ -2,11 +2,15 @@
   <div :class="outerClass">
     <BaseLayout outerClass="bg-white text-gray-700 font-roboto pb-2">
       <div class="flex flex-wrap">
-        <div class="pt-4 pb-1">
+        <div class="pt-4 pb-1 pl-3 sm:pl-0 w-56">
           <img src="@/assets/images/logo.png" />
         </div>
         <div class="flex-grow pt-8 flex justify-end">
-          <div v-for="(link, index) in NavLinks" :key="index">
+          <div
+            v-for="(link, index) in NavLinks"
+            :key="index"
+            class="lg:inline-block hidden"
+          >
             <div v-if="getLinkType(link)">
               <BaseButton
                 type="submit"
@@ -22,8 +26,6 @@
                   inline-flex
                   items-center
                   bg-buttonblue
-                  lg:inline-block
-                  hidden
                   hover:bg-buttonblueHover
                 "
                 @click="$router.push('MainSite')"
@@ -81,12 +83,14 @@
             >
               ADD CONTENT
             </BaseButton>
-            <!-- </div>
-          <div class=""> -->
-            <BaseButton
+          </div>
+          <div class="">
+            <!-- <BaseButton
               type="submit"
               :disabled="false"
               class="
+                hidden
+                lg:inline-block
                 text-white
                 h-8
                 bg-buttonblue
@@ -100,12 +104,14 @@
               v-if="!loggedIn"
             >
               LOG IN
-            </BaseButton>
+            </BaseButton> -->
             <BaseButton
               type="submit"
               :class="'bg-buttonblue'"
               :disabled="false"
               class="
+                hidden
+                lg:inline-block
                 text-white
                 h-8
                 bg-buttonblue
@@ -115,30 +121,39 @@
                 font-bold
                 hover:bg-buttonblueHover
               "
-              something="else"
               @click="logout"
-              v-else
+              v-if="loggedIn"
             >
               LOG OUT
             </BaseButton>
           </div>
-          <!-- <div class="hidden lg:block font-bold"></div> -->
           <div
-            class="block lg:hidden font-bold text-right text-smlg ml-2"
+            class="
+              block
+              lg:hidden
+              font-bold
+              text-right text-smlg
+              ml-2
+              pr-2
+              sm:pr-0
+              w-12
+              sm:w-10
+            "
             v-if="loggedIn"
           >
             <button
               @click="toggle"
               class="
-                px-3
-                py-2
                 border
                 rounded
                 text-teal-lighter
                 border-teal-light
-                hover:text-gray-800 hover:border-gray-400
+                hover:bg-buttonblueHover hover:border-buttonblue
                 h-10
+                w-full
                 shadow
+                bg-buttonblue
+                text-white
               "
             >
               <font-awesome-icon :icon="['fas', 'bars']" v-if="!open" />
@@ -160,15 +175,16 @@
           border-b border-gray-400
         "
       >
-        <div class="text-sm py-4 bg-gridrowbluehover">
+        <div class="text-sm py-0 bg-buttonblue">
           <ul>
             <li
               class="
-                my-1
-                py-1
+                pt-2
+                pb-1
                 font-bold
                 border-t border-b border-blue-300
-                bg-gridrowbluehover
+                bg-buttonblue
+                hover:bg-buttonblueHover
               "
               v-for="(link, index) in NavLinks"
               :key="index"
@@ -181,7 +197,7 @@
                       font-bold
                       pl-6
                       w-full
-                      text-left text-blue-100
+                      text-left text-gray-100
                       hover:text-white
                       text-left
                     "
@@ -200,7 +216,14 @@
               </div>
             </li>
             <li
-              class="my-1 py-1 font-bold border-b border-blue-300"
+              class="
+                pt-2
+                pb-1
+                font-bold
+                border-b border-blue-300
+                bg-buttonblue
+                hover:bg-buttonblueHover
+              "
               v-if="loggedIn && checkUser() && showAdmin()"
             >
               <div class="flex">
@@ -211,7 +234,7 @@
                       font-bold
                       pl-6
                       w-full
-                      text-left text-left text-blue-100
+                      text-left text-gray-100
                       hover:text-white
                     "
                     @click="goPath('resource-content')"
@@ -229,11 +252,12 @@
             </li>
             <li
               class="
-                my-1
-                py-1
+                pt-2
+                pb-1
                 font-bold
                 border-b border-blue-300
-                bg-gridrowbluehover
+                bg-buttonblue
+                hover:bg-buttonblueHover
               "
               v-if="loggedIn && checkUser() && showAdmin()"
             >
@@ -245,13 +269,49 @@
                       font-bold
                       pl-6
                       w-full
-                      text-left text-white
+                      text-left text-gray-100
                       hover:text-white
                     "
                     @click="goPath('Register')"
                     v-if="loggedIn && checkUser() && showAdmin()"
                   >
                     REGISTER
+                  </BaseButton>
+                </div>
+                <div>
+                  <font-awesome-icon
+                    :icon="['fas', 'caret-right']"
+                    class="text-xl inline-block mr-3"
+                  />
+                </div>
+              </div>
+            </li>
+            <li
+              class="
+                pt-2
+                pb-1
+                font-bold
+                border-b border-blue-300
+                bg-buttonblue
+                hover:bg-buttonblueHover
+              "
+              v-if="loggedIn && checkUser() && showAdmin()"
+            >
+              <div class="flex">
+                <div class="flex-grow">
+                  <BaseButton
+                    type="button"
+                    class="
+                      font-bold
+                      pl-6
+                      w-full
+                      text-left text-gray-100
+                      hover:text-white
+                    "
+                    @click="logout"
+                    v-if="loggedIn && checkUser()"
+                  >
+                    LOG OUT
                   </BaseButton>
                 </div>
                 <div>

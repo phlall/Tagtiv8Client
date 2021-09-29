@@ -2,7 +2,7 @@
   <div>
     <div><NavVari /></div>
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="bg-headerblue py-4 flex ml-2 md:ml-0">
+      <div class="bg-headerblue py-4 flex flex-wrap ml-2 md:ml-0">
         <div>
           <span class="text-white leading-2"
             ><BaseButton
@@ -25,7 +25,6 @@
       </div>
     </BaseLayout>
     <BaseLayout>
-      <!-- <div class="w-full m-auto text-center flex justify-center font-roboto"> -->
       <div v-if="!loaded" class="w-full mt-12">
         <ContentLoader
           viewBox="0 0 250 110"
@@ -40,20 +39,29 @@
       </div>
       <div class="font-roboto" v-else>
         <div class="flex flex-wrap w-full mt-12">
-          <div class="pl-1 flex-shrink">
-            <h3 class="text-left pt-2 text-smlg">
+          <div class="pl-2 sm:pl-0 flex-shrink mt-0 sm:mt-3">
+            <h3 class="text-left text-smlg">
               {{ plan.resource.name }} -
               {{ plan.resource.resourceContent.name }} - Work Sheet
             </h3>
           </div>
-          <div class="flex-grow flex pt-2 mr-2 lg:mr-0 justify-end">
-            <div>
+          <div
+            class="
+              flex-grow flex flex-wrap
+              pt-2
+              mr-2
+              mt-0
+              lg:mr-0
+              justify-start
+              sm:justify-end
+            "
+          >
+            <div class="pt-1 sm:pt-0">
               <BaseButton
                 type="button"
                 class="
                   text-white
                   h-8
-                  bg-indigo-400
                   px-3
                   ml-2
                   align-middle
@@ -78,13 +86,12 @@
                 />
               </BaseButton>
             </div>
-            <div>
+            <div class="pt-1 sm:pt-0">
               <BaseButton
                 type="submit"
                 class="
                   text-white
                   h-8
-                  bg-indigo-400
                   px-3
                   ml-2
                   align-middle
@@ -104,13 +111,12 @@
                 />
               </BaseButton>
             </div>
-            <div>
+            <div class="pt-1 sm:pt-0">
               <BaseButton
                 type="submit"
                 class="
                   text-white
                   h-8
-                  bg-indigo-400
                   px-3
                   ml-2
                   align-middle
@@ -229,6 +235,13 @@ export default {
     },
   },
   methods: {
+    savePdf() {
+      var FileSaver = require("file-saver");
+      FileSaver.saveAs(
+        this.pdfFile,
+        this.plan.resource.resourceContent.workSheet
+      );
+    },
     createCrumbs() {
       this.crumbs = [
         { name: "Planning Home", route: "home" },
@@ -247,13 +260,6 @@ export default {
           console.log(err);
         });
     },
-    savePdf() {
-      var FileSaver = require("file-saver");
-      FileSaver.saveAs(
-        this.pdfFile,
-        this.plan.resource.resourceContent.workSheet
-      );
-    },
     handle_pdf_link: function (params) {
       var page = document.getElementById(String(params.pageNumber));
       page.scrollIntoView();
@@ -264,7 +270,6 @@ export default {
       self.pdfdata.then((pdf) => {
         self.numPages = pdf.numPages;
         this.loaded = true;
-
         window.onscroll = function () {
           changePage();
         };
@@ -289,27 +294,6 @@ export default {
     findPos(obj) {
       return obj.offsetTop;
     },
-    // setFavorite() {
-    //   let rs = this.plan.resource.resourceContent;
-    //   const rsId = rs.id;
-    //   if (rs.isFavorite) {
-    //     rs.isFavorite = false;
-    //     this.$store
-    //       .dispatch("user/deleteFavorite", { itemId: rsId })
-    //       .then(() => {})
-    //       .catch(() => {
-    //         rs.isFavorite = true;
-    //       });
-    //   } else {
-    //     rs.isFavorite = true;
-    //     this.$store
-    //       .dispatch("user/addFavorite", { itemId: rsId })
-    //       .then(() => {})
-    //       .catch(() => {
-    //         rs.isFavorite = false;
-    //       });
-    //   }
-    // },
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="bg-headerblue flex py-4 ml-2 md:ml-0">
+      <div class="bg-headerblue flex flex-wrap py-4 ml-4 sm:ml-0">
         <div>
           <span class="text-white leading-2"
             ><BaseButton
@@ -25,35 +25,37 @@
       </div>
     </BaseLayout>
     <BaseLayout outerClass="text-gray-700">
-      <div class="bg-bgblue mb-64 font-roboto border">
+      <div class="bg-bgblue mb-64 font-roboto mx-4 sm:mx-0">
         <div class="grid grid-cols-2 mt-12 gap-2 m-auto">
-          <div class="pl-1">
-            <h3 class="font-bold text-gray-600 text-left pt-2 text-lg">
-              {{ plan.subject.name }} Resources
-            </h3>
-          </div>
-          <div class="flex justify-end pt-2 pr-1">
-            <div class="mr-3">Sort:</div>
-            <div>
-              <BaseButton
-                type="button"
-                :disabled="false"
-                @click="sortAz()"
-                v-if="!loggedIn"
-              >
-                A-Z
-              </BaseButton>
+          <div class="col-span-2 flex flex-wrap w-full">
+            <div class="pl-1">
+              <h3 class="font-bold text-gray-600 text-left pt-2 text-lg">
+                {{ plan.subject.name }} Resources
+              </h3>
             </div>
-            <div class="mx-2">|</div>
-            <div>
-              <BaseButton
-                type="button"
-                :disabled="false"
-                @click="sortFavorites()"
-                v-if="!loggedIn"
-              >
-                Favorites
-              </BaseButton>
+            <div class="flex justify-end flex-grow pt-2 pr-1">
+              <div class="mr-3">Sort:</div>
+              <div>
+                <BaseButton
+                  type="button"
+                  :disabled="false"
+                  @click="sortAz()"
+                  v-if="!loggedIn"
+                >
+                  A-Z
+                </BaseButton>
+              </div>
+              <div class="mx-2">|</div>
+              <div>
+                <BaseButton
+                  type="button"
+                  :disabled="false"
+                  @click="sortFavorites()"
+                  v-if="!loggedIn"
+                >
+                  Favorites
+                </BaseButton>
+              </div>
             </div>
           </div>
           <div v-if="!loaded" class="col-span-2">

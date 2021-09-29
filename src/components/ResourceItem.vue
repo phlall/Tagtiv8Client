@@ -42,20 +42,24 @@
           <h2
             class="
               w-full
-              h-10
+              h-8
+              sm:h-10
               text-gray-600
               pt-1
+              sm:pt-2
               text-sm
               xl:text-base
               2xl:text-base
+              text-center
+              sm:text-left
             "
           >
             {{ item.name }}
           </h2>
         </div>
-        <div class="flex justify-end">
+        <div class="flex justify-center sm:justify-end">
           <div v-if="intro">
-            <div class="mr-2">
+            <div class="mr-2 pb-3">
               <button
                 type="button"
                 :disabled="false"
@@ -99,7 +103,7 @@
             </div>
           </div>
           <div v-else class="flex">
-            <div class="mr-2">
+            <div class="mr-2 pb-1 sm:pb-0">
               <BaseButton
                 type="button"
                 :disabled="false"
