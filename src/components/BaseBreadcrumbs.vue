@@ -1,16 +1,16 @@
 <template>
   <div
     class="
-      pt-2
-      text-xslg
+      pt-3
+      sm:pt-2
+      text-navxs
       sm:text-nav
       text-white
       sm:ml-4 sm:mr-4
       mr-2
-      flex flex-nowrap
+      flex
       sm:justify-end
       justify-start
-      pl-2
       sm:pl-0
     "
   >

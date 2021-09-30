@@ -3,7 +3,7 @@
     <div><NavVari /></div>
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 flex flex-wrap ml-2 md:ml-0">
-        <div>
+        <div class="mr-2">
           <span class="text-white leading-2"
             ><BaseButton
               type="submit"
@@ -25,7 +25,7 @@
       </div>
     </BaseLayout>
     <BaseLayout>
-      <div v-if="!loaded" class="w-full mt-12">
+      <div v-if="!loaded" class="mx-4 sm:mx-0 mt-12">
         <ContentLoader
           viewBox="0 0 250 110"
           :speed="1.2"
@@ -38,9 +38,9 @@
         </ContentLoader>
       </div>
       <div class="font-roboto" v-else>
-        <div class="flex flex-wrap w-full mt-12">
+        <div class="flex flex-wrap w-full mt-6 sm:mt-8">
           <div class="pl-2 sm:pl-0 flex-shrink mt-0 sm:mt-3">
-            <h3 class="text-left text-smlg">
+            <h3 class="text-left text-xslg sm:text-smlg">
               {{ plan.resource.name }} -
               {{ plan.resource.resourceContent.name }} - Lesson Plan
             </h3>

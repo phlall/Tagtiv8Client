@@ -3,7 +3,7 @@
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue flex flex-wrap py-4 ml-4 sm:ml-0">
-        <div>
+        <div class="mr-2">
           <span class="text-white leading-2"
             ><BaseButton
               type="submit"
