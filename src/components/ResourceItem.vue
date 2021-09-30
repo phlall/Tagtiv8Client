@@ -81,7 +81,7 @@
             </div>
           </div>
           <div v-else-if="isView">
-            <div class="mr-2">
+            <div class="mr-2 pb-3">
               <button
                 type="button"
                 :disabled="false"

@@ -2,7 +2,7 @@
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
-      <div class="bg-headerblue flex py-4 ml-2 md:ml-0">
+      <div class="bg-headerblue flex flex-wrap py-4 ml-2 md:ml-0">
         <div>
           <span class="text-white leading-2"
             ><BaseButton
@@ -20,7 +20,7 @@
           >
         </div>
         <div class="flex-grow">
-          <BaseBreadcrumbs class="" :crumbs="crumbs" @selected="selected" />
+          <BaseBreadcrumbs class="" :crumbs="crumbs" />
         </div>
       </div>
     </BaseLayout>
@@ -68,8 +68,9 @@
                 h-12
                 text-center text-white
                 pt-2
-                text-bombers
                 font-bold
+                text-4xl
+                sm:text-bombers
               "
             >
               {{ ageRange.title }}

@@ -27,7 +27,7 @@
             <div
               class="
                 absolute
-                top-12
+                top-1/3
                 md:top-9
                 h-16
                 mt-0
@@ -40,7 +40,8 @@
               "
               @click="setPlan(intro)"
             >
-              Introduction to Tagtiv8
+              <span class="hidden sm:block"> Introduction to Tagtiv8</span>
+              <span class="block sm:hidden"> Introduction</span>
             </div>
           </div>
         </div>

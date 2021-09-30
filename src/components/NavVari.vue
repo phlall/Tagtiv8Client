@@ -295,7 +295,7 @@
                 bg-buttonblue
                 hover:bg-buttonblueHover
               "
-              v-if="loggedIn && checkUser() && showAdmin()"
+              v-if="loggedIn && checkUser()"
             >
               <div class="flex">
                 <div class="flex-grow">
@@ -309,7 +309,6 @@
                       hover:text-white
                     "
                     @click="logout"
-                    v-if="loggedIn && checkUser()"
                   >
                     LOG OUT
                   </BaseButton>

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import store from "@/store";
 import _ from "lodash";
 import Login from "../views/Login.vue";
@@ -10,6 +10,7 @@ import LessonPlan from "../views/LessonPlan.vue";
 import WorkSheet from "../views/WorkSheet.vue";
 import Introduction from "../views/Introduction.vue";
 import Register from "../views/Register.vue";
+import NotFound from "../views/NotFound.vue";
 import AdminResourceContent from "../views/AdminResourceContent.vue";
 
 const routes = [
@@ -165,10 +166,15 @@ const routes = [
       window.location.href = "https://tagtiv8.com";
     },
   },
+  {
+    path: "/:catchAll(.*)",
+    component: NotFound,
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
+  // hash: createWebHistory(),
   routes,
 });
 
