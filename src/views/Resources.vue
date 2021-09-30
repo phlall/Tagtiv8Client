@@ -58,7 +58,7 @@
               </div>
             </div>
           </div>
-          <div v-if="!loaded" class="col-span-2">
+          <div v-if="!loaded" class="col-span-2 mx-4 sm:mx-0">
             <ContentLoader
               viewBox="0 0 250 110"
               :speed="1.2"

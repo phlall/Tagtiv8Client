@@ -2,14 +2,23 @@
   <div
     class="
       pt-2
-      text-nav text-white
-      mx-4
+      text-xslg
+      sm:text-nav
+      text-white
+      sm:ml-4 sm:mr-4
+      mr-2
       flex flex-nowrap
-      justify-end
-      sm:justify-start
+      sm:justify-end
+      justify-start
+      pl-2
+      sm:pl-0
     "
   >
-    <div v-for="(crumb, ci) in crumbs" :key="ci">
+    <div
+      v-for="(crumb, ci) in crumbs"
+      :key="ci"
+      class="flex flex-nowrap mb-auto"
+    >
       <BaseButton
         @click="$router.push(crumb.route)"
         :class="
@@ -21,7 +30,7 @@
       >
         {{ crumb.name }}
       </BaseButton>
-      <span v-if="!isLast(ci)" class="px-1">/</span>
+      <div v-if="!isLast(ci)" class="px-1 inline-block">/</div>
     </div>
   </div>
 </template>

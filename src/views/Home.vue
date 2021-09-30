@@ -92,7 +92,7 @@
                 w-full
                 h-12
                 text-center text-white
-                pt-2
+                pt-1
                 font-bold
                 text-4xl
                 sm:text-bombers
