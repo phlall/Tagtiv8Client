@@ -144,12 +144,31 @@ export default {
         })
         .then((error) => {
           if (!error) {
-            this.$router.push({ name: "AgeRange" });
+            if (subject.name.includes("Introduction")) {
+              this.$router.push({ name: "Resources" });
+            } else {
+              this.$router.push({ name: "AgeRange" });
+            }
           } else {
             this.$router.push({ name: "Login" });
           }
         });
     },
+    // setIntroPlan(subject) {
+    //   this.$store
+    //     .dispatch("user/setPlan", {
+    //       name: subject.name,
+    //       id: subject.id,
+    //       blended: subject.blended,
+    //     })
+    //     .then((error) => {
+    //       if (!error) {
+    //         this.$router.push({ name: "Resources" });
+    //       } else {
+    //         this.$router.push({ name: "Login" });
+    //       }
+    //     });
+    // },
   },
   components: {
     NavVari,

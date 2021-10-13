@@ -29,7 +29,10 @@
         <div class="grid grid-cols-2 mt-12 gap-2 m-auto">
           <div class="col-span-2 flex flex-wrap w-full">
             <div class="pl-1">
-              <h3 class="font-bold text-gray-600 text-left pt-2 text-lg">
+              <h3
+                class="font-bold text-gray-600 text-left pt-2 text-lg"
+                v-show="resourceData.length"
+              >
                 {{ plan.subject.name }} Resources
               </h3>
             </div>
@@ -78,6 +81,7 @@
               <ResourceItem
                 :resource="intro"
                 :intro="true"
+                :isOpen="!resourceData.length"
                 @setContent="setResourceContent($event)"
               />
             </div>

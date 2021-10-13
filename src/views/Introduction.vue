@@ -41,8 +41,9 @@
         <div class="flex flex-wrap w-full mt-12">
           <div class="pl-2 sm:pl-0 flex-shrink mt-0 sm:mt-3">
             <h3 class="text-left pt-2 text-smlg">
-              {{ plan.subject.name }} -
-              {{ plan.resource.resourceContent.name }}
+              {{ plan.resource.name }}
+              <!-- {{ plan.subject.name }}  -->
+              <!-- {{ plan.resource.resourceContent.name }} -->
             </h3>
           </div>
         </div>

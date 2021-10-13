@@ -1,6 +1,11 @@
 <template>
   <div class="bg-gridrowblue">
-    <div class="flex w-full" :class="handleToggle()" @click="toggle()">
+    <div
+      class="flex w-full"
+      :class="handleToggle()"
+      @click="toggle()"
+      v-if="!isOpen"
+    >
       <div class="flex-shrink">
         <h2 class="w-full h-10 pl-4 pt-2 text-lg xl:text-lg 2xl:text-lg">
           {{ resource.name }}
@@ -183,10 +188,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    isOpen: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      open: false,
+      open: this.isOpen,
     };
   },
   methods: {

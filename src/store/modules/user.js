@@ -50,7 +50,7 @@ export const actions = {
   login({ commit, dispatch }, credentials) {
     return ApiService.login(credentials)
       .then((response) => {
-        commit("SET_USER_DATA", response.data);
+        commit("SET_USER_DATA", response.data); 
         const notification = {
           type: "success",
           message: "login successful",
