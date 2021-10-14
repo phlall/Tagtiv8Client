@@ -7,6 +7,7 @@ import {
   faLinkedin,
   faPinterestSquare,
   faVimeo,
+  faInstagramSquare,
 } from "@fortawesome/free-brands-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -41,6 +42,7 @@ library.add(
   faTimes,
   faFacebookSquare,
   faLinkedin,
+  faInstagramSquare,
   faPinterestSquare,
   faVimeo,
   faStar,

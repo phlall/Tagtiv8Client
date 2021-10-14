@@ -145,7 +145,13 @@ export default {
         .then((error) => {
           if (!error) {
             if (subject.name.includes("Introduction")) {
-              this.$router.push({ name: "Resources" });
+              this.$store
+                .dispatch("user/setAgeRange", { ageRange: "EYFS" })
+                .then((error) => {
+                  if (!error) {
+                    this.$router.push({ name: "Resources" });
+                  }
+                });
             } else {
               this.$router.push({ name: "AgeRange" });
             }

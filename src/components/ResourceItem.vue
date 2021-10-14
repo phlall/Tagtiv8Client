@@ -58,6 +58,9 @@
               text-center
               sm:text-left
             "
+            :class="
+              resource.resourceContent.length <= 1 ? 'text-lg font-bold' : ''
+            "
           >
             {{ item.name }}
           </h2>

@@ -42,7 +42,7 @@
           <div class="pl-2 sm:pl-0 flex-shrink mt-0 sm:mt-3">
             <h3 class="text-left text-xslg sm:text-smlg">
               {{ plan.resource.name }} -
-              {{ plan.resource.resourceContent.name }} - Work Sheet
+              {{ plan.resource.resourceContent.name }} - Activity Card
             </h3>
           </div>
           <div

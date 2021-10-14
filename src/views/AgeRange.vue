@@ -15,7 +15,7 @@
                 :icon="['fas', 'caret-left']"
                 class="text-xl"
               />
-              <span class="inline-block align-top ml-2"> Back </span>
+              <span class="align-top ml-2 hidden sm:inline-block"> Back </span>
             </BaseButton></span
           >
         </div>

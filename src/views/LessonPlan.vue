@@ -106,7 +106,7 @@
                 "
                 @click="$router.push('worksheet')"
               >
-                View Work Sheet
+                View Activity Card
                 <font-awesome-icon
                   :icon="['far', 'file-alt']"
                   class="text-xl ml-3 mr-1"
