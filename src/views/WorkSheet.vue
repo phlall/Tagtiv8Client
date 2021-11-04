@@ -15,7 +15,7 @@
                 :icon="['fas', 'caret-left']"
                 class="text-xl"
               />
-              <span class="inline-block align-top ml-2"> Back </span>
+              <span class="hidden sm:inline-block align-top ml-2"> Back </span>
             </BaseButton></span
           >
         </div>
@@ -135,18 +135,6 @@
                   class="text-xl ml-3 mr-1"
                 />
               </BaseButton>
-              <!-- 
-              <BaseButton
-                type="button"
-                :disabled="false"
-                v-if="!loggedIn"
-                class="text-md"
-                @click.prevent="savePdf()"
-              >
-                <span class="ml-4 text-lg">
-                  <font-awesome-icon :icon="['fas', 'file-download']"
-                /></span>
-              </BaseButton> -->
             </div>
           </div>
         </div>

@@ -59,7 +59,9 @@
               sm:text-left
             "
             :class="
-              resource.resourceContent.length <= 1 ? 'text-lg font-bold' : ''
+              resource.resourceContent.length <= 1 && intro
+                ? 'text-lg font-bold'
+                : ''
             "
           >
             {{ item.name }}
@@ -163,7 +165,7 @@
                 "
                 @click="setResourceContent(item, 'WorkSheet')"
               >
-                Work Sheet
+                Activity Card
               </BaseButton>
             </div>
           </div>
