@@ -27,6 +27,7 @@ module.exports = {
         smlg: "1.0rem",
         xlsm: "1.175rem",
         xl2sm: "1.7rem",
+        bomberssm: "2rem",
         bombers: "2.4rem",
         bombersHeading: "2.6rem",
         // xslg: {"font-size: 0.81rem", "line-height: 1.05rem"],

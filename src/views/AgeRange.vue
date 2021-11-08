@@ -1,5 +1,9 @@
 <template>
   <div>
+    <teleport to="title">
+      {{ plan.subject.name }} | Active Learning Games</teleport
+    >
+
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue flex flex-wrap py-4 ml-2 md:ml-0">

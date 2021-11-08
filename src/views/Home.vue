@@ -1,4 +1,5 @@
 <template>
+  <teleport to="#title">Tagtiv8 Resources | Active Learning Games</teleport>
   <div>
     <NavVari :NavLinks="navLinks" />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
@@ -94,8 +95,9 @@
                 text-center text-white
                 pt-1
                 font-bold
+                sm:text-bomberssm
                 text-4xl
-                sm:text-bombers
+                md:text-bombers
               "
             >
               {{ subject.name }}

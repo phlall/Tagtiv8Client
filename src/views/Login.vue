@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 <template>
+  <teleport to="#title">Login | Active Learning Games</teleport>
   <div>
     <NavVari :NavLinks="navLinks" outerClass="border-b border-gray-700" />
     <BaseLayout>

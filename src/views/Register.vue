@@ -1,4 +1,5 @@
 <template>
+  <teleport to="#title">Register | Active Learning Games</teleport>
   <div>
     <NavVari />
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
