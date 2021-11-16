@@ -176,7 +176,9 @@
 </template>
 
 <script>
+//import _ from "lodash";
 export default {
+  name: "ResourceItem",
   props: {
     resource: {
       type: Object,
@@ -201,9 +203,16 @@ export default {
   data() {
     return {
       open: this.isOpen,
+      grouped: [],
     };
   },
   methods: {
+    itemCategories(item) {
+      alert(JSON.stringify(item));
+      //alert(JSON.stringify(_.groupBy(item, (item) => item.resourceName)));
+      //return _.groupBy(item, (item) => item.subject.resourceName);
+      return null;
+    },
     setResourceContent(resourceItem, type) {
       let resourceObj = {
         id: this.resource.id,

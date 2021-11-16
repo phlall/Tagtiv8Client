@@ -94,7 +94,14 @@
               :key="resource.id"
               class="my-1"
             >
+              <ResourceBlendedItem
+                v-if="plan.subject.blended"
+                :resource="resource"
+                :isView="isView"
+                @setContent="setResourceContent($event)"
+              />
               <ResourceItem
+                v-else
                 :resource="resource"
                 :isView="isView"
                 @setContent="setResourceContent($event)"
@@ -110,6 +117,7 @@
 <script>
 import NavVari from "../components/NavVari.vue";
 import ResourceItem from "../components/ResourceItem.vue";
+import ResourceBlendedItem from "../components/ResourceBlendedItem.vue";
 import _ from "lodash";
 import { mapGetters } from "vuex";
 import { ContentLoader } from "vue-content-loader";
@@ -213,6 +221,7 @@ export default {
   components: {
     NavVari,
     ResourceItem,
+    ResourceBlendedItem,
     ContentLoader,
   },
 };
