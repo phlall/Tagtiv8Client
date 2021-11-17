@@ -41,6 +41,9 @@ module.exports = {
         buttonblueHover: {
           DEFAULT: "#1BBDF5",
         },
+        buttonblueHoverLite: {
+          DEFAULT: "#99e4ff",
+        },
         headerblue: {
           DEFAULT: "#005FAB",
         },
@@ -52,6 +55,9 @@ module.exports = {
         },
         gridrowbluedark: {
           DEFAULT: "#44b9e4",
+        },
+        gridrowBlueDarkMinor: {
+          DEFAULT: "#198abe",
         },
         gridrowbluehover: {
           DEFAULT: "#72b0da",
