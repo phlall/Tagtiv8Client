@@ -127,7 +127,10 @@
                 /></span>
               </BaseButton>
             </div>
-            <div class="mr-2">
+            <div
+              class="mr-2"
+              v-if="item.lessonPlan && item.lessonPlan != 'none'"
+            >
               <button
                 type="button"
                 :disabled="false"

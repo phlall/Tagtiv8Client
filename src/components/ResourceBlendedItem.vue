@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-600">
+  <div class="bg-gridrowBlueDarkMinor">
     <div
       class="flex w-full pb-2"
       :class="handleToggle()"
@@ -31,7 +31,7 @@
           <span class="text-3xl">
             <font-awesome-icon
               :icon="['fas', open ? 'caret-up' : 'caret-down']"
-              :class="!open ? 'text-gray-400' : 'text-white'"
+              :class="!open ? 'text-buttonblueHoverLite' : 'text-white'"
           /></span>
         </BaseButton>
       </div>
@@ -91,7 +91,7 @@
                 {{ activity.name }}
               </h2>
             </div>
-            <div class="flex justify-center sm:justify-end">
+            <div class="flex justify-center sm:justify-end sm:text-center">
               <div class="mr-2 pb-1 sm:pb-0 flex-grow text-right">
                 <BaseButton
                   type="button"
@@ -108,7 +108,10 @@
                   /></span>
                 </BaseButton>
               </div>
-              <div class="mr-2">
+              <div
+                class="mr-2"
+                v-if="item.lessonPlan != '' && item.lessonPlan != 'none'"
+              >
                 <button
                   type="button"
                   :disabled="false"
@@ -218,10 +221,10 @@ export default {
     handleToggle() {
       let strClass = "";
       if (this.resource.resourceContent.length && !this.open) {
-        strClass += "cursor-pointer hover:bg-gray-500 text-gray-600";
+        strClass += "cursor-pointer hover:bg-gridrowbluedark text-gray-600";
       }
       if (this.resource.resourceContent.length && this.open) {
-        strClass += "cursor-pointer bg-gray-400 text-white";
+        strClass += "cursor-pointer bg-gridrowbluedark text-white";
       }
       return strClass;
     },
