@@ -195,8 +195,8 @@ export default {
             if (this.plan.subject.name == "Sustain") {
               this.isView = true;
             }
-            const match = _.filter(resources, (car) => {
-              return car.resourceContent.length;
+            const match = _.filter(resources, (x) => {
+              return x.resourceContent.length;
             });
             this.resourceData = _.orderBy(match, ["name"], ["asc"]);
             // this.resourceData = _.sortBy(match, function (emp) {

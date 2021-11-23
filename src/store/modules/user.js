@@ -105,13 +105,13 @@ export const actions = {
     });
   },
   getUsers({ dispatch }) {
-    return ApiService.getUsers().then((data) => {
+    return ApiService.getUsers().then((response) => {
       const notification = {
         type: "success",
         message: "Users returned",
       };
       dispatch("notification/add", notification, { root: true });
-      return data;
+      return response.data;
     });
   },
   getResources({ state, commit, dispatch }) {

@@ -38,7 +38,7 @@ export default {
   },
   getUsers() {
     if (this.setAuthHeader()) {
-      return apiClient.get("/wp/v2/users?context=edit");
+      return apiClient.get("users");
     }
     return null;
   },

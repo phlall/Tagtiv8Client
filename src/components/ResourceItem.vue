@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gridrowblue">
     <div
-      class="flex w-full"
+      class="flex flex-row w-full"
       :class="handleToggle()"
       @click="toggle()"
       v-if="!isOpen"
