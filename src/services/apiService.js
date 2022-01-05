@@ -2,8 +2,8 @@ import axios from "axios";
 import store from "@/store";
 
 const apiClient = axios.create({
-  baseURL: "https://tagtiv8.herokuapp.com/api/",
-  //baseURL: "https://localhost:49155/api/",
+  //baseURL: "https://tagtiv8.herokuapp.com/api/",
+  baseURL: "https://localhost:49155/api/",
   withCredentials: false, // This is the default
   headers: {
     Accept: "application/json",
@@ -39,6 +39,12 @@ export default {
   getUsers() {
     if (this.setAuthHeader()) {
       return apiClient.get("users");
+    }
+    return null;
+  },
+  getUser(id) {
+    if (this.setAuthHeader()) {
+      return apiClient.get(`users/${id}`);
     }
     return null;
   },

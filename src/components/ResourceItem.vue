@@ -187,9 +187,6 @@ export default {
       type: Object,
       required: true,
     },
-    // loaded: {
-    //   type: Boolean,
-    // },
     intro: {
       type: Boolean,
       default: false,

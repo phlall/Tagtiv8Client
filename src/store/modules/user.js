@@ -114,6 +114,20 @@ export const actions = {
       return response.data;
     });
   },
+  getUser({ dispatch }, userId) {
+    return ApiService.getUser(userId.userId)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        const notification = {
+          type: "error",
+          message: `User not found  -  ${error.message}`,
+        };
+        dispatch("notification/add", notification, { root: true });
+        return error;
+      });
+  },
   getResources({ state, commit, dispatch }) {
     if (state.plan.ageRange != null && state.plan.subject != null) {
       return ApiService.getResources(

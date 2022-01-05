@@ -1,7 +1,16 @@
 <template>
   <div class="bg-gridrowblue">
     <div class="flex w-full">
-      <div class="flex-grow flex">
+      <BaseButton
+        class="
+          flex-grow flex
+          hover:bg-blue-300 hover:cursor-pointer
+          rounded
+          mr-2
+          text-left
+        "
+        @click="userDetail()"
+      >
         <div class="w-2/12">
           <h2 class="pl-4 pt-2 text-smlg text-left">
             {{ user.firstName }}
@@ -22,9 +31,9 @@
             {{ user.school }}
           </h2>
         </div>
-      </div>
+      </BaseButton>
 
-      <div class="flex justify-end my-2">
+      <div class="flex justify-end my-2 h-8">
         <div class="w-16">
           <div
             v-show="user.isAdmin"
@@ -40,11 +49,15 @@
             admin
           </div>
         </div>
-        <div class="mr-2">
+        <div class="mr-1 text-white py-1 px-3 text-nav bg-blue-600 rounded h-8">
+          {{ user.logonsCount }}
+        </div>
+
+        <div class="mr-2 h-8">
           <button
             type="button"
             :disabled="false"
-            class="text-white py-1 px-3 bg-buttonblue text-nav"
+            class="text-white py-1 px-3 bg-buttonblue text-nav rounded h-8"
             @click="changePassword()"
           >
             Change Password
@@ -54,7 +67,7 @@
           <BaseButton
             type="submit"
             :disabled="false"
-            class="text-white py-1 px-3 bg-buttonblue mr-2 text-nav"
+            class="text-white py-1 px-3 bg-buttonblue mr-2 text-nav rounded h-8"
             @click="deleteUser()"
           >
             Delete
@@ -82,6 +95,11 @@ export default {
     };
   },
   methods: {
+    userDetail() {
+      //alert(this.user.id);
+      //this.$router.push("UserDetail", user);
+      this.$emit("showModal", { userId: this.user.id });
+    },
     itemCategories(item) {
       alert(JSON.stringify(item));
       //alert(JSON.stringify(_.groupBy(item, (item) => item.resourceName)));
