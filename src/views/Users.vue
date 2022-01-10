@@ -162,8 +162,72 @@
           <rect x="0" y="48" rx="3" ry="3" height="4" class="w-9/12" />
         </ContentLoader>
       </div>
-      <div v-for="user in users" :key="user.id" class="my-1">
-        <User :user="user" @showModal="getUserDetail" />
+      <div v-for="user in usersPage" :key="user.id" class="my-1">
+        <User
+          :user="user"
+          @showModal="getUserDetail"
+          @deleteUser="deleteUser"
+        />
+      </div>
+      <div>
+        <div class="container flex justify-center mx-auto mt-8">
+          <ul class="flex">
+            <li>
+              <button
+                class="
+                  h-10
+                  px-5
+                  text-gray-600
+                  bg-white
+                  border border-r-0 border-gray-600
+                "
+                :disabled="skipCount == 0"
+                :class="
+                  skipCount == 0
+                    ? 'text-blue-200'
+                    : 'text-gray-600 hover:bg-gray-100'
+                "
+                @click="skipCount -= 1"
+              >
+                Prev
+              </button>
+            </li>
+
+            <li v-for="(page, index) in totalPages" :key="index">
+              <button
+                class="
+                  h-10
+                  px-5
+                  text-gray-600
+                  bg-white
+                  border border-r-0 border-gray-600
+                "
+                :class="
+                  index == skipCount
+                    ? 'bg-blue-200'
+                    : 'text-gray-600 hover:bg-gray-100'
+                "
+                @click="skipCount = index"
+              >
+                {{ index + 1 }}
+              </button>
+            </li>
+            <li>
+              <button
+                class="h-10 px-5 text-gray-600 bg-white border border-gray-600"
+                :disabled="skipCount + 1 >= totalPages"
+                :class="
+                  skipCount + 1 >= totalPages
+                    ? 'text-blue-200'
+                    : 'text-gray-600 hover:bg-gray-100'
+                "
+                @click="skipCount += 1"
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </BaseLayout>
   </div>
@@ -182,11 +246,15 @@ export default {
     return {
       navLinks: ["MainSite"],
       users: [],
+      usersPage: [],
       userDetail: {},
       sortOrder: "asc",
       sortItem: "",
       loaded: false,
       showModal: false,
+      takeCount: 20,
+      skipCount: 0,
+      totalPages: 0,
     };
   },
   computed: {
@@ -197,9 +265,32 @@ export default {
     this.createCrumbs();
     this.getUsers();
   },
+  watch: {
+    skipCount: function () {
+      this.goPage();
+    },
+  },
   methods: {
+    // getUserPages() {
+    //   this.totalPages = Math.ceil(this.users.length / 20);
+    //   return Math.ceil(this.totalPages);
+    // },
+    goPage() {
+      const context = this;
+      const dropCount = this.skipCount * context.takeCount;
+      this.usersPage = _.take(
+        _.drop(context.users, dropCount),
+        context.takeCount
+      );
+    },
     closeModal() {
       this.showModal = false;
+    },
+    deleteUser(userId) {
+      _.remove(this.users, {
+        id: userId.userId,
+      });
+      this.goPage();
     },
     createCrumbs() {
       this.crumbs = [{ name: "Planning Home", route: "home" }];
@@ -211,6 +302,8 @@ export default {
           if (users) {
             this.loaded = true;
             this.users = _.orderBy(users, ["lastName"], ["asc"]);
+            this.usersPage = _.take(this.users, this.takeCount);
+            this.totalPages = Math.ceil(this.users.length / 20);
           }
         })
         .catch(() => {
@@ -230,6 +323,7 @@ export default {
       this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc";
       this.sortItem = sortItem;
       this.users = _.orderBy(this.users, [sortItem], [this.sortOrder]);
+      this.goPage();
     },
     getUserDetail(userId) {
       this.showModal = true;

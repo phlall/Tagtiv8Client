@@ -1,7 +1,7 @@
 <template>
   <teleport to="#title">Tagtiv8 Resources | Active Learning Games</teleport>
   <div>
-    <NavVari :NavLinks="navLinks" />
+    <!-- <NavVari :NavLinks="navLinks" /> -->
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="py-4 pl-6">
         <span class="text-white text-nav"><h2>Planning Home</h2></span>
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import NavVari from "../components/NavVari.vue";
+//import NavVari from "../components/NavVari.vue";
 import InlineSvg from "vue-inline-svg";
 import { ContentLoader } from "vue-content-loader";
 import _ from "lodash";
@@ -179,7 +179,7 @@ export default {
     // },
   },
   components: {
-    NavVari,
+    // NavVari,
     InlineSvg,
     ContentLoader,
   },

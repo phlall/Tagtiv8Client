@@ -128,6 +128,16 @@ export const actions = {
         return error;
       });
   },
+  deleteUser({ dispatch }, userId) {
+    return ApiService.delete(userId.userId).then((response) => {
+      const notification = {
+        type: "success",
+        message: "User deleted",
+      };
+      dispatch("notification/add", notification, { root: true });
+      return response.data;
+    });
+  },
   getResources({ state, commit, dispatch }) {
     if (state.plan.ageRange != null && state.plan.subject != null) {
       return ApiService.getResources(

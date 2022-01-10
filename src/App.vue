@@ -1,12 +1,14 @@
 <template>
   <div id="nav">
     <navTop />
+    <NavVari :NavLinks="navLinks" />
   </div>
   <router-view class="text-gray-600" />
   <NotificationContainer />
 </template>
 <script>
 import NotificationContainer from "@/components/NotificationContainer.vue";
+import NavVari from "./components/NavVari.vue";
 import navTop from "./components/NavTop.vue";
 import axios from "axios";
 
@@ -36,6 +38,7 @@ export default {
   },
   components: {
     navTop,
+    NavVari,
     NotificationContainer,
   },
 };

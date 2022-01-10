@@ -46,25 +46,6 @@
           <div>
             <BaseButton
               type="submit"
-              class="
-                text-white
-                h-8
-                py-1
-                px-3
-                ml-2
-                font-bold
-                lg:inline-block
-                hidden
-                bg-buttonblue
-                hover:bg-buttonblueHover
-              "
-              @click="goPath('Register')"
-              v-if="loggedIn && checkUser() && showAdmin()"
-            >
-              REGISTER
-            </BaseButton>
-            <BaseButton
-              type="submit"
               :class="'bg-buttonblue'"
               class="
                 text-white
@@ -78,10 +59,10 @@
                 hidden
                 hover:bg-buttonblueHover
               "
-              @click="goPath('resource-content')"
+              @click="openAdmin = !openAdmin"
               v-if="loggedIn && checkUser() && showAdmin()"
             >
-              ADD CONTENT
+              {{ openAdmin ? "HIDE ADMIN" : "SHOW ADMIN" }}
             </BaseButton>
           </div>
           <div class="">
@@ -324,7 +305,71 @@
           </ul>
         </div>
       </div>
-      <div class="text-right justify-end"></div>
+      <div
+        v-if="loggedIn && checkUser() && showAdmin() && openAdmin"
+        class="flex w-full border-t border-gray-600 justify-end"
+      >
+        <div class="flex py-4">
+          <div class="flex-grow">
+            <BaseButton
+              type="submit"
+              class="
+                text-gray-500
+                h-8
+                border border-buttonblueHover
+                py-1
+                px-3
+                ml-2
+                font-bold
+                hover:bg-buttonblueHover hover:text-white
+              "
+              @click="goPath('resource-content')"
+              v-if="loggedIn && checkUser() && showAdmin()"
+            >
+              ADD CONTENT
+            </BaseButton>
+          </div>
+          <div class="flex-grow">
+            <BaseButton
+              type="submit"
+              class="
+                text-gray-500
+                h-8
+                py-1
+                px-3
+                ml-2
+                font-bold
+                lg:inline-block
+                hidden
+                border border-buttonblueHover
+                hover:bg-buttonblueHover hover:text-white
+              "
+              @click="goPath('Register')"
+            >
+              REGISTER
+            </BaseButton>
+          </div>
+          <div class="flex-grow">
+            <BaseButton
+              type="submit"
+              class="
+                text-gray-500
+                h-8
+                border border-buttonblueHover
+                py-1
+                px-3
+                ml-2
+                font-bold
+                hover:bg-buttonblueHover hover:text-white
+              "
+              @click="goPath('Users')"
+              v-if="loggedIn && checkUser() && showAdmin()"
+            >
+              VIEW USERS
+            </BaseButton>
+          </div>
+        </div>
+      </div>
     </BaseLayout>
   </div>
 </template>
@@ -353,6 +398,7 @@ export default {
     return {
       open: false,
       windowWidth: width,
+      openAdmin: false,
     };
   },
   computed: {

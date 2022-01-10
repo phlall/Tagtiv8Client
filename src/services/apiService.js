@@ -36,6 +36,9 @@ export default {
   login(credentials) {
     return apiClient.post("users/authenticate", credentials);
   },
+  delete(userId) {
+    return apiClient.delete("users/" + userId);
+  },
   getUsers() {
     if (this.setAuthHeader()) {
       return apiClient.get("users");

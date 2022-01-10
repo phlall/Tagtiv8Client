@@ -68,7 +68,7 @@
             type="submit"
             :disabled="false"
             class="text-white py-1 px-3 bg-buttonblue mr-2 text-nav rounded h-8"
-            @click="deleteUser()"
+            @click="deleteUser(user.id)"
           >
             Delete
           </BaseButton>
@@ -88,6 +88,7 @@ export default {
       required: true,
     },
   },
+  emits: ["deleteUser"],
   data() {
     return {
       open: this.isOpen,
@@ -100,56 +101,65 @@ export default {
       //this.$router.push("UserDetail", user);
       this.$emit("showModal", { userId: this.user.id });
     },
-    itemCategories(item) {
-      alert(JSON.stringify(item));
-      //alert(JSON.stringify(_.groupBy(item, (item) => item.resourceName)));
-      //return _.groupBy(item, (item) => item.subject.resourceName);
-      return null;
+    // itemCategories(item) {
+    //  // alert(JSON.stringify(item));
+    //   //alert(JSON.stringify(_.groupBy(item, (item) => item.resourceName)));
+    //   //return _.groupBy(item, (item) => item.subject.resourceName);
+    //   return null;
+    // },
+    deleteUser(userId) {
+      if (confirm("Do you want to permanently delete this user?")) {
+        this.$store
+          .dispatch("user/deleteUser", { userId })
+          .then(() => {
+            this.$emit("deleteUser", { userId });
+          })
+          .catch(() => {});
+      }
     },
-    deleteUser() {},
     changePassword() {},
-    setResourceContent(resourceItem, type) {
-      let resourceObj = {
-        id: this.resource.id,
-        ageGroups: this.resource.ageGroups,
-        name: this.resource.name,
-        resourceContent: resourceItem,
-      };
-      this.$emit("setContent", { resourceObj, resourceType: type });
-    },
-    handleToggle() {
-      let strClass = "";
-      if (this.resource.resourceContent.length && !this.open) {
-        strClass += "cursor-pointer hover:bg-gridrowbluehover text-gray-600";
-      }
-      if (this.resource.resourceContent.length && this.open) {
-        strClass += "cursor-pointer bg-gridrowbluedark text-white";
-      }
-      return strClass;
-    },
-    toggle() {
-      this.open = !this.open;
-    },
-    setFavorite(item) {
-      const itemId = item.id;
-      const fav = item.isFavorite;
-      item.isFavorite = !item.isFavorite;
-      if (fav) {
-        this.$store
-          .dispatch("user/deleteFavorite", { itemId })
-          .then(() => {})
-          .catch(() => {
-            item.isFavorite = !item.isFavorite;
-          });
-      } else {
-        this.$store
-          .dispatch("user/addFavorite", { itemId })
-          .then(() => {})
-          .catch(() => {
-            item.isFavorite = !item.isFavorite;
-          });
-      }
-    },
+    // setResourceContent(resourceItem, type) {
+    //   let resourceObj = {
+    //     id: this.resource.id,
+    //     ageGroups: this.resource.ageGroups,
+    //     name: this.resource.name,
+    //     resourceContent: resourceItem,
+    //   };
+    //   this.$emit("setContent", { resourceObj, resourceType: type });
+    // },
+    // handleToggle() {
+    //   let strClass = "";
+    //   if (this.resource.resourceContent.length && !this.open) {
+    //     strClass += "cursor-pointer hover:bg-gridrowbluehover text-gray-600";
+    //   }
+    //   if (this.resource.resourceContent.length && this.open) {
+    //     strClass += "cursor-pointer bg-gridrowbluedark text-white";
+    //   }
+    //   return strClass;
+    // },
+    // toggle() {
+    //   this.open = !this.open;
+    // },
+    // setFavorite(item) {
+    //   const itemId = item.id;
+    //   const fav = item.isFavorite;
+    //   item.isFavorite = !item.isFavorite;
+    //   if (fav) {
+    //     this.$store
+    //       .dispatch("user/deleteFavorite", { itemId })
+    //       .then(() => {})
+    //       .catch(() => {
+    //         item.isFavorite = !item.isFavorite;
+    //       });
+    //   } else {
+    //     this.$store
+    //       .dispatch("user/addFavorite", { itemId })
+    //       .then(() => {})
+    //       .catch(() => {
+    //         item.isFavorite = !item.isFavorite;
+    //       });
+    //   }
+    // },
   },
 };
 </script>
