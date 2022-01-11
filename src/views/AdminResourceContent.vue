@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavVari />
+    <!-- <NavVari /> -->
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 flex">
         <div>
@@ -210,7 +210,7 @@
 </template>
 
 <script>
-import NavVari from "@/components/NavVari.vue";
+//import NavVari from "@/components/NavVari.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import _ from "lodash";
@@ -307,7 +307,7 @@ export default {
     };
   },
   components: {
-    NavVari,
+    // NavVari,
   },
 };
 </script>

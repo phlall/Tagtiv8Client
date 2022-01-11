@@ -2,8 +2,8 @@
 <template>
   <teleport to="#title">Login | Active Learning Games</teleport>
   <div>
-    <NavVari :NavLinks="navLinks" outerClass="border-b border-gray-700" />
-    <BaseLayout>
+    <!-- <NavVari :NavLinks="navLinks" outerClass="border-b border-gray-700" /> -->
+    <BaseLayout outerClass="border-t border-gray-700">
       <div class="w-full m-auto text-center flex justify-center bg-white">
         <div class="grid grid-cols-12 md:mt-16 max-w-screen-lg">
           <div
@@ -168,7 +168,7 @@
 import { mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-import NavVari from "@/components/NavVari.vue";
+//import NavVari from "@/components/NavVari.vue";
 
 export default {
   name: "LoginPage",
@@ -235,7 +235,7 @@ export default {
     },
   },
   components: {
-    NavVari,
+    //NavVari,
   },
 };
 </script>

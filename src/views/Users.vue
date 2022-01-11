@@ -3,7 +3,7 @@
   <ModalDialog :show="showModal" :user="userDetail" @closeModal="closeModal">
   </ModalDialog>
   <div>
-    <NavVari :NavLinks="navLinks" />
+    <!-- <NavVari :NavLinks="navLinks" /> -->
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue flex flex-wrap py-4 ml-4 sm:ml-0">
         <div class="mr-2">
@@ -39,21 +39,18 @@
       </div>
       <div class="flex flex-wrap w-10/12 pl-2">
         <div class="flex flex-grow">
-          <div class="w-2/12">
+          <div class="flex-initial w-28 mr-2">
             <BaseButton type="button" @click="sortAz('firstName')" class="flex">
               <div class="font-bold pt-1">First Name</div>
-              <div class="ml-2">
+              <div class="ml-2 mt-1">
                 <font-awesome-icon
-                  :icon="[
-                    'fas',
-                    sorted('firstName') ? 'caret-down' : 'caret-up',
-                  ]"
-                  class="text-gray-600 text-3xl"
+                  :icon="['fas', sortIcon('firstName')]"
+                  class="text-gray-600 text-2xl"
                 />
               </div>
             </BaseButton>
           </div>
-          <div class="w-2/12">
+          <div class="flex-initial w-32">
             <BaseButton
               type="button"
               :disabled="false"
@@ -61,18 +58,15 @@
               class="flex"
             >
               <div class="font-bold pt-1">Last Name</div>
-              <div class="ml-2">
+              <div class="ml-2 mt-1">
                 <font-awesome-icon
-                  :icon="[
-                    'fas',
-                    sorted('lastName') ? 'caret-down' : 'caret-up',
-                  ]"
-                  class="text-gray-600 text-3xl"
+                  :icon="['fas', sortIcon('lastName')]"
+                  class="text-gray-600 text-2xl"
                 />
               </div>
             </BaseButton>
           </div>
-          <div class="w-3/12 pl-3">
+          <div class="flex-initial w-80 pl-0">
             <BaseButton
               type="button"
               :disabled="false"
@@ -80,18 +74,15 @@
               class="flex"
             >
               <div class="font-bold pt-1">Email</div>
-              <div class="ml-2">
+              <div class="ml-2 mt-1">
                 <font-awesome-icon
-                  :icon="[
-                    'fas',
-                    sorted('username') ? 'caret-down' : 'caret-up',
-                  ]"
-                  class="text-gray-600 text-3xl"
+                  :icon="['fas', sortIcon('username')]"
+                  class="text-gray-600 text-2xl"
                 />
               </div>
             </BaseButton>
           </div>
-          <div class="w-3/12 pl-8">
+          <div class="flex-initial w-72 ml-8">
             <BaseButton
               type="button"
               :disabled="false"
@@ -99,15 +90,15 @@
               class="flex"
             >
               <div class="font-bold pt-1">School</div>
-              <div class="ml-2">
+              <div class="ml-2 mt-1">
                 <font-awesome-icon
-                  :icon="['fas', sorted('school') ? 'caret-down' : 'caret-up']"
-                  class="text-gray-600 text-3xl"
+                  :icon="['fas', sortIcon('school')]"
+                  class="text-gray-600 text-2xl"
                 />
               </div>
             </BaseButton>
           </div>
-          <div class="pl-8">
+          <div class="flex-initial w-20">
             <BaseButton
               type="button"
               :disabled="false"
@@ -115,15 +106,15 @@
               class="flex"
             >
               <div class="font-bold pt-1">Admin</div>
-              <div class="ml-2">
+              <div class="ml-2 mt-1">
                 <font-awesome-icon
-                  :icon="['fas', sorted('isAdmin') ? 'caret-up' : 'caret-down']"
-                  class="text-gray-600 text-3xl"
+                  :icon="['fas', sortIcon('isAdmin')]"
+                  class="text-gray-600 text-2xl"
                 />
               </div>
             </BaseButton>
           </div>
-          <div class="flex-grow pl-2">
+          <div class="flex-grow pl-1">
             <BaseButton
               type="button"
               :disabled="false"
@@ -131,13 +122,10 @@
               class="flex"
             >
               <div class="font-bold pt-1">Logons</div>
-              <div class="ml-2">
+              <div class="ml-2 mt-1">
                 <font-awesome-icon
-                  :icon="[
-                    'fas',
-                    sorted('logonsCount') ? 'caret-up' : 'caret-down',
-                  ]"
-                  class="text-gray-600 text-3xl"
+                  :icon="['fas', sortIcon('logonsCount')]"
+                  class="text-gray-600 text-2xl"
                 />
               </div>
             </BaseButton>
@@ -234,7 +222,7 @@
 </template>
 
 <script>
-import NavVari from "../components/NavVari.vue";
+//import NavVari from "../components/NavVari.vue";
 import User from "../components/User.vue";
 import _ from "lodash";
 import { mapGetters } from "vuex";
@@ -325,6 +313,16 @@ export default {
       this.users = _.orderBy(this.users, [sortItem], [this.sortOrder]);
       this.goPage();
     },
+    sortIcon(sortItem) {
+      if (this.sortItem == sortItem) {
+        if (this.sortOrder == "asc") {
+          return "sort-down";
+        } else {
+          return "sort-up";
+        }
+      }
+      return "sort";
+    },
     getUserDetail(userId) {
       this.showModal = true;
       this.$store
@@ -341,7 +339,7 @@ export default {
     },
   },
   components: {
-    NavVari,
+    //NavVari,
     User,
     ContentLoader,
     ModalDialog,

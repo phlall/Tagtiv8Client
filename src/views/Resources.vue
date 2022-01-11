@@ -4,7 +4,7 @@
     Games</teleport
   >
   <div>
-    <NavVari :NavLinks="navLinks" />
+    <!-- <NavVari :NavLinks="navLinks" /> -->
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue flex flex-wrap py-4 ml-4 sm:ml-0">
         <div class="mr-2">
@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import NavVari from "../components/NavVari.vue";
+//import NavVari from "../components/NavVari.vue";
 import ResourceItem from "../components/ResourceItem.vue";
 import ResourceBlendedItem from "../components/ResourceBlendedItem.vue";
 import _ from "lodash";
@@ -219,7 +219,7 @@ export default {
     ...mapGetters(["plan"]),
   },
   components: {
-    NavVari,
+    //NavVari,
     ResourceItem,
     ResourceBlendedItem,
     ContentLoader,

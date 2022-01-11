@@ -1,7 +1,7 @@
 <template>
   <teleport to="#title">Register | Active Learning Games</teleport>
   <div>
-    <NavVari />
+    <!-- <NavVari /> -->
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 flex">
         <div>
@@ -171,7 +171,7 @@
 import { mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-import NavVari from "@/components/NavVari.vue";
+//import NavVari from "@/components/NavVari.vue";
 
 export default {
   name: "Register",
@@ -247,7 +247,7 @@ export default {
     },
   },
   components: {
-    NavVari,
+    //NavVari,
   },
 };
 </script>

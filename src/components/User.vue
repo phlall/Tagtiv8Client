@@ -11,22 +11,22 @@
         "
         @click="userDetail()"
       >
-        <div class="w-2/12">
+        <div class="w-32">
           <h2 class="pl-4 pt-2 text-smlg text-left">
             {{ user.firstName }}
           </h2>
         </div>
-        <div class="w-2/12">
+        <div class="w-32">
           <h2 class="pt-2 text-smlg">
             {{ user.lastName }}
           </h2>
         </div>
-        <div class="w-4/12">
+        <div class="w-80">
           <h2 class="pt-2 text-smlg">
             {{ user.username }}
           </h2>
         </div>
-        <div class="w-4/12">
+        <div class="w-72 ml-5 pl-4">
           <h2 class="pt-2 text-smlg">
             {{ user.school }}
           </h2>
@@ -42,14 +42,26 @@
               rounded
               px-2
               py-1
-              mr-2
+              mr-1
               text-nav text-center text-white
             "
           >
             admin
           </div>
         </div>
-        <div class="mr-1 text-white py-1 px-3 text-nav bg-blue-600 rounded h-8">
+        <div
+          class="
+            mr-1
+            text-white
+            py-1 py-1
+            text-nav
+            bg-blue-600
+            rounded
+            h-8
+            w-8
+            text-center
+          "
+        >
           {{ user.logonsCount }}
         </div>
 
@@ -60,7 +72,7 @@
             class="text-white py-1 px-3 bg-buttonblue text-nav rounded h-8"
             @click="changePassword()"
           >
-            Change Password
+            Reset Pwd
           </button>
         </div>
         <div class="mr-1">

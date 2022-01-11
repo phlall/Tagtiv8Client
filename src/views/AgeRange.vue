@@ -4,7 +4,7 @@
       {{ plan.subject.name }} | Active Learning Games</teleport
     >
 
-    <NavVari :NavLinks="navLinks" />
+    <!-- <NavVari :NavLinks="navLinks" /> -->
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue flex flex-wrap py-4 ml-2 md:ml-0">
         <div class="mr-2">
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import NavVari from "../components/NavVari.vue";
+//import NavVari from "../components/NavVari.vue";
 import InlineSvg from "vue-inline-svg";
 import { AgeGroups } from "../assets/js/utils.js";
 import { mapGetters } from "vuex";
@@ -124,7 +124,7 @@ export default {
     ...mapGetters(["plan"]),
   },
   components: {
-    NavVari,
+    // NavVari,
     InlineSvg,
   },
 };

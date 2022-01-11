@@ -4,7 +4,7 @@
     Games</teleport
   >
   <div>
-    <div><NavVari /></div>
+    <!-- <div><NavVari /></div> -->
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue py-4 flex flex-wrap ml-2 md:ml-0">
         <div class="mr-2">
@@ -169,7 +169,7 @@
 </template>
 
 <script>
-import NavVari from "@/components/NavVari.vue";
+//import NavVari from "@/components/NavVari.vue";
 import { GetFile } from "@/assets/js/aws.js";
 import { mapGetters } from "vuex";
 import pdfvuer from "pdfvuer";
@@ -181,7 +181,7 @@ export default {
   props: ["contentId"],
   mixins: [Favorites],
   components: {
-    NavVari,
+    //NavVari,
     pdf: pdfvuer,
     ContentLoader,
   },
