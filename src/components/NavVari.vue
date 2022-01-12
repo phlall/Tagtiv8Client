@@ -69,26 +69,6 @@
             </BaseButton>
           </div>
           <div class="">
-            <!-- <BaseButton
-              type="submit"
-              :disabled="false"
-              class="
-                hidden
-                lg:inline-block
-                text-white
-                h-8
-                bg-buttonblue
-                py-1
-                px-3
-                ml-2
-                font-bold
-                hover:bg-buttonblueHover
-              "
-              @click="$router.push('Login')"
-              v-if="!loggedIn"
-            >
-              LOG IN
-            </BaseButton> -->
             <BaseButton
               type="submit"
               :class="'bg-buttonblue'"
