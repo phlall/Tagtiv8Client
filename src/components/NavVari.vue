@@ -46,23 +46,26 @@
           <div>
             <BaseButton
               type="submit"
-              :class="'bg-buttonblue'"
+              :class="openAdmin ? 'bg-yellow-500' : 'bg-buttonblue'"
               class="
                 text-white
                 h-8
-                bg-buttonblue
                 py-1
                 px-3
                 ml-2
                 font-bold
                 lg:inline-block
                 hidden
-                hover:bg-buttonblueHover
+                hover:bg-yellow-400
               "
               @click="openAdmin = !openAdmin"
               v-if="loggedIn && checkUser() && showAdmin()"
             >
-              {{ openAdmin ? "HIDE ADMIN" : "SHOW ADMIN" }}
+              ADMIN
+              <font-awesome-icon
+                :icon="['fas', openAdmin ? 'caret-up' : 'caret-down']"
+                class="text-xl ml-2"
+              />
             </BaseButton>
           </div>
           <div class="">
@@ -321,7 +324,7 @@
                 px-3
                 ml-2
                 font-bold
-                hover:bg-buttonblueHover hover:text-white
+                hover:bg-yellow-500 hover:text-white
               "
               @click="goPath('resource-content')"
               v-if="loggedIn && checkUser() && showAdmin()"
@@ -342,7 +345,7 @@
                 lg:inline-block
                 hidden
                 border border-buttonblueHover
-                hover:bg-buttonblueHover hover:text-white
+                hover:bg-yellow-500 hover:text-white
               "
               @click="goPath('Register')"
             >
@@ -360,7 +363,7 @@
                 px-3
                 ml-2
                 font-bold
-                hover:bg-buttonblueHover hover:text-white
+                hover:bg-yellow-500 hover:text-white
               "
               @click="goPath('Users')"
               v-if="loggedIn && checkUser() && showAdmin()"
