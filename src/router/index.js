@@ -143,6 +143,7 @@ const routes = [
     meta: {
       title: "Register",
       requiresAuth: true,
+      showAdmin: true,
     },
   },
   {

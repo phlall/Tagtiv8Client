@@ -42,9 +42,10 @@
                 h-14
                 focus:ring-purple-400 focus:border-transparent
               "
+              @blur="v$.firstName.$touch"
             />
             <div class="pt-1 h-8 text-red-500">
-              <p v-if="v$.firstName.required.$invalid">
+              <p v-if="v$.firstName.required.$invalid && v$.firstName.$dirty">
                 First name is required.
               </p>
             </div>
@@ -63,9 +64,12 @@
                 h-14
                 focus:ring-purple-400 focus:border-transparent
               "
+              @blur="v$.lastName.$touch"
             />
             <div class="pt-1 h-8">
-              <p v-if="v$.lastName.required.$invalid">Last name is required.</p>
+              <p v-if="v$.lastName.required.$invalid && v$.lastName.$dirty">
+                Last name is required.
+              </p>
             </div>
           </div>
           <div class="px-8 text-red-500">
@@ -82,9 +86,12 @@
                 h-14
                 focus:ring-purple-400 focus:border-transparent
               "
+              @blur="v$.school.$touch"
             />
             <div class="pt-1 h-8">
-              <p v-if="v$.school.required.$invalid">School name is required.</p>
+              <p v-if="v$.school.required.$invalid && v$.school.$dirty">
+                School name is required.
+              </p>
             </div>
           </div>
           <div class="px-8 text-red-500">
@@ -101,12 +108,15 @@
                 h-14
                 focus:ring-purple-400 focus:border-transparent
               "
+              @blur="v$.email.$touch"
             />
             <div class="pt-1 h-8 text-red-500">
               <p v-if="v$.email.email.$invalid">
                 Please enter a valid email address.
               </p>
-              <p v-if="v$.email.required.$invalid">Email is required.</p>
+              <p v-if="v$.email.required.$invalid && v$.email.$dirty">
+                Email is required.
+              </p>
             </div>
           </div>
           <div class="mt-4 pb-4 px-8">
@@ -126,10 +136,15 @@
                 bg-white
               "
               placeholder="Enter your password"
+              @blur="v$.password.$touch"
             />
             <div class="pt-1 h-8 text-red-500 outline-0">
-              <p v-if="v$.password.$invalid">Please enter a valid password.</p>
-              <p v-if="v$.password.required.$invalid">Email is required.</p>
+              <p v-if="v$.password.$invalid && v$.password.$dirty">
+                Please enter a valid password.
+              </p>
+              <p v-if="v$.password.required.$invalid && v$.password.$dirty">
+                Password is required.
+              </p>
             </div>
           </div>
           <div class="mt-4 px-8">
