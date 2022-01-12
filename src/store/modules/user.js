@@ -96,13 +96,15 @@ export const actions = {
       });
   },
   resetPassword({ dispatch }, credentials) {
-    return ApiService.resetPassword(credentials).then(({ data }) => {
-      const notification = {
-        type: "success",
-        message: data.message,
-      };
-      dispatch("notification/add", notification, { root: true });
-    });
+    return ApiService.resetPassword(credentials.id, credentials).then(
+      ({ data }) => {
+        const notification = {
+          type: "success",
+          message: data.message,
+        };
+        dispatch("notification/add", notification, { root: true });
+      }
+    );
   },
   getUsers({ dispatch }) {
     return ApiService.getUsers().then((response) => {

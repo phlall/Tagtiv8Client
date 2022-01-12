@@ -21,12 +21,12 @@
             {{ user.lastName }}
           </h2>
         </div>
-        <div class="w-80">
+        <div class="w-80 overflow-hidden">
           <h2 class="pt-2 text-smlg">
             {{ user.username }}
           </h2>
         </div>
-        <div class="w-72 ml-5 pl-4">
+        <div class="flex-grow ml-5 pl-4 pr-2">
           <h2 class="pt-2 text-smlg">
             {{ user.school }}
           </h2>
@@ -34,19 +34,24 @@
       </BaseButton>
 
       <div class="flex justify-end my-2 h-8">
-        <div class="w-16">
+        <div class="">
           <div
             v-show="user.isAdmin"
             class="
               bg-green-500
               rounded
-              px-2
-              py-1
+              w-8
+              h-8
+              px-1
+              pt-1.5
               mr-1
               text-nav text-center text-white
             "
           >
-            admin
+            <font-awesome-icon
+              :icon="['fas', 'check']"
+              class="text-white text-md"
+            />
           </div>
         </div>
         <div
@@ -69,7 +74,7 @@
           <button
             type="button"
             :disabled="false"
-            class="text-white py-1 px-3 bg-buttonblue text-nav rounded h-8"
+            class="text-white bg-buttonblue text-nav rounded h-8 w-24"
             @click="changePassword()"
           >
             Reset Pwd
@@ -80,7 +85,7 @@
             type="submit"
             :disabled="false"
             class="text-white py-1 px-3 bg-buttonblue mr-2 text-nav rounded h-8"
-            @click="deleteUser(user.id)"
+            @click="deleteUser()"
           >
             Delete
           </BaseButton>
@@ -100,7 +105,7 @@ export default {
       required: true,
     },
   },
-  emits: ["deleteUser"],
+  emits: ["deleteUser", "showChangePassword", "showUserLogons"],
   data() {
     return {
       open: this.isOpen,
@@ -109,69 +114,21 @@ export default {
   },
   methods: {
     userDetail() {
-      //alert(this.user.id);
-      //this.$router.push("UserDetail", user);
-      this.$emit("showModal", { userId: this.user.id });
+      this.$emit("showUserLogons", { userId: this.user.id });
     },
-    // itemCategories(item) {
-    //  // alert(JSON.stringify(item));
-    //   //alert(JSON.stringify(_.groupBy(item, (item) => item.resourceName)));
-    //   //return _.groupBy(item, (item) => item.subject.resourceName);
-    //   return null;
-    // },
-    deleteUser(userId) {
+    deleteUser() {
       if (confirm("Do you want to permanently delete this user?")) {
         this.$store
-          .dispatch("user/deleteUser", { userId })
+          .dispatch("user/deleteUser", this.user.id)
           .then(() => {
-            this.$emit("deleteUser", { userId });
+            this.$emit("deleteUser", this.user.id);
           })
           .catch(() => {});
       }
     },
-    changePassword() {},
-    // setResourceContent(resourceItem, type) {
-    //   let resourceObj = {
-    //     id: this.resource.id,
-    //     ageGroups: this.resource.ageGroups,
-    //     name: this.resource.name,
-    //     resourceContent: resourceItem,
-    //   };
-    //   this.$emit("setContent", { resourceObj, resourceType: type });
-    // },
-    // handleToggle() {
-    //   let strClass = "";
-    //   if (this.resource.resourceContent.length && !this.open) {
-    //     strClass += "cursor-pointer hover:bg-gridrowbluehover text-gray-600";
-    //   }
-    //   if (this.resource.resourceContent.length && this.open) {
-    //     strClass += "cursor-pointer bg-gridrowbluedark text-white";
-    //   }
-    //   return strClass;
-    // },
-    // toggle() {
-    //   this.open = !this.open;
-    // },
-    // setFavorite(item) {
-    //   const itemId = item.id;
-    //   const fav = item.isFavorite;
-    //   item.isFavorite = !item.isFavorite;
-    //   if (fav) {
-    //     this.$store
-    //       .dispatch("user/deleteFavorite", { itemId })
-    //       .then(() => {})
-    //       .catch(() => {
-    //         item.isFavorite = !item.isFavorite;
-    //       });
-    //   } else {
-    //     this.$store
-    //       .dispatch("user/addFavorite", { itemId })
-    //       .then(() => {})
-    //       .catch(() => {
-    //         item.isFavorite = !item.isFavorite;
-    //       });
-    //   }
-    // },
+    changePassword() {
+      this.$emit("showChangePassword", this.user);
+    },
   },
 };
 </script>

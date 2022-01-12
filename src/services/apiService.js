@@ -27,8 +27,8 @@ export default {
   register(credentials) {
     return apiClient.post("users/register", credentials);
   },
-  resetPassword(credentials) {
-    return apiClient.post("/bdpwr/v1/reset-password", credentials);
+  resetPassword(id, credentials) {
+    return apiClient.put("users/" + id, credentials);
   },
   setPassword(credentials) {
     return apiClient.post("/bdpwr/v1/set-password", credentials);

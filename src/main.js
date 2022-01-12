@@ -25,6 +25,9 @@ import {
   faCaretRight,
   faFileDownload,
   faFile,
+  faEye,
+  faEyeSlash,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { faFilePdf, faFileAlt } from "@fortawesome/free-regular-svg-icons";
 import App from "./App.vue";
@@ -33,6 +36,7 @@ import store from "./store";
 import camelCase from "lodash/camelCase";
 import upperFirst from "lodash/upperFirst";
 import "./registerServiceWorker";
+import "./assets/tailwind.css";
 
 library.add(
   faPhone,
@@ -56,7 +60,10 @@ library.add(
   faFileDownload,
   faFile,
   faFilePdf,
-  faFileAlt
+  faFileAlt,
+  faEye,
+  faEyeSlash,
+  faCheck
 );
 
 const requireComponent = require.context(

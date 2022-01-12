@@ -1,6 +1,13 @@
 <template>
   <teleport to="title"> Users| Active Learning Games</teleport>
-  <ModalDialog :show="showModal" :user="userDetail" @closeModal="closeModal">
+  <ModalDialog :show="showModal" @closeModal="closeModal">
+    <UserLogons :user="userDetail" @deleteUser="deleteUser" />
+  </ModalDialog>
+  <ModalDialog :show="showPasswordModal" @closeModal="closePasswordModal">
+    <ChangePassword
+      :user="userDetail"
+      @closePasswordModal="closePasswordModal"
+    />
   </ModalDialog>
   <div>
     <!-- <NavVari :NavLinks="navLinks" /> -->
@@ -82,7 +89,7 @@
               </div>
             </BaseButton>
           </div>
-          <div class="flex-initial w-72 ml-8">
+          <div class="flex-initial w-64 ml-8">
             <BaseButton
               type="button"
               :disabled="false"
@@ -98,7 +105,7 @@
               </div>
             </BaseButton>
           </div>
-          <div class="flex-initial w-20">
+          <div class="flex-initial w-20 ml-2">
             <BaseButton
               type="button"
               :disabled="false"
@@ -114,20 +121,20 @@
               </div>
             </BaseButton>
           </div>
-          <div class="flex-grow pl-1">
+          <div class="flex-grow ml-3">
             <BaseButton
               type="button"
               :disabled="false"
               @click="sortAz('logonsCount')"
               class="flex"
             >
-              <div class="font-bold pt-1">Logons</div>
-              <div class="ml-2 mt-1">
+              <div class="mt-1">
                 <font-awesome-icon
                   :icon="['fas', sortIcon('logonsCount')]"
                   class="text-gray-600 text-2xl"
                 />
               </div>
+              <div class="font-bold pt-1 ml-2">Logons</div>
             </BaseButton>
           </div>
         </div>
@@ -153,7 +160,8 @@
       <div v-for="user in usersPage" :key="user.id" class="my-1">
         <User
           :user="user"
-          @showModal="getUserDetail"
+          @showUserLogons="showUserLogons"
+          @showChangePassword="showChangePassword"
           @deleteUser="deleteUser"
         />
       </div>
@@ -228,6 +236,8 @@ import _ from "lodash";
 import { mapGetters } from "vuex";
 import { ContentLoader } from "vue-content-loader";
 import ModalDialog from "../components/ModalDialog.vue";
+import UserLogons from "../components/UserLogons.vue";
+import ChangePassword from "../components/ChangePassword.vue";
 export default {
   name: "Users",
   data() {
@@ -240,6 +250,7 @@ export default {
       sortItem: "",
       loaded: false,
       showModal: false,
+      showPasswordModal: false,
       takeCount: 20,
       skipCount: 0,
       totalPages: 0,
@@ -259,10 +270,6 @@ export default {
     },
   },
   methods: {
-    // getUserPages() {
-    //   this.totalPages = Math.ceil(this.users.length / 20);
-    //   return Math.ceil(this.totalPages);
-    // },
     goPage() {
       const context = this;
       const dropCount = this.skipCount * context.takeCount;
@@ -274,11 +281,8 @@ export default {
     closeModal() {
       this.showModal = false;
     },
-    deleteUser(userId) {
-      _.remove(this.users, {
-        id: userId.userId,
-      });
-      this.goPage();
+    closePasswordModal() {
+      this.showPasswordModal = false;
     },
     createCrumbs() {
       this.crumbs = [{ name: "Planning Home", route: "home" }];
@@ -298,15 +302,33 @@ export default {
           this.$router.push("Home");
         });
     },
-    // setUser(resourceItem, type) {
-    //   let resourceObj = {
-    //     id: this.resource.id,
-    //     ageGroups: this.resource.ageGroups,
-    //     name: this.resource.name,
-    //     resourceContent: resourceItem,
-    //   };
-    //   this.$emit("setContent", { resourceObj, resourceType: type });
-    // },
+    showChangePassword(user) {
+      this.showPasswordModal = true;
+      this.userDetail = user;
+    },
+    showUserLogons(userId) {
+      //alert();
+      this.showModal = true;
+      this.getUserDetail(userId);
+    },
+    getUserDetail(userId) {
+      this.showModal = true;
+      this.$store
+        .dispatch("user/getUser", userId)
+        .then((user) => {
+          this.userDetail = user;
+        })
+        .catch(() => {
+          this.$router.push("Home");
+        });
+    },
+    deleteUser(userId) {
+      _.remove(this.users, {
+        id: userId,
+        //id: userId.userId,
+      });
+      this.goPage();
+    },
     sortAz(sortItem) {
       this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc";
       this.sortItem = sortItem;
@@ -323,23 +345,13 @@ export default {
       }
       return "sort";
     },
-    getUserDetail(userId) {
-      this.showModal = true;
-      this.$store
-        .dispatch("user/getUser", userId)
-        .then((user) => {
-          this.userDetail = user;
-        })
-        .catch(() => {
-          this.$router.push("Home");
-        });
-    },
     sorted(sortItem) {
       return this.sortItem == sortItem && this.sortOrder === "asc";
     },
   },
   components: {
-    //NavVari,
+    ChangePassword,
+    UserLogons,
     User,
     ContentLoader,
     ModalDialog,
