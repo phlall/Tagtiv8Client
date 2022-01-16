@@ -279,6 +279,7 @@ export default {
       );
     },
     closeModal() {
+      this.userDetail = {};
       this.showModal = false;
     },
     closePasswordModal() {

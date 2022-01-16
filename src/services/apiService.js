@@ -2,8 +2,8 @@ import axios from "axios";
 import store from "@/store";
 
 const apiClient = axios.create({
-  //baseURL: "https://tagtiv8.herokuapp.com/api/",
-  baseURL: "https://localhost:49155/api/",
+  baseURL: "https://tagtiv8.herokuapp.com/api/",
+  //baseURL: "https://localhost:49155/api/",
   withCredentials: false, // This is the default
   headers: {
     Accept: "application/json",
@@ -29,9 +29,6 @@ export default {
   },
   resetPassword(id, credentials) {
     return apiClient.put("users/" + id, credentials);
-  },
-  setPassword(credentials) {
-    return apiClient.post("/bdpwr/v1/set-password", credentials);
   },
   login(credentials) {
     return apiClient.post("users/authenticate", credentials);

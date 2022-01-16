@@ -74,11 +74,11 @@
             <div
               class="
                 bg-red-700
-                w-5
                 h-5
                 rounded-full
                 mr-2
                 pt-0
+                px-1.5
                 text-center text-white text-sm
               "
             >
@@ -101,7 +101,7 @@
                     <div
                       class="
                         bg-red-700
-                        w-5
+                        px-1.5
                         h-5
                         rounded-full
                         mr-2
@@ -128,50 +128,18 @@
                       'dayInt'
                     )"
                     :key="index1"
+                    :class="index1 > 0 ? 'border-t border-white' : ''"
                   >
-                    <div class="flex">
-                      <div :class="index1 > 0 ? 'border-t border-white' : ''">
-                        <div class="w-48 pl-4 py-2 flex">
-                          <div class="flex-grow">
-                            {{ day.parent }}
-                          </div>
-                          <div
-                            class="
-                              bg-red-700
-                              w-5
-                              h-5
-                              rounded-full
-                              mr-2
-                              pt-0
-                              text-center text-white text-sm
-                            "
-                          >
-                            {{
-                              getLogonsCount({
-                                year: logon.parent,
-                                month: date.parent,
-                                dayInt: day.parent,
-                              })
-                            }}
-                          </div>
-                        </div>
-                      </div>
-                      <div class="flex-grow bg-blue-100 pb-2">
-                        <div
-                          v-for="(time, index2) in day.children"
-                          :key="index2"
-                          class=""
-                          :class="index1 > 0 ? 'border-t border-white' : ''"
-                        >
-                          <div
-                            class="px-6"
-                            :class="index2 > 0 ? 'pt-1 pb-2' : 'pt-2'"
-                          >
-                            {{ getTime(time.logonDateTime) }}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <UserLogonDatePart
+                      :day="day"
+                      :logonsCount="
+                        getLogonsCount({
+                          year: logon.parent,
+                          month: date.parent,
+                          dayInt: day.parent,
+                        })
+                      "
+                    />
                   </div>
                 </div>
               </div>
@@ -206,12 +174,13 @@ const props = {
 };
 import _ from "lodash";
 import formatDateMixin from "../Mixins/formatDate.js";
+import UserLogonDatePart from "../components/UserLogonDatePart.vue";
 import { ContentLoader } from "vue-content-loader";
 export default {
   name: "UserLogons",
   props,
   mixins: [formatDateMixin],
-  components: { ContentLoader },
+  components: { ContentLoader, UserLogonDatePart },
   computed: {
     formattedDate() {
       return this.formatDate(this.date);
@@ -225,6 +194,7 @@ export default {
       shapedDates: [],
       logCounts: [],
       logons: [],
+      open: false,
     };
   },
   methods: {

@@ -4,6 +4,7 @@
       <div class="flex flex-wrap">
         <div class="pt-4 pb-1 pl-3 sm:pl-0 w-56">
           <img src="@/assets/images/logo.png" />
+          <!-- {{ isLoggedIn() }} -->
         </div>
         <div class="flex-grow pt-8 flex justify-end">
           <div
@@ -37,13 +38,13 @@
                 {{ getTitle(link) }}
               </BaseButton>
             </div>
-            <div v-if="!getLinkType(link) && loggedIn" class="pt-1">
+            <div v-if="!getLinkType(link) && isLoggedIn()" class="pt-1">
               <router-link class="px-2" :to="link"
                 >{{ getTitle(link) }}
               </router-link>
             </div>
           </div>
-          <div>
+          <div v-if="isLoggedIn() && checkUser() && allowAdmin()">
             <BaseButton
               type="submit"
               :class="openAdmin ? 'bg-yellow-500' : 'bg-buttonblue'"
@@ -59,7 +60,6 @@
                 hover:bg-yellow-400
               "
               @click="openAdmin = !openAdmin"
-              v-if="loggedIn && checkUser() && showAdmin()"
             >
               ADMIN
               <font-awesome-icon
@@ -68,11 +68,10 @@
               />
             </BaseButton>
           </div>
-          <div class="">
+          <div class="" v-if="isLoggedIn()">
             <BaseButton
               type="submit"
               :class="'bg-buttonblue'"
-              :disabled="false"
               class="
                 hidden
                 lg:inline-block
@@ -86,7 +85,6 @@
                 hover:bg-buttonblueHover
               "
               @click="logout"
-              v-if="loggedIn"
             >
               LOG OUT
             </BaseButton>
@@ -103,7 +101,7 @@
               w-12
               sm:w-10
             "
-            v-if="loggedIn"
+            v-if="isLoggedIn()"
           >
             <button
               @click="toggle"
@@ -166,7 +164,7 @@
                       text-left
                     "
                     @click="goPath('resource-content')"
-                    v-if="loggedIn && checkUser()"
+                    v-if="isLoggedIn() && checkUser()"
                   >
                     <router-link :to="link">{{ getTitle(link) }}</router-link>
                   </BaseButton>
@@ -188,7 +186,7 @@
                 bg-buttonblue
                 hover:bg-buttonblueHover
               "
-              v-if="loggedIn && checkUser() && showAdmin()"
+              v-if="isLoggedIn() && checkUser() && showAdmin()"
             >
               <div class="flex">
                 <div class="flex-grow">
@@ -223,7 +221,7 @@
                 bg-buttonblue
                 hover:bg-buttonblueHover
               "
-              v-if="loggedIn && checkUser() && showAdmin()"
+              v-if="isLoggedIn() && checkUser() && showAdmin()"
             >
               <div class="flex">
                 <div class="flex-grow">
@@ -237,7 +235,7 @@
                       hover:text-white
                     "
                     @click="goPath('Register')"
-                    v-if="loggedIn && checkUser() && showAdmin()"
+                    v-if="isLoggedIn() && checkUser() && showAdmin()"
                   >
                     REGISTER
                   </BaseButton>
@@ -259,7 +257,7 @@
                 bg-buttonblue
                 hover:bg-buttonblueHover
               "
-              v-if="loggedIn && checkUser()"
+              v-if="isLoggedIn() && checkUser()"
             >
               <div class="flex">
                 <div class="flex-grow">
@@ -289,7 +287,7 @@
         </div>
       </div>
       <div
-        v-if="loggedIn && checkUser() && showAdmin() && openAdmin"
+        v-if="isLoggedIn() && checkUser() && allowAdmin() && openAdmin"
         class="flex w-full border-t border-gray-600 justify-end"
       >
         <div class="flex py-4">
@@ -307,7 +305,6 @@
                 hover:bg-yellow-500 hover:text-white
               "
               @click="goPath('resource-content')"
-              v-if="loggedIn && checkUser() && showAdmin()"
             >
               ADD CONTENT
             </BaseButton>
@@ -346,7 +343,7 @@
                 hover:bg-yellow-500 hover:text-white
               "
               @click="goPath('Users')"
-              v-if="loggedIn && checkUser() && showAdmin()"
+              v-if="isLoggedIn() && checkUser() && showAdmin()"
             >
               VIEW USERS
             </BaseButton>
@@ -358,7 +355,7 @@
 </template>
 <script>
 import { useWindowSize } from "vue-window-size";
-import { authComputed } from "../store/helpers.js";
+
 import { mapGetters } from "vuex";
 import _ from "lodash";
 const { width } = useWindowSize();
@@ -382,11 +379,14 @@ export default {
       open: false,
       windowWidth: width,
       openAdmin: false,
+      loggedIn: false,
     };
   },
   computed: {
-    ...authComputed,
-    ...mapGetters(["userToken"]),
+    ...mapGetters({ userToken: "userToken", loggedIn: "loggedIn" }),
+    isLoggedIn2: function () {
+      return _.has(this.userToken, "isAdmin");
+    },
   },
   mounted() {
     window.addEventListener("resize", this.handleResize);
@@ -402,8 +402,13 @@ export default {
       return _.has(this.userToken, "isAdmin");
     },
     logout() {
-      this.$store.dispatch("user/logout");
+      this.$store.commit("user/LOGOUT");
+      this.openAdmin = false;
       this.$router.push("Login");
+    },
+    isLoggedIn() {
+      // return _.has(this.userToken, "isAdmin");
+      return this.$store.getters.loggedIn;
     },
     toggle() {
       this.open = !this.open;
@@ -412,6 +417,9 @@ export default {
       if (this.windowWidth > 1024) {
         this.open = false;
       }
+    },
+    allowAdmin() {
+      return _.has(this.userToken, "isAdmin") ? this.userToken.isAdmin : false;
     },
     showAdmin() {
       const isAdminMeta = this.$route.meta;

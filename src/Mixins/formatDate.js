@@ -35,7 +35,7 @@ export default {
     },
     getTime(dateString) {
       const date = dayjs(dateString);
-      return date.format("H:m");
+      return date.format("HH:mm");
     },
   },
 };

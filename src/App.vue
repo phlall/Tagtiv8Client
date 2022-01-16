@@ -1,7 +1,7 @@
 <template>
   <div id="nav">
     <navTop />
-    <NavVari :NavLinks="navLinks" />
+    <NavVari />
   </div>
   <router-view class="text-gray-600" />
   <NotificationContainer />

@@ -131,7 +131,7 @@ export const actions = {
       });
   },
   deleteUser({ dispatch }, userId) {
-    return ApiService.delete(userId.userId).then((response) => {
+    return ApiService.delete(userId).then((response) => {
       const notification = {
         type: "success",
         message: "User deleted",
