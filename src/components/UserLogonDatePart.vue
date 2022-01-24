@@ -22,7 +22,7 @@
           <!-- {{ getYearLogons("year", logon.parent) }} -->
           <BaseButton @click="open = !open">
             <font-awesome-icon
-              :icon="['fas', open ? 'caret-down' : 'caret-up']"
+              :icon="['fas', open ? 'caret-up' : 'caret-down']"
               class="text-gray-500 text-3xl"
             />
           </BaseButton>
