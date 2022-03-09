@@ -37,6 +37,7 @@ import camelCase from "lodash/camelCase";
 import upperFirst from "lodash/upperFirst";
 import "./registerServiceWorker";
 import "./assets/tailwind.css";
+//import VCalendar from "v-calendar";
 
 library.add(
   faPhone,

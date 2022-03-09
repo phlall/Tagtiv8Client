@@ -160,6 +160,83 @@
                 : " Check for Administrator status"
             }}</label>
           </div>
+
+          <div class="mt-4 px-8">
+            <input
+              type="checkbox"
+              id="isActive"
+              v-model="isActive"
+              class="h-4 w-4"
+            />
+            <label for="checkbox">{{
+              isActive
+                ? "Active - user will show on site"
+                : "Inactive - user is hidden"
+            }}</label>
+          </div>
+          <div class="mt-4 px-8">
+            <input
+              type="checkbox"
+              id="isSubscribed"
+              v-model="isSubscribed"
+              class="h-4 w-4"
+            />
+            <label for="checkbox">{{
+              isSubscribed ? " Subscribed user" : " Check to Subscribe"
+            }}</label>
+          </div>
+          <!-- <div>
+            <Datepicker v-model="dateFrom" />
+          </div> -->
+          <div v-show="isSubscribed">
+            <div class="flex">
+              <div>
+                <Datepicker
+                  v-model="dateFrom"
+                  autoApply
+                  :closeOnAutoApply="false"
+                />
+              </div>
+              <div>
+                <BaseInput
+                  v-model="subscriptionTo"
+                  type="txt"
+                  disabled
+                  class="
+                    h-14
+                    w-full
+                    border
+                    pl-2
+                    border-gray-500
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-purple-400
+                    focus:border-transparent
+                    bg-white
+                  "
+                  placeholder="Subscribed to"
+                />
+                <!-- <Datepicker
+                  v-model="subscriptionTo"
+                  autoApply
+                  :closeOnAutoApply="false"
+                  locale="en-gb"
+                /> -->
+              </div>
+            </div>
+
+            <div>
+              <h3>Choose Subscription period</h3>
+              <div>
+                <BaseRadioGroup
+                  v-model="subscriptionPeriod"
+                  name="Subscription"
+                  :options="subscriptionPeriods"
+                />
+              </div>
+            </div>
+          </div>
+
           <div class="flex px-8 mt-6 mb-32">
             <div class="w-1/2 mr-2">
               <BaseButton
@@ -186,15 +263,59 @@
 import { mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
+import formatDateMixin from "../Mixins/formatDate.js";
+import Datepicker from "vue3-date-time-picker";
+import "vue3-date-time-picker/dist/main.css";
+import { ref } from "vue";
 //import NavVari from "@/components/NavVari.vue";
 
 export default {
   name: "Register",
+  mixins: [formatDateMixin],
   setup() {
-    return { v$: useVuelidate() };
+    const date = ref(new Date());
+    // In case of a range picker, you'll receive [Date, Date]
+    const format = (date) => {
+      const day = this.getDay(this.subscriptionTo);
+      const month = this.getMonth(this.subscriptionTo);
+      const year = date.getYear(this.subscriptionTo);
+
+      return `${day}/${month}/${year}`;
+    };
+    // const dateTo = ref(this.subscriptionTo);
+    // const formatTo = (dateTo) => {
+    //   const day = ("0" + dateTo.getDate()).slice(-2);
+    //   const month = ("0" + dateTo.getMonth() + 1).slice(-2);
+    //   const year = formatTo.getFullYear();
+
+    //   return `${day}/${month}/${year}`;
+    // };
+
+    // const format =
+    //   ("0" + date.value.getDate()).slice(-2) +
+    //   "/" +
+    //   ("0" + (date.value.getMonth() + 1)).slice(-2) +
+    //   "/" +
+    //   date.value.getFullYear();
+
+    return { v$: useVuelidate(), date, format };
   },
   data() {
     return {
+      subscriptionPeriods: [
+        { label: "3 Months", value: 3 },
+        { label: "6 Months", value: 6 },
+        { label: "one year", value: 12 },
+        { label: "two years", value: 24 },
+        { label: "five years", value: 60 },
+      ],
+      subscriptionPeriod: 0,
+      subscriptionTo: "",
+      isActive: true,
+      isSubscribed: true,
+      days: [],
+      dateFrom: new Date(),
+      dateTo: null,
       email: "",
       password: "",
       firstName: "",
@@ -207,6 +328,7 @@ export default {
     };
   },
   validations() {
+    var vm = this;
     return {
       email: { required, email },
       password: {
@@ -227,10 +349,44 @@ export default {
       firstName: { required },
       lastName: { required },
       school: { required },
+      subscriptionPeriod: {
+        isSubscription(value) {
+          if (vm.isSubscribed && value > 0) {
+            return true;
+          }
+          if (!vm.isSubscribed) {
+            return true;
+          }
+          return false;
+        },
+      },
     };
+  },
+  watch: {
+    subscriptionPeriod: function (newValue) {
+      this.subscriptionTo = this.addMonths(this.dateFrom, newValue);
+    },
+    isSubscribed: function (newValue) {
+      if (!newValue) {
+        this.subscriptionPeriod = 0;
+        this.subscriptionTo = {};
+      }
+    },
+    dateFrom: function (newValue) {
+      this.subscriptionTo = this.addMonths(newValue, this.subscriptionPeriod);
+    },
   },
   computed: {
     ...mapState(["user"]),
+    dates() {
+      return this.days.map((day) => day.date);
+    },
+    attributes() {
+      return this.dates.map((date) => ({
+        highlight: true,
+        dates: date,
+      }));
+    },
   },
   methods: {
     login() {
@@ -244,7 +400,12 @@ export default {
             firstName: this.firstName,
             lastName: this.lastName,
             school: this.school,
-            isadmin: this.isAdmin,
+            isAdmin: this.isAdmin,
+            isSubscribed: this.isSubscribed,
+            isActive: this.isActive,
+            SubscribedFrom: this.dateFrom,
+            SubscribedTo: this.subscriptionTo,
+            SubscribedMonths: this.subscriptionPeriod,
           })
           .then((error) => {
             if (!error) {
@@ -260,9 +421,20 @@ export default {
           });
       }
     },
+    // onDayClick(day) {
+    //   const idx = this.days.findIndex((d) => d.id === day.id);
+    //   if (idx >= 0) {
+    //     this.days.splice(idx, 1);
+    //   } else {
+    //     this.days.push({
+    //       id: day.id,
+    //       date: day.date,
+    //     });
+    //   }
+    // },
   },
   components: {
-    //NavVari,
+    Datepicker,
   },
 };
 </script>

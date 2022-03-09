@@ -37,5 +37,13 @@ export default {
       const date = dayjs(dateString);
       return date.format("HH:mm");
     },
+    addMonths(dateString, months) {
+      //let dateStr = "";
+      // if (dateString == "") {
+      //   dateString = dayjs();
+      // }
+      const date = dayjs(dateString).add(months, "month");
+      return date;
+    },
   },
 };
