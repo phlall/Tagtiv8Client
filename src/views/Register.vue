@@ -189,31 +189,22 @@
             <Datepicker v-model="dateFrom" />
           </div> -->
           <div v-show="isSubscribed">
-            <div class="flex">
-              <div>
+            <div class="flex flex-row bg-red-200">
+              <div class="basis-1/2">
                 <Datepicker
                   v-model="dateFrom"
                   autoApply
                   :closeOnAutoApply="false"
+                  format="dd/MM/yyyy"
+                  inputClassName="h-10"
                 />
               </div>
-              <div>
+              <div class="grow border border-red-400">
                 <BaseInput
                   v-model="subscriptionTo"
-                  type="txt"
                   disabled
-                  class="
-                    h-14
-                    w-full
-                    border
-                    pl-2
-                    border-gray-500
-                    focus:outline-none
-                    focus:ring-2
-                    focus:ring-purple-400
-                    focus:border-transparent
-                    bg-white
-                  "
+                  type="text"
+                  class="h-10 w-64 border ml-4 pl-2 border-gray-300 bg-white"
                   placeholder="Subscribed to"
                 />
                 <!-- <Datepicker
@@ -421,6 +412,9 @@ export default {
           });
       }
     },
+    // format(value) {
+    //   return this.formatDateShort(value);
+    // },
     // onDayClick(day) {
     //   const idx = this.days.findIndex((d) => d.id === day.id);
     //   if (idx >= 0) {

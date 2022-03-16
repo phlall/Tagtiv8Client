@@ -34,7 +34,7 @@
       </BaseButton>
 
       <div class="flex justify-end my-2 h-8">
-        <div class="">
+        <div class="" @click="userDetail()">
           <div
             v-show="user.isAdmin"
             class="
@@ -54,27 +54,38 @@
             />
           </div>
         </div>
-        <div
-          class="
-            mr-1
-            text-white
-            py-1 py-1
-            text-nav
-            bg-blue-600
-            rounded
-            h-8
-            w-8
-            text-center
-          "
-        >
-          {{ user.logonsCount }}
+        <div class="mr-1 text-center">
+          <button
+            type="button"
+            :disabled="false"
+            class="
+              text-white
+              bg-blue-600
+              text-nav
+              rounded
+              h-8
+              w-8
+              hover:opacity-50
+            "
+            @click="userLogons()"
+          >
+            {{ user.logonsCount }}
+          </button>
         </div>
 
         <div class="mr-2 h-8">
           <button
             type="button"
             :disabled="false"
-            class="text-white bg-buttonblue text-nav rounded h-8 w-24"
+            class="
+              text-white
+              bg-buttonblue
+              hover:opacity-50
+              text-nav
+              rounded
+              h-8
+              w-24
+            "
             @click="changePassword()"
           >
             Reset Pwd
@@ -84,7 +95,17 @@
           <BaseButton
             type="submit"
             :disabled="false"
-            class="text-white py-1 px-3 bg-buttonblue mr-2 text-nav rounded h-8"
+            class="
+              text-white
+              py-1
+              px-3
+              bg-buttonblue
+              mr-2
+              text-nav
+              rounded
+              h-8
+              hover:opacity-50
+            "
             @click="deleteUser()"
           >
             Delete
@@ -114,6 +135,9 @@ export default {
   },
   methods: {
     userDetail() {
+      this.$emit("showUserDetail", { userId: this.user.id });
+    },
+    userLogons() {
       this.$emit("showUserLogons", { userId: this.user.id });
     },
     deleteUser() {

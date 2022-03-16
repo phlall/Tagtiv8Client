@@ -95,6 +95,32 @@ export const actions = {
         return error;
       });
   },
+  update({ dispatch }, credentials) {
+    return ApiService.update(credentials)
+      .then((response) => {
+        let notification = "";
+        if (_.has(response.data, "message")) {
+          notification = {
+            type: "error",
+            message: response.data.message,
+          };
+        } else {
+          notification = {
+            type: "success",
+            message: "Update successful",
+          };
+          dispatch("notification/add", notification, { root: true });
+        }
+      })
+      .catch((error) => {
+        const notification = {
+          type: "error",
+          message: `Registration failed  -  ${error.message} - check duplicate user`,
+        };
+        dispatch("notification/add", notification, { root: true });
+        return error;
+      });
+  },
   resetPassword({ dispatch }, credentials) {
     return ApiService.resetPassword(credentials.id, credentials).then(
       ({ data }) => {

@@ -33,6 +33,9 @@ export default {
   login(credentials) {
     return apiClient.post("users/authenticate", credentials);
   },
+  update(credentials) {
+    return apiClient.put("users", credentials);
+  },
   delete(userId) {
     return apiClient.delete("users/" + userId);
   },

@@ -7,7 +7,7 @@ export default {
     },
     formatDateShort(dateString) {
       const date = dayjs(dateString);
-      return date.format("DD MM YYYY");
+      return date.format("DD/MM/YYYY");
     },
     getYear(dateString) {
       const date = dayjs(dateString);

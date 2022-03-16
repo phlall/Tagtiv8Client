@@ -3,6 +3,13 @@
   <ModalDialog :show="showModal" @closeModal="closeModal">
     <UserLogons :user="userDetail" @deleteUser="deleteUser" />
   </ModalDialog>
+  <ModalDialog :show="showDetailModal" @closeModal="closeDetailModal">
+    <UserDetail
+      :userId="userId"
+      @deleteUser="deleteUser"
+      @closeModal="closeDetailModal"
+    />
+  </ModalDialog>
   <ModalDialog :show="showPasswordModal" @closeModal="closePasswordModal">
     <ChangePassword
       :user="userDetail"
@@ -161,6 +168,7 @@
         <User
           :user="user"
           @showUserLogons="showUserLogons"
+          @showUserDetail="showUserDetail"
           @showChangePassword="showChangePassword"
           @deleteUser="deleteUser"
         />
@@ -237,6 +245,7 @@ import { mapGetters } from "vuex";
 import { ContentLoader } from "vue-content-loader";
 import ModalDialog from "../components/ModalDialog.vue";
 import UserLogons from "../components/UserLogons.vue";
+import UserDetail from "../components/UserDetail.vue";
 import ChangePassword from "../components/ChangePassword.vue";
 export default {
   name: "Users",
@@ -246,14 +255,17 @@ export default {
       users: [],
       usersPage: [],
       userDetail: {},
+      // userLogons: {},
       sortOrder: "asc",
       sortItem: "",
       loaded: false,
       showModal: false,
+      showDetailModal: false,
       showPasswordModal: false,
       takeCount: 20,
       skipCount: 0,
       totalPages: 0,
+      userId: 0,
     };
   },
   computed: {
@@ -282,6 +294,10 @@ export default {
       this.userDetail = {};
       this.showModal = false;
     },
+    closeDetailModal() {
+      this.userDetail = {};
+      this.showDetailModal = false;
+    },
     closePasswordModal() {
       this.showPasswordModal = false;
     },
@@ -308,12 +324,17 @@ export default {
       this.userDetail = user;
     },
     showUserLogons(userId) {
-      //alert();
+      //alert("logons");
       this.showModal = true;
       this.getUserDetail(userId);
     },
+    showUserDetail(userId) {
+      this.userId = userId;
+      this.showDetailModal = true;
+      // this.getUserDetail(userId);
+    },
     getUserDetail(userId) {
-      this.showModal = true;
+      // this.showDetailModal = true;
       this.$store
         .dispatch("user/getUser", userId)
         .then((user) => {
@@ -323,6 +344,17 @@ export default {
           this.$router.push("Home");
         });
     },
+    // getUserLogons(userId) {
+    //   this.showModal = true;
+    //   this.$store
+    //     .dispatch("user/getUser", userId)
+    //     .then((user) => {
+    //       this.userLogons = user;
+    //     })
+    //     .catch(() => {
+    //       this.$router.push("Home");
+    //     });
+    // },
     deleteUser(userId) {
       _.remove(this.users, {
         id: userId,
@@ -356,6 +388,7 @@ export default {
     User,
     ContentLoader,
     ModalDialog,
+    UserDetail,
   },
 };
 </script>
