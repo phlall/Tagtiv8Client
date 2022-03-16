@@ -322,10 +322,10 @@ import Datepicker from "vue3-date-time-picker";
 import { ref } from "vue";
 export default {
   name: "User Detail",
+  emits: ["closeDetailModal"],
   props: {
     userId: Number,
   },
-  emits: ["deleteUser", "showChangePassword", "showUserLogons"],
   mixins: [formatDateMixin],
   components: { ContentLoader, Datepicker },
   computed: {
@@ -407,35 +407,9 @@ export default {
     //var vm = this;
     return {
       email: { required, email },
-      // password: {
-      //   required,
-      //   containsUppercase(value) {
-      //     return /[A-Z]/.test(value);
-      //   },
-      //   containsLowercase(value) {
-      //     return /[a-z]/.test(value);
-      //   },
-      //   containsNumber(value) {
-      //     return /[0-9]/.test(value);
-      //   },
-      //   // containsSpecial: function (value) {
-      //   //   return /[#?!@$%^&*-]/.test(value)
-      //   // }
-      // },
       firstName: { required },
       lastName: { required },
       school: { required },
-      // subscriptionPeriod: {
-      //   isSubscription(value) {
-      //     if (vm.isSubscribed && value > 0) {
-      //       return true;
-      //     }
-      //     if (!vm.isSubscribed) {
-      //       return true;
-      //     }
-      //     return false;
-      //   },
-      // },
     };
   },
   created() {
@@ -499,22 +473,18 @@ export default {
           })
           .then((error) => {
             if (!error) {
-              // (this.email = ""),
-              //   (this.password = ""),
-              //   (this.firstName = ""),
-              //   (this.lastName = ""),
-              //   (this.school = ""),
-              //   (this.isAdmin = false);
               this.user = {};
-              this.$emit("closeModal");
+              this.$emit("closeDetailModal", {
+                id: this.userId.userId,
+                school: this.school,
+                isAdmin: this.isAdmin,
+                username: this.email,
+              });
             } else {
               // this.$router.push({ name: "Login" });
             }
           });
       }
-    },
-    closeModal() {
-      this.$emit("closeModal");
     },
   },
 };

@@ -7,7 +7,7 @@
     <UserDetail
       :userId="userId"
       @deleteUser="deleteUser"
-      @closeModal="closeDetailModal"
+      @closeDetailModal="closeUpdateModal"
     />
   </ModalDialog>
   <ModalDialog :show="showPasswordModal" @closeModal="closePasswordModal">
@@ -294,8 +294,15 @@ export default {
       this.userDetail = {};
       this.showModal = false;
     },
-    closeDetailModal() {
+    closeUpdateModal(obj) {
+      let user = _.find(this.users, { id: obj.id });
+      user.school = obj.school;
+      user.isAdmin = obj.isAdmin;
+      user.username = obj.username;
       this.userDetail = {};
+      this.showDetailModal = false;
+    },
+    closeDetailModal() {
       this.showDetailModal = false;
     },
     closePasswordModal() {
