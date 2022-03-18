@@ -1,5 +1,6 @@
 import { createApp } from "vue";
-import "@/assets/styles/tailwind.css";
+//import "@/assets/styles/tailwind.css";
+import "@/assets/tailwind.css";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faTwitter,
@@ -28,6 +29,9 @@ import {
   faEye,
   faEyeSlash,
   faCheck,
+  faUnlock,
+  faTrash,
+  faUserTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { faFilePdf, faFileAlt } from "@fortawesome/free-regular-svg-icons";
 import App from "./App.vue";
@@ -37,6 +41,7 @@ import camelCase from "lodash/camelCase";
 import upperFirst from "lodash/upperFirst";
 import "./registerServiceWorker";
 import "./assets/tailwind.css";
+
 //import VCalendar from "v-calendar";
 
 library.add(
@@ -64,7 +69,10 @@ library.add(
   faFileAlt,
   faEye,
   faEyeSlash,
-  faCheck
+  faCheck,
+  faUnlock,
+  faTrash,
+  faUserTimes
 );
 
 const requireComponent = require.context(

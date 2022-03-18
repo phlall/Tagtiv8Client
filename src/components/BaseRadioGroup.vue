@@ -1,13 +1,15 @@
 <template>
-  <BaseRadio
-    v-for="option in options"
-    :key="option.value"
-    :label="option.label"
-    :value="option.value"
-    :modelValue="modelValue"
-    :name="name"
-    @update:modelValue="$emit('update:modelValue', $event)"
-  />
+  <div class="flex">
+    <div v-for="option in options" :key="option.value" class="h-8">
+      <BaseRadio
+        :label="option.label"
+        :value="option.value"
+        :modelValue="modelValue"
+        :name="name"
+        @update:modelValue="$emit('update:modelValue', $event)"
+      />
+    </div>
+  </div>
 </template>
 
 <script>

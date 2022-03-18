@@ -34,25 +34,42 @@
       </BaseButton>
 
       <div class="flex justify-end my-2 h-8">
-        <div class="" @click="userDetail()">
-          <div
-            v-show="user.isAdmin"
-            class="
-              bg-green-500
-              rounded
-              w-8
-              h-8
-              px-1
-              pt-1.5
-              mr-1
-              text-nav text-center text-white
-            "
-          >
-            <font-awesome-icon
-              :icon="['fas', 'check']"
-              class="text-white text-md"
-            />
-          </div>
+        <div
+          v-show="user.isSubscribed"
+          class="
+            bg-yellow-500
+            rounded
+            w-8
+            h-8
+            px-1
+            pt-1.5
+            text-nav text-center text-white
+          "
+          :class="!user.isAdmin ? 'mr-10' : 'mr-1'"
+        >
+          {{ user.subscribedMonths }}
+          <!-- <font-awesome-icon
+            :icon="['fas', 'check']"
+            class="text-white text-md"
+          /> -->
+        </div>
+        <div
+          v-show="user.isAdmin"
+          class="
+            bg-green-500
+            rounded
+            w-8
+            h-8
+            px-1
+            pt-1.5
+            mr-1
+            text-nav text-center text-white
+          "
+        >
+          <font-awesome-icon
+            :icon="['fas', 'check']"
+            class="text-white text-md"
+          />
         </div>
         <div class="mr-1 text-center">
           <button
@@ -84,11 +101,11 @@
               text-nav
               rounded
               h-8
-              w-24
+              w-8
             "
             @click="changePassword()"
           >
-            Reset Pwd
+            <font-awesome-icon :icon="['fa', 'unlock']" />
           </button>
         </div>
         <div class="mr-1">
@@ -99,7 +116,7 @@
               text-white
               py-1
               px-3
-              bg-buttonblue
+              bg-pink-800
               mr-2
               text-nav
               rounded
@@ -108,7 +125,7 @@
             "
             @click="deleteUser()"
           >
-            Delete
+            <font-awesome-icon :icon="['fa', 'user-times']" />
           </BaseButton>
         </div>
       </div>

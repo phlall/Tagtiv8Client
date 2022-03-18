@@ -1,5 +1,6 @@
 const plugin = require("tailwindcss/plugin");
 module.exports = {
+  content: ["./src/**/*.{html,js}"],
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -68,6 +69,7 @@ module.exports = {
   variants: {
     extend: {},
   },
+  //plugins: [require("daisyui")],
   plugins: [
     plugin(({ addBase, theme }) => {
       addBase({

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user">
+  <div v-if="loaded">
     <div
       class="
         flex flex-row
@@ -25,47 +25,9 @@
         {{ formatDate(user.passwordChanged) }}
       </div>
     </div>
-    <!-- <div class="flex mt-6">
-                    <div>
-                      <BaseButton
-                        type="button"
-                        @click="sortAz('month')"
-                        class="flex"
-                      >
-                        <div class="font-bold pt-1">Month</div>
-                        <div class="ml-2">
-                          <font-awesome-icon
-                            :icon="[
-                              'fas',
-                              sorted('username') ? 'caret-down' : 'caret-up',
-                            ]"
-                            class="text-gray-600 text-3xl"
-                          />
-                        </div>
-                      </BaseButton>
-                    </div>
-                    <div>
-                      <BaseButton
-                        type="button"
-                        @click="sortAz('year')"
-                        class="flex"
-                      >
-                        <div class="font-bold pt-1">Year</div>
-                        <div class="ml-2">
-                          <font-awesome-icon
-                            :icon="[
-                              'fas',
-                              sorted('username') ? 'caret-down' : 'caret-up',
-                            ]"
-                            class="text-gray-600 text-3xl"
-                          />
-                        </div>
-                      </BaseButton>
-                    </div>
-                  </div> -->
     <div class="w-full sm:3/4 lg:w-1/2 m-auto mt-6">
       <form class="form" v-on:submit.prevent="update">
-        <div class="px-8 text-red-500">
+        <!-- <div class="px-8 text-red-500">
           <BaseInput
             v-model="firstName"
             type="text"
@@ -86,8 +48,8 @@
               First name is required.
             </p>
           </div>
-        </div>
-        <div class="px-8 text-red-500">
+        </div> -->
+        <!-- <div class="px-8 text-red-500">
           <BaseInput
             v-model="lastName"
             type="text"
@@ -108,8 +70,8 @@
               Last name is required.
             </p>
           </div>
-        </div>
-        <div class="px-8 text-red-500">
+        </div> -->
+        <div class="px-8 mt-16">
           <BaseInput
             v-model="school"
             type="text"
@@ -131,7 +93,7 @@
             </p>
           </div>
         </div>
-        <div class="px-8 text-red-500">
+        <div class="px-8">
           <BaseInput
             v-model="email"
             type="email"
@@ -156,42 +118,14 @@
             </p>
           </div>
         </div>
-        <!-- <div class="mt-4 pb-4 px-8">
-          <BaseInput
-            v-model="password"
-            type="password"
-            class="
-              h-14
-              w-full
-              border
-              pl-2
-              border-gray-500
-              focus:outline-none
-              focus:ring-2
-              focus:ring-purple-400
-              focus:border-transparent
-              bg-white
-            "
-            placeholder="Enter your password"
-            @blur="v$.password.$touch"
-          />
-          <div class="pt-1 h-8 text-red-500 outline-0">
-            <p v-if="v$.password.$invalid && v$.password.$dirty">
-              Please enter a valid password.
-            </p>
-            <p v-if="v$.password.required.$invalid && v$.password.$dirty">
-              Password is required.
-            </p>
-          </div>
-        </div> -->
         <div class="mt-4 px-8">
           <input
             type="checkbox"
-            id="checkbox"
+            id="isAdmin"
             v-model="isAdmin"
             class="h-4 w-4"
           />
-          <label for="checkbox">{{
+          <label for="isAdmin" class="ml-1">{{
             isAdmin ? " Is an Administrator" : " Check for Administrator status"
           }}</label>
         </div>
@@ -203,63 +137,67 @@
             v-model="isActive"
             class="h-4 w-4"
           />
-          <label for="checkbox">{{
+          <label for="isActive" class="ml-2">{{
             isActive
               ? "Active - user will show on site"
               : "Inactive - user is hidden"
           }}</label>
         </div>
-        <div class="mt-4 px-8">
-          <input
-            type="checkbox"
-            id="isSubscribed"
-            v-model="isSubscribed"
-            class="h-4 w-4"
-          />
-          <label for="checkbox">{{
-            isSubscribed ? " Subscribed user" : " Check to Subscribe"
-          }}</label>
-        </div>
-        <!-- <div>
-            <Datepicker v-model="dateFrom" />
-          </div> -->
-        <div v-show="isSubscribed">
-          <div class="flex flex-row bg-red-200">
-            <div class="basis-1/2">
-              <Datepicker
-                v-model="dateFrom"
-                autoApply
-                :closeOnAutoApply="false"
-                format="dd/MM/yyyy"
-                inputClassName="h-10"
-              />
-            </div>
-            <div class="grow border border-red-400">
-              <input
-                disabled
-                type="text"
-                :value="formatDateShort(this.subscribedTo)"
-                class="h-10 w-64 border ml-4 pl-2 border-gray-300 bg-white"
-                placeholder="Subscribed to"
-              />
-
-              <!-- <Datepicker
-                  v-model="subscriptionTo"
+        <div :class="isSubscribed ? 'bg-gray-200 rounded-md' : ''">
+          <div class="mt-4 pl-8 pt-2">
+            <input
+              type="checkbox"
+              id="isSubscribed"
+              v-model="isSubscribed"
+              class="h-4 w-4"
+            />
+            <label for="isSubscribed" class="ml-1">{{
+              isSubscribed ? " Subscribed user" : " Check to Subscribe"
+            }}</label>
+          </div>
+          <!-- <div>
+              <Datepicker v-model="dateFrom" />
+            </div> -->
+          <div v-show="isSubscribed" class="mt-4">
+            <div class="flex flex-row pl-2">
+              <div class="basis-1/2">
+                <div class="text-md">From</div>
+                <Datepicker
+                  v-model="dateFrom"
                   autoApply
                   :closeOnAutoApply="false"
-                  locale="en-gb"
-                /> -->
-            </div>
-          </div>
+                  format="dd/MM/yyyy"
+                  inputClassName="h-10 mt-1"
+                />
+              </div>
+              <div class="grow ml-8">
+                <div class="text-md">To</div>
+                <input
+                  disabled
+                  type="text"
+                  :value="formatDateShort(this.subscribedTo)"
+                  class="h-10 w-64 border pl-2 mt-1 border-gray-300 bg-white"
+                  placeholder="Subscribed to"
+                />
 
-          <div>
-            <h3>Choose Subscription period</h3>
-            <div>
-              <BaseRadioGroup
-                v-model="subscribedMonths"
-                name="Subscription"
-                :options="subscriptionPeriods"
-              />
+                <!-- <Datepicker
+                    v-model="subscriptionTo"
+                    autoApply
+                    :closeOnAutoApply="false"
+                    locale="en-gb"
+                  /> -->
+              </div>
+            </div>
+
+            <div class="py-4 pl-2">
+              <h3>Choose Subscription period</h3>
+              <div class="pt-4">
+                <BaseRadioGroup
+                  v-model="subscribedMonths"
+                  name="Subscription"
+                  :options="subscriptionPeriods"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -274,7 +212,7 @@
               "
               class="text-white h-12 w-full bg-buttonblue font-bold"
             >
-              REGISTER
+              UPDATE
             </BaseButton>
           </div>
           <p v-if="v$.$anyError" class="text-xslg text-red-500">
@@ -282,10 +220,6 @@
           </p>
         </div>
       </form>
-    </div>
-    <div class="mt-12">
-      {{ userId.userId }} {{ user.id }}
-      <!-- <Register :user="userDetail"></Register> -->
     </div>
   </div>
   <div v-else>
@@ -370,6 +304,7 @@ export default {
       days: [],
       dateFrom: new Date(),
       dateTo: null,
+      loaded: false,
       subscriptionPeriods: [
         { label: "3 Months", value: 3 },
         { label: "6 Months", value: 6 },
@@ -387,12 +322,13 @@ export default {
       this.setSubscribedTo();
       //this.subscriptionTo = this.addMonths(this.dateFrom, newValue);
     },
-    isSubscribed: function (newValue) {
-      if (!newValue) {
-        this.subscribedTo = {};
-        //this.subscribedMonths = 3;
-      }
-    },
+    // isSubscribed: function (newValue) {
+    //   alert();
+    //   if (!newValue) {
+    //     //this.subscribedTo = {};
+    //     //this.subscribedMonths = 3;
+    //   }
+    // },
     dateFrom: function () {
       //this.dateFrom = newValue;
       this.setSubscribedTo();
@@ -407,13 +343,14 @@ export default {
     //var vm = this;
     return {
       email: { required, email },
-      firstName: { required },
-      lastName: { required },
+      // firstName: { required },
+      // lastName: { required },
       school: { required },
     };
   },
   created() {
     this.subscribedTo = new Date();
+    this.loaded = false;
     this.getUserDetail();
   },
   methods: {
@@ -444,6 +381,7 @@ export default {
           } else {
             this.setSubscribedTo();
           }
+          this.loaded = true;
         })
         .catch(() => {
           this.$router.push("Home");

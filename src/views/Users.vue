@@ -43,14 +43,68 @@
     </BaseLayout>
     <BaseLayout outerClass="text-gray-700 font-roboto">
       <div class="bg-bgblue my-8 mx-4 sm:mx-0">
-        <div class="mt-4 m-auto">
+        <div class="mt-2 m-auto">
           <div class="pl-1">
-            <h3 class="font-bold text-gray-600 text-left pt-2 text-lg">
+            <h1 class="font-bold text-gray-600 text-left pt-2 text-2xl">
               Users
-            </h3>
+            </h1>
           </div>
         </div>
       </div>
+      <!-- <div class="container text-center mx-auto p-4">
+        <div class="flex justify-center rounded-lg text-lg" role="group">
+          <button
+            class="
+              bg-white
+              text-blue-500
+              hover:bg-blue-500 hover:text-white
+              border border-r-0 border-blue-500
+              rounded-l-lg
+              px-4
+              py-2
+              mx-0
+              outline-none
+              focus:shadow-outline
+            "
+            @click="filterAttrs('active')"
+          >
+            Active
+          </button>
+          <button
+            class="
+              bg-white
+              text-blue-500
+              hover:bg-blue-500 hover:text-white
+              border border-blue-500
+              px-4
+              py-2
+              mx-0
+              outline-none
+              focus:shadow-outline
+            "
+            @click="filterAttrs('subscribed')"
+          >
+            Subscribed
+          </button>
+          <button
+            class="
+              bg-white
+              text-blue-500
+              hover:bg-blue-500 hover:text-white
+              border border-l-0 border-blue-500
+              rounded-r-lg
+              px-4
+              py-2
+              mx-0
+              outline-none
+              focus:shadow-outline
+            "
+            @click="filterAttrs('admin')"
+          >
+            Admin
+          </button>
+        </div>
+      </div> -->
       <div class="flex flex-wrap w-10/12 pl-2">
         <div class="flex flex-grow">
           <div class="flex-initial w-28 mr-2">
@@ -96,7 +150,7 @@
               </div>
             </BaseButton>
           </div>
-          <div class="flex-initial w-64 ml-8">
+          <div class="flex-initial w-52 ml-8">
             <BaseButton
               type="button"
               :disabled="false"
@@ -112,14 +166,30 @@
               </div>
             </BaseButton>
           </div>
-          <div class="flex-initial w-20 ml-2">
+          <div class="flex-initial mr-2 ml-8">
+            <BaseButton
+              type="button"
+              :disabled="false"
+              @click="sortAz('isSubscribed')"
+              class="flex"
+            >
+              <div class="font-bold pt-1 text-yellow-500">Subscribed</div>
+              <div class="ml-2 mt-1">
+                <font-awesome-icon
+                  :icon="['fas', sortIcon('isSubscribed')]"
+                  class="text-gray-600 text-2xl"
+                />
+              </div>
+            </BaseButton>
+          </div>
+          <div class="flex-initial">
             <BaseButton
               type="button"
               :disabled="false"
               @click="sortAz('isAdmin')"
               class="flex"
             >
-              <div class="font-bold pt-1">Admin</div>
+              <div class="font-bold pt-1 text-green-500">Admin</div>
               <div class="ml-2 mt-1">
                 <font-awesome-icon
                   :icon="['fas', sortIcon('isAdmin')]"
@@ -128,7 +198,7 @@
               </div>
             </BaseButton>
           </div>
-          <div class="flex-grow ml-3">
+          <div class="flex-grow ml-6">
             <BaseButton
               type="button"
               :disabled="false"
@@ -141,7 +211,7 @@
                   class="text-gray-600 text-2xl"
                 />
               </div>
-              <div class="font-bold pt-1 ml-2">Logons</div>
+              <div class="font-bold pt-1 ml-2 text-blue-600">Logons</div>
             </BaseButton>
           </div>
         </div>
@@ -238,7 +308,6 @@
 </template>
 
 <script>
-//import NavVari from "../components/NavVari.vue";
 import User from "../components/User.vue";
 import _ from "lodash";
 import { mapGetters } from "vuex";
@@ -253,6 +322,7 @@ export default {
     return {
       navLinks: ["MainSite"],
       users: [],
+      filteredUsers: [],
       usersPage: [],
       userDetail: {},
       // userLogons: {},
@@ -282,6 +352,7 @@ export default {
     },
   },
   methods: {
+    // filterAttrs() {},
     goPage() {
       const context = this;
       const dropCount = this.skipCount * context.takeCount;
@@ -331,7 +402,6 @@ export default {
       this.userDetail = user;
     },
     showUserLogons(userId) {
-      //alert("logons");
       this.showModal = true;
       this.getUserDetail(userId);
     },

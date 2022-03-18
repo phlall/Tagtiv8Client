@@ -9,7 +9,7 @@
             ><BaseButton
               type="submit"
               :disabled="false"
-              class="text-white text-nav bg-red-500 font-bold pt-2 pb-1 px-6"
+              class="text-white text-nav font-bold pt-2 pb-1 px-6"
               @click="$router.push('home')"
             >
               <font-awesome-icon
@@ -168,62 +168,66 @@
               v-model="isActive"
               class="h-4 w-4"
             />
-            <label for="checkbox">{{
+            <label for="isActive" class="ml-1">{{
               isActive
                 ? "Active - user will show on site"
                 : "Inactive - user is hidden"
             }}</label>
           </div>
-          <div class="mt-4 px-8">
-            <input
-              type="checkbox"
-              id="isSubscribed"
-              v-model="isSubscribed"
-              class="h-4 w-4"
-            />
-            <label for="checkbox">{{
-              isSubscribed ? " Subscribed user" : " Check to Subscribe"
-            }}</label>
-          </div>
-          <!-- <div>
-            <Datepicker v-model="dateFrom" />
-          </div> -->
-          <div v-show="isSubscribed">
-            <div class="flex flex-row bg-red-200">
-              <div class="basis-1/2">
-                <Datepicker
-                  v-model="dateFrom"
-                  autoApply
-                  :closeOnAutoApply="false"
-                  format="dd/MM/yyyy"
-                  inputClassName="h-10"
-                />
-              </div>
-              <div class="grow border border-red-400">
-                <BaseInput
-                  v-model="subscriptionTo"
-                  disabled
-                  type="text"
-                  class="h-10 w-64 border ml-4 pl-2 border-gray-300 bg-white"
-                  placeholder="Subscribed to"
-                />
-                <!-- <Datepicker
+          <div
+            :class="isSubscribed ? 'border-2 border-gray-300 rounded-md' : ' '"
+          >
+            <div class="pl-8" :class="isSubscribed ? 'mt-3' : 'mt-4'">
+              <input
+                type="checkbox"
+                id="isSubscribed"
+                v-model="isSubscribed"
+                class="h-4 w-4"
+              />
+              <label for="checkbox" class="ml-1">{{
+                isSubscribed ? " Subscribed user" : " Check to Subscribe"
+              }}</label>
+            </div>
+
+            <div v-show="isSubscribed">
+              <div class="flex flex-row pl-2">
+                <div class="basis-1/2">
+                  <div class="text-md">From</div>
+                  <Datepicker
+                    v-model="dateFrom"
+                    autoApply
+                    :closeOnAutoApply="false"
+                    format="dd/MM/yyyy"
+                    inputClassName="h-10"
+                  />
+                </div>
+                <div class="grow ml-8">
+                  <div class="text-md">To</div>
+                  <input
+                    :value="formatDateShort(this.subscriptionTo)"
+                    disabled
+                    type="text"
+                    class="h-10 w-64 border ml-4 pl-2 border-gray-300 bg-white"
+                    placeholder="Subscribed to"
+                  />
+                  <!-- <Datepicker
                   v-model="subscriptionTo"
                   autoApply
                   :closeOnAutoApply="false"
                   locale="en-gb"
                 /> -->
+                </div>
               </div>
-            </div>
 
-            <div>
-              <h3>Choose Subscription period</h3>
-              <div>
-                <BaseRadioGroup
-                  v-model="subscriptionPeriod"
-                  name="Subscription"
-                  :options="subscriptionPeriods"
-                />
+              <div class="py-4 pl-2">
+                <h3>Choose Subscription period</h3>
+                <div>
+                  <BaseRadioGroup
+                    v-model="subscriptionPeriod"
+                    name="Subscription"
+                    :options="subscriptionPeriods"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -300,10 +304,10 @@ export default {
         { label: "two years", value: 24 },
         { label: "five years", value: 60 },
       ],
-      subscriptionPeriod: 0,
-      subscriptionTo: "",
+      subscriptionPeriod: 3,
+      subscriptionTo: new Date(),
       isActive: true,
-      isSubscribed: true,
+      isSubscribed: false,
       days: [],
       dateFrom: new Date(),
       dateTo: null,
@@ -317,6 +321,9 @@ export default {
       error: "",
       legit: false,
     };
+  },
+  created() {
+    this.setSubscribedTo();
   },
   validations() {
     var vm = this;
@@ -354,17 +361,19 @@ export default {
     };
   },
   watch: {
-    subscriptionPeriod: function (newValue) {
-      this.subscriptionTo = this.addMonths(this.dateFrom, newValue);
+    subscriptionPeriod: function () {
+      //this.subscriptionTo = this.addMonths(this.dateFrom, newValue);
+      this.setSubscribedTo();
     },
-    isSubscribed: function (newValue) {
-      if (!newValue) {
-        this.subscriptionPeriod = 0;
-        this.subscriptionTo = {};
-      }
-    },
-    dateFrom: function (newValue) {
-      this.subscriptionTo = this.addMonths(newValue, this.subscriptionPeriod);
+    // isSubscribed: function (newValue) {
+    //   if (!newValue) {
+    //     this.subscriptionPeriod = 3;
+    //     this.subscriptionTo = new Date();
+    //   }
+    // },
+    dateFrom: function () {
+      // this.subscriptionTo = this.addMonths(newValue, this.subscriptionPeriod);
+      this.setSubscribedTo();
     },
   },
   computed: {
@@ -380,6 +389,12 @@ export default {
     },
   },
   methods: {
+    setSubscribedTo() {
+      this.subscriptionTo = this.addMonths(
+        this.dateFrom,
+        this.subscriptionPeriod
+      );
+    },
     login() {
       this.v$.$touch();
       if (!this.v$.$invalid) {
