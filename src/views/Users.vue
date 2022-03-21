@@ -368,6 +368,8 @@ export default {
       let user = _.find(this.users, { id: obj.id });
       user.school = obj.school;
       user.isAdmin = obj.isAdmin;
+      user.isSubscribed = obj.isSubscribed;
+      user.subscribedMonths = obj.subscribedMonths;
       user.username = obj.username;
       this.userDetail = {};
       this.showDetailModal = false;

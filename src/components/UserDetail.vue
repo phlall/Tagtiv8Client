@@ -318,35 +318,28 @@ export default {
     update() {
       this.v$.$touch();
       if (!this.v$.$invalid) {
-        //this.legit = true;
-        this.$store
-          .dispatch("user/update", {
-            id: this.userId.userId,
-            username: this.email,
-            password: this.password,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            school: this.school,
-            isAdmin: this.isAdmin,
-            isSubscribed: this.isSubscribed,
-            isActive: this.isActive,
-            subscribedFrom: this.dateFrom,
-            subscribedTo: this.subscribedTo,
-            subscribedMonths: this.subscribedMonths,
-          })
-          .then((error) => {
-            if (!error) {
-              this.user = {};
-              this.$emit("closeDetailModal", {
-                id: this.userId.userId,
-                school: this.school,
-                isAdmin: this.isAdmin,
-                username: this.email,
-              });
-            } else {
-              // this.$router.push({ name: "Login" });
-            }
-          });
+        const user = {
+          id: this.userId.userId,
+          username: this.email,
+          password: this.password,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          school: this.school,
+          isAdmin: this.isAdmin,
+          isSubscribed: this.isSubscribed,
+          isActive: this.isActive,
+          subscribedFrom: this.dateFrom,
+          subscribedTo: this.subscribedTo,
+          subscribedMonths: this.subscribedMonths,
+        };
+        this.$store.dispatch("user/update", user).then((error) => {
+          if (!error) {
+            //this.user = {};
+            this.$emit("closeDetailModal", user);
+          } else {
+            // this.$router.push({ name: "Login" });
+          }
+        });
       }
     },
   },
