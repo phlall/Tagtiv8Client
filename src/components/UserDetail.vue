@@ -27,50 +27,6 @@
     </div>
     <div class="w-full sm:3/4 lg:w-1/2 m-auto mt-6">
       <form class="form" v-on:submit.prevent="update">
-        <!-- <div class="px-8 text-red-500">
-          <BaseInput
-            v-model="firstName"
-            type="text"
-            placeholder="First Name"
-            class="
-              w-full
-              border
-              pl-2
-              border-gray-500
-              focus:outline-none focus:ring-2
-              h-14
-              focus:ring-purple-400 focus:border-transparent
-            "
-            @blur="v$.firstName.$touch"
-          />
-          <div class="pt-1 h-8 text-red-500">
-            <p v-if="v$.firstName.required.$invalid && v$.firstName.$dirty">
-              First name is required.
-            </p>
-          </div>
-        </div> -->
-        <!-- <div class="px-8 text-red-500">
-          <BaseInput
-            v-model="lastName"
-            type="text"
-            placeholder="Last Name"
-            class="
-              w-full
-              border
-              pl-2
-              border-gray-500
-              focus:outline-none focus:ring-2
-              h-14
-              focus:ring-purple-400 focus:border-transparent
-            "
-            @blur="v$.lastName.$touch"
-          />
-          <div class="pt-1 h-8">
-            <p v-if="v$.lastName.required.$invalid && v$.lastName.$dirty">
-              Last name is required.
-            </p>
-          </div>
-        </div> -->
         <div class="px-8 mt-16">
           <BaseInput
             v-model="school"
@@ -155,9 +111,6 @@
               isSubscribed ? " Subscribed user" : " Check to Subscribe"
             }}</label>
           </div>
-          <!-- <div>
-              <Datepicker v-model="dateFrom" />
-            </div> -->
           <div v-show="isSubscribed" class="mt-4">
             <div class="flex flex-row pl-2">
               <div class="basis-1/2">
@@ -179,13 +132,6 @@
                   class="h-10 w-64 border pl-2 mt-1 border-gray-300 bg-white"
                   placeholder="Subscribed to"
                 />
-
-                <!-- <Datepicker
-                    v-model="subscriptionTo"
-                    autoApply
-                    :closeOnAutoApply="false"
-                    locale="en-gb"
-                  /> -->
               </div>
             </div>
 
@@ -279,7 +225,6 @@ export default {
   },
   setup() {
     const date = ref(new Date());
-    // In case of a range picker, you'll receive [Date, Date]
     const format = (date) => {
       const day = this.getDay(this.subscriptionTo);
       const month = this.getMonth(this.subscriptionTo);
@@ -317,34 +262,15 @@ export default {
   },
   watch: {
     subscribedMonths: function () {
-      //alert(newValue);
-      //this.user.subscribedMonths = newValue;
       this.setSubscribedTo();
-      //this.subscriptionTo = this.addMonths(this.dateFrom, newValue);
     },
-    // isSubscribed: function (newValue) {
-    //   alert();
-    //   if (!newValue) {
-    //     //this.subscribedTo = {};
-    //     //this.subscribedMonths = 3;
-    //   }
-    // },
     dateFrom: function () {
-      //this.dateFrom = newValue;
       this.setSubscribedTo();
-      // alert("dateFrom");
-      // this.user.subscribedTo = this.addMonths(
-      //   newValue,
-      //   this.user.subscribedMonths
-      // );
     },
   },
   validations() {
-    //var vm = this;
     return {
       email: { required, email },
-      // firstName: { required },
-      // lastName: { required },
       school: { required },
     };
   },
@@ -358,7 +284,6 @@ export default {
       return this.formatDateShort(this.subscribedTo);
     },
     getUserDetail() {
-      // this.showDetailModal = true;
       this.$store
         .dispatch("user/getUser", this.userId)
         .then((user) => {

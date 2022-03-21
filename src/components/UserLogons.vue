@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user">
+  <div v-if="loaded">
     <div
       class="
         flex flex-row
@@ -25,44 +25,6 @@
         {{ formatDate(user.passwordChanged) }}
       </div>
     </div>
-    <!-- <div class="flex mt-6">
-                    <div>
-                      <BaseButton
-                        type="button"
-                        @click="sortAz('month')"
-                        class="flex"
-                      >
-                        <div class="font-bold pt-1">Month</div>
-                        <div class="ml-2">
-                          <font-awesome-icon
-                            :icon="[
-                              'fas',
-                              sorted('username') ? 'caret-down' : 'caret-up',
-                            ]"
-                            class="text-gray-600 text-3xl"
-                          />
-                        </div>
-                      </BaseButton>
-                    </div>
-                    <div>
-                      <BaseButton
-                        type="button"
-                        @click="sortAz('year')"
-                        class="flex"
-                      >
-                        <div class="font-bold pt-1">Year</div>
-                        <div class="ml-2">
-                          <font-awesome-icon
-                            :icon="[
-                              'fas',
-                              sorted('username') ? 'caret-down' : 'caret-up',
-                            ]"
-                            class="text-gray-600 text-3xl"
-                          />
-                        </div>
-                      </BaseButton>
-                    </div>
-                  </div> -->
     <div class="mt-12">
       <div
         v-for="(logon, index0) in shapeLogonDates(user.logons)"
@@ -82,7 +44,6 @@
                 text-center text-white text-sm
               "
             >
-              <!-- {{ getYearLogons("year", logon.parent) }} -->
               {{ getLogonsCount({ year: logon.parent }) }}
             </div>
           </div>
@@ -167,18 +128,20 @@
   </div>
 </template>
 <script>
-const props = {
-  user: {
-    type: Object,
-  },
-};
+// const props = {
+//   user: {
+//     type: Object,
+//   },
+// };
 import _ from "lodash";
 import formatDateMixin from "../Mixins/formatDate.js";
 import UserLogonDatePart from "../components/UserLogonDatePart.vue";
 import { ContentLoader } from "vue-content-loader";
 export default {
   name: "UserLogons",
-  props,
+  props: {
+    userId: Number,
+  },
   mixins: [formatDateMixin],
   components: { ContentLoader, UserLogonDatePart },
   computed: {
@@ -188,6 +151,7 @@ export default {
   },
   data() {
     return {
+      user: {},
       sortOrder: "asc",
       sortItem: "",
       shapedLogons: [],
@@ -195,9 +159,29 @@ export default {
       logCounts: [],
       logons: [],
       open: false,
+      loaded: false,
     };
   },
+  created() {
+    this.loaded = false;
+    this.getUserDetail();
+  },
   methods: {
+    getUserDetail() {
+      // this.showDetailModal = true;
+      this.$store
+        .dispatch("user/getUser", this.userId)
+        .then((user) => {
+          this.user = user;
+          this.loaded = true;
+        })
+        .catch(() => {
+          this.$router.push("Home");
+        });
+    },
+    checkUser() {
+      return _.isEmpty(this.user);
+    },
     shapeLogonDates(logons) {
       const logonsFlattened = _.map(logons, (x) => ({
         id: x.id,
@@ -215,7 +199,6 @@ export default {
         .map((objs, parent) => ({ parent, objs }))
         .value();
 
-      // const grouped = _.groupBy(log, "year");
       this.shapedLogons = grouped;
       this.logons = logonsFlattened;
       this.logCounts.push(grouped.length);
@@ -226,7 +209,6 @@ export default {
         .groupBy(period)
         .map((children, parent) => ({ parent, children }))
         .value();
-      //this.shapedDates = grouped;
       this.logCounts.push(grouped.length);
       return grouped;
     },

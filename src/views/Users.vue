@@ -1,7 +1,7 @@
 <template>
   <teleport to="title"> Users| Active Learning Games</teleport>
   <ModalDialog :show="showModal" @closeModal="closeModal">
-    <UserLogons :user="userDetail" @deleteUser="deleteUser" />
+    <UserLogons :userId="userId" @deleteUser="deleteUser" />
   </ModalDialog>
   <ModalDialog :show="showDetailModal" @closeModal="closeDetailModal">
     <UserDetail
@@ -17,7 +17,6 @@
     />
   </ModalDialog>
   <div>
-    <!-- <NavVari :NavLinks="navLinks" /> -->
     <BaseLayout outerClass="bg-headerblue text-gray-700 font-roboto">
       <div class="bg-headerblue flex flex-wrap py-4 ml-4 sm:ml-0">
         <div class="mr-2">
@@ -403,35 +402,12 @@ export default {
     },
     showUserLogons(userId) {
       this.showModal = true;
-      this.getUserDetail(userId);
+      this.userId = userId;
     },
     showUserDetail(userId) {
       this.userId = userId;
       this.showDetailModal = true;
-      // this.getUserDetail(userId);
     },
-    getUserDetail(userId) {
-      // this.showDetailModal = true;
-      this.$store
-        .dispatch("user/getUser", userId)
-        .then((user) => {
-          this.userDetail = user;
-        })
-        .catch(() => {
-          this.$router.push("Home");
-        });
-    },
-    // getUserLogons(userId) {
-    //   this.showModal = true;
-    //   this.$store
-    //     .dispatch("user/getUser", userId)
-    //     .then((user) => {
-    //       this.userLogons = user;
-    //     })
-    //     .catch(() => {
-    //       this.$router.push("Home");
-    //     });
-    // },
     deleteUser(userId) {
       _.remove(this.users, {
         id: userId,
