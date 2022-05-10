@@ -22,7 +22,7 @@
             </BaseButton></span
           >
         </div>
-        <div class="flex-grow">
+        <div class="flex-grow pl-2 sm:pl-0">
           <BaseBreadcrumbs class="" :crumbs="crumbs" />
         </div>
       </div>
@@ -42,12 +42,34 @@
       </div>
       <div class="font-roboto" v-else>
         <div class="flex flex-wrap w-full mt-12">
-          <div class="pl-2 sm:pl-0 flex-shrink mt-0 sm:mt-3">
-            <h3 class="text-left pt-2 text-xlsm font-bold">
+          <div class="pl-2 sm:pl-0 mt-0 sm:mt-3 flex-grow">
+            <h3 class="text-left pl-1 pt-0 text-xlsm font-bold">
               {{ plan.resource.name }}
               <!-- {{ plan.subject.name }}  -->
               <!-- {{ plan.resource.resourceContent.name }} -->
             </h3>
+          </div>
+          <div class="pt-2 sm:pt-0">
+            <BaseButton
+              type="submit"
+              class="
+                text-white
+                h-8
+                px-3
+                bg-buttonblue
+                hover:bg-buttonblueHover
+                text-navxs
+                lg:text-xslg
+                mt-2
+              "
+              @click.prevent="savePdf()"
+            >
+              Download
+              <font-awesome-icon
+                :icon="['fas', 'file-download']"
+                class="text-xl ml-3 mr-1"
+              />
+            </BaseButton>
           </div>
         </div>
         <div class="m-auto bg-gray-100 mt-4 md:px-4">
@@ -98,6 +120,7 @@ export default {
       errors: [],
       scale: "page-width",
       loaded: false,
+      pdfFile: null,
     };
   },
   computed: {
@@ -140,6 +163,7 @@ export default {
     load() {
       GetFile.from(encodeURI(this.plan.resource.resourceContent.workSheet))
         .then((file) => {
+          this.pdfFile = file;
           this.getPdf(file);
         })
         .catch((err) => {
@@ -166,6 +190,13 @@ export default {
     handle_pdf_link: function (params) {
       var page = document.getElementById(String(params.pageNumber));
       page.scrollIntoView();
+    },
+    savePdf() {
+      var FileSaver = require("file-saver");
+      FileSaver.saveAs(
+        this.pdfFile,
+        this.plan.resource.resourceContent.workSheet
+      );
     },
     getPdf(file) {
       var self = this;

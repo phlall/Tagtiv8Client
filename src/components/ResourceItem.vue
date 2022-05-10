@@ -59,7 +59,7 @@
               sm:text-left
             "
             :class="
-              resource.resourceContent.length <= 1 && intro
+              resource.resourceContent.length <= 1 && checkIntro(item)
                 ? 'text-lg font-bold'
                 : ''
             "
@@ -68,7 +68,7 @@
           </h2>
         </div>
         <div class="flex justify-center sm:justify-end">
-          <div v-if="intro">
+          <div v-if="checkIntro(item)">
             <div class="mr-2 pb-3">
               <button
                 type="button"
@@ -207,12 +207,12 @@ export default {
     };
   },
   methods: {
-    itemCategories(item) {
-      alert(JSON.stringify(item));
-      //alert(JSON.stringify(_.groupBy(item, (item) => item.resourceName)));
-      //return _.groupBy(item, (item) => item.subject.resourceName);
-      return null;
-    },
+    // itemCategories(item) {
+    //  // alert(JSON.stringify(item));
+    //   //alert(JSON.stringify(_.groupBy(item, (item) => item.resourceName)));
+    //   //return _.groupBy(item, (item) => item.subject.resourceName);
+    //   return null;
+    // },
     setResourceContent(resourceItem, type) {
       let resourceObj = {
         id: this.resource.id,
@@ -235,6 +235,9 @@ export default {
 
     toggle() {
       this.open = !this.open;
+    },
+    checkIntro(item) {
+      return item.name.includes("Introduction");
     },
     setFavorite(item) {
       const itemId = item.id;

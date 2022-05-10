@@ -81,14 +81,14 @@
             </ContentLoader>
           </div>
           <div v-else class="col-span-2">
-            <div v-if="intro">
+            <!-- <div v-if="intro">
               <ResourceItem
                 :resource="intro"
                 :intro="true"
                 :isOpen="!resourceData.length"
                 @setContent="setResourceContent($event)"
               />
-            </div>
+            </div> -->
             <div
               v-for="resource in resourceData"
               :key="resource.id"
@@ -186,19 +186,19 @@ export default {
         .then((resources) => {
           if (resources) {
             this.loaded = true;
-            let intr = _.remove(resources, function (n) {
-              return n.name.includes("Introduction");
-            });
-            if (intr.length) {
-              this.intro = intr[0];
-            }
+            // let intr = _.remove(resources, function (n) {
+            //   return n.name.includes("Introduction");
+            // });
+            // if (intr.length) {
+            //   this.intro = intr[0];
+            // }
             if (this.plan.subject.name == "Sustain") {
               this.isView = true;
             }
             const match = _.filter(resources, (x) => {
               return x.resourceContent.length;
             });
-            this.resourceData = _.orderBy(match, ["name"], ["asc"]);
+            this.resourceData = _.orderBy(match, ["sortOrder"], ["asc"]);
             // this.resourceData = _.sortBy(match, function (emp) {
             //   return _.chain(emp)
             //     .sortBy("name")
