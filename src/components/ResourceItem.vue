@@ -30,7 +30,7 @@
       </div>
     </div>
     <div
-      v-for="(item, index) in resource.resourceContent"
+      v-for="(item, index) in orderedActivities"
       :key="index"
       class="cursor-pointer bg-white px-4"
     >
@@ -68,7 +68,7 @@
           </h2>
         </div>
         <div class="flex justify-center sm:justify-end">
-          <div v-if="checkIntro(item)">
+          <!-- <div v-if="checkIntro(item)">
             <div class="mr-2 pb-3">
               <button
                 type="button"
@@ -89,8 +89,8 @@
                 View
               </button>
             </div>
-          </div>
-          <div v-else-if="isView">
+          </div> -->
+          <div v-if="item.introduction">
             <div class="mr-2 pb-3">
               <button
                 type="button"
@@ -179,7 +179,7 @@
 </template>
 
 <script>
-//import _ from "lodash";
+import _ from "lodash";
 export default {
   name: "ResourceItem",
   props: {
@@ -205,6 +205,11 @@ export default {
       open: this.isOpen,
       grouped: [],
     };
+  },
+  computed: {
+    orderedActivities: function () {
+      return _.orderBy(this.resource.resourceContent, "sortOrder");
+    },
   },
   methods: {
     // itemCategories(item) {

@@ -142,6 +142,21 @@
               </p>
             </div>
           </div>
+
+          <div class="border-b border-gray-400">
+            <div class="flex w-5/12 mt-2">
+              <div class="flex-grow h-12">
+                <input
+                  type="checkbox"
+                  value="introduction"
+                  v-model="introduction"
+                  class="mr-2 h-4 w-4"
+                />
+                <label>is Introduction</label>
+              </div>
+            </div>
+          </div>
+
           <div class="border-b border-gray-400">
             <h2 class="text-lg mt-2">BLENDED SUBJECTS</h2>
             <div class="flex w-5/12 mt-2">
@@ -233,6 +248,8 @@ export default {
       blended: false,
       thinking: false,
       physical: false,
+      introduction: false,
+      introFile: "",
       resourceData: [],
     };
   },
@@ -255,6 +272,7 @@ export default {
             blended: this.blended,
             thinking: this.thinking,
             physical: this.physical,
+            introduction: this.introduction ? _.trim(this.worksheet) : null,
             resourceIds: this.resourceIds,
           })
           .then(() => {
@@ -265,6 +283,7 @@ export default {
               (this.blended = false),
               (this.thinking = false),
               (this.physical = false),
+              (this.introduction = false),
               (this.resourceIds = []);
           });
       }

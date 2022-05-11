@@ -161,7 +161,11 @@ export default {
       ];
     },
     load() {
-      GetFile.from(encodeURI(this.plan.resource.resourceContent.workSheet))
+      var fileType =
+        this.plan.resource.resourceContent.introduction ??
+        this.plan.resource.resourceContent.workSheet;
+      // GetFile.from(encodeURI(this.plan.resource.resourceContent.workSheet))
+      GetFile.from(encodeURI(fileType))
         .then((file) => {
           this.pdfFile = file;
           this.getPdf(file);
