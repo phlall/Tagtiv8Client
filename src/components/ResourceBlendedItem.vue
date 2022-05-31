@@ -47,6 +47,35 @@
           <ResourceItem :resource="item" @setContent="setContent($event)" />
         </div> -->
         <div
+          v-if="item.resourceContent[0].introduction"
+          class="flex justify-center sm:justify-end"
+        >
+          <div class="w-full pl-6 pt-3 pb-2 text-lg">{{ item.name }}</div>
+          <div class="pt-2 pr-6">
+            <button
+              type="button"
+              class="
+                text-white
+                py-1
+                px-2
+                w-24
+                sm:w-28
+                bg-buttonblue
+                font-bold
+                text-xs
+                sm:text-base
+              "
+              @click="
+                setResourceContent(item.resourceContent[0], 'Introduction')
+              "
+            >
+              View
+            </button>
+          </div>
+        </div>
+
+        <div
+          v-if="grouped.length > 1"
           class="
             border-t border-gray-400
             w-full
@@ -58,6 +87,7 @@
         >
           {{ item.name }}
         </div>
+
         <div
           v-for="(activity, activityIndex) in item.resourceContent"
           :key="activityIndex"
@@ -66,6 +96,7 @@
           <div
             class="grid grid-cols-1 sm:grid-cols-2 w-full pt-2"
             :class="activityIndex != 0 ? 'border-t border-gray-300' : ''"
+            v-if="!activity.introduction"
           >
             <div>
               <h2
@@ -91,19 +122,20 @@
                 {{ activity.name }}
               </h2>
             </div>
+
             <div class="flex justify-center sm:justify-end sm:text-center">
               <div class="mr-2 pb-1 sm:pb-0 flex-grow text-right">
                 <BaseButton
                   type="button"
                   :disabled="false"
                   class="py-1 px-2"
-                  @click="setFavorite(item)"
+                  @click="setFavorite(activity)"
                 >
                   <span class="ml-4">
                     <font-awesome-icon
                       :icon="['fas', 'star']"
                       :class="
-                        item.isFavorite ? 'text-red-600' : 'text-gray-200'
+                        activity.isFavorite ? 'text-red-600' : 'text-gray-200'
                       "
                   /></span>
                 </BaseButton>
